@@ -29,7 +29,7 @@ public class Arduino extends SerialHardware {
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
 			try {
-				String data = input.readLine();
+				byte[] data = read();
 			} catch (Exception e) {
 				String msg = String.format(
 						"Unable to read from input stream.\n %s", e.toString());

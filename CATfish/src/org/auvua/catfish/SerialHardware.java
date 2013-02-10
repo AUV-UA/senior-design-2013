@@ -1,6 +1,7 @@
 package org.auvua.catfish;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -41,8 +42,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	public void initalize() {
 		String msg = null;
 		CommPortIdentifier identifier = null;
-		Enumeration<CommPortIdentifier> ports = CommPortIdentifier
-				.getPortIdentifiers();
+		Enumeration<CommPortIdentifier> ports = CommPortIdentifier.getPortIdentifiers();
 
 		while (ports.hasMoreElements()) {
 			CommPortIdentifier cur_identifier = ports.nextElement();
@@ -90,6 +90,30 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			System.out.println(e);
+		}
+	}
+	
+	public byte[] read() {
+		byte[] buffer = new byte[1024];
+		byte next;
+		
+		try {
+			for(int i = 0; (next = (byte)input.read()) >= 0; i++)
+				buffer[i] = next; 
+		} catch (IOException e) {
+			String msg = String.format("Nothing to read.\n %s", e.toString());
+			LOGGER.log(Level.WARNING, msg);
+		}
+		
+		return buffer;
+	}
+	
+	public void write(byte[] message) {
+		try {
+			output.write(message);
+		} catch (IOException e) {
+			String msg = String.format("Failed to write to port.\n %s", e.toString());
+			LOGGER.log(Level.WARNING, msg);
 		}
 	}
 
