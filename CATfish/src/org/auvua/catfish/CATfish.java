@@ -35,18 +35,18 @@ import javax.swing.plaf.nimbus.*;
 public class CATfish {
 
 	private JFrame frmCatfish;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
+	private JTextField panelA0_t;
+	private JTextField panelA1_t;
+	private JTextField panelA2_t;
+	private JTextField panelA3_t;
+	private JTextField panelA4_t;
+	private JTextField panelA5_t;
+	private JTextField panelHeading_t;
+	private JTextField panelPitch_t;
+	private JTextField panelRoll_t;
+	private JTextField panelAccX_t;
+	private JTextField panelAccY_t;
+	private JTextField panelAccZ_t;
 
 	/**
 	 * Launch the application.
@@ -166,75 +166,75 @@ public class CATfish {
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JToggleButton toggleButton = new JToggleButton("0");
-		GridBagConstraints gbc_toggleButton = new GridBagConstraints();
-		gbc_toggleButton.insets = new Insets(0, 0, 5, 5);
-		gbc_toggleButton.gridx = 0;
-		gbc_toggleButton.gridy = 0;
-		panel_1.add(toggleButton, gbc_toggleButton);
+		JToggleButton panelDO0_tb = new JToggleButton("0");
+		GridBagConstraints gbc_panelDO0_tb = new GridBagConstraints();
+		gbc_panelDO0_tb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelDO0_tb.gridx = 0;
+		gbc_panelDO0_tb.gridy = 0;
+		panel_1.add(panelDO0_tb, gbc_panelDO0_tb);
 		
-		JToggleButton toggleButton_1 = new JToggleButton("1");
-		GridBagConstraints gbc_toggleButton_1 = new GridBagConstraints();
-		gbc_toggleButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_toggleButton_1.gridx = 1;
-		gbc_toggleButton_1.gridy = 0;
-		panel_1.add(toggleButton_1, gbc_toggleButton_1);
+		JToggleButton panelDO1_tb = new JToggleButton("1");
+		GridBagConstraints gbc_panelDO1_tb = new GridBagConstraints();
+		gbc_panelDO1_tb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelDO1_tb.gridx = 1;
+		gbc_panelDO1_tb.gridy = 0;
+		panel_1.add(panelDO1_tb, gbc_panelDO1_tb);
 		
-		JToggleButton toggleButton_2 = new JToggleButton("2");
-		GridBagConstraints gbc_toggleButton_2 = new GridBagConstraints();
-		gbc_toggleButton_2.insets = new Insets(0, 0, 5, 5);
-		gbc_toggleButton_2.gridx = 2;
-		gbc_toggleButton_2.gridy = 0;
-		panel_1.add(toggleButton_2, gbc_toggleButton_2);
+		JToggleButton panelDO2_tb = new JToggleButton("2");
+		GridBagConstraints gbc_panelDO2_tb = new GridBagConstraints();
+		gbc_panelDO2_tb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelDO2_tb.gridx = 2;
+		gbc_panelDO2_tb.gridy = 0;
+		panel_1.add(panelDO2_tb, gbc_panelDO2_tb);
 		
-		JToggleButton toggleButton_3 = new JToggleButton("3");
-		GridBagConstraints gbc_toggleButton_3 = new GridBagConstraints();
-		gbc_toggleButton_3.insets = new Insets(0, 0, 5, 5);
-		gbc_toggleButton_3.gridx = 3;
-		gbc_toggleButton_3.gridy = 0;
-		panel_1.add(toggleButton_3, gbc_toggleButton_3);
+		JToggleButton panelDO3_tb = new JToggleButton("3");
+		GridBagConstraints gbc_panelDO3_tb = new GridBagConstraints();
+		gbc_panelDO3_tb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelDO3_tb.gridx = 3;
+		gbc_panelDO3_tb.gridy = 0;
+		panel_1.add(panelDO3_tb, gbc_panelDO3_tb);
 		
-		JToggleButton toggleButton_4 = new JToggleButton("4");
-		GridBagConstraints gbc_toggleButton_4 = new GridBagConstraints();
-		gbc_toggleButton_4.insets = new Insets(0, 0, 5, 5);
-		gbc_toggleButton_4.gridx = 4;
-		gbc_toggleButton_4.gridy = 0;
-		panel_1.add(toggleButton_4, gbc_toggleButton_4);
+		JToggleButton panelDO4_tb = new JToggleButton("4");
+		GridBagConstraints gbc_panelDO4_tb = new GridBagConstraints();
+		gbc_panelDO4_tb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelDO4_tb.gridx = 4;
+		gbc_panelDO4_tb.gridy = 0;
+		panel_1.add(panelDO4_tb, gbc_panelDO4_tb);
 		
-		JToggleButton toggleButton_5 = new JToggleButton("5");
-		GridBagConstraints gbc_toggleButton_5 = new GridBagConstraints();
-		gbc_toggleButton_5.insets = new Insets(0, 0, 0, 5);
-		gbc_toggleButton_5.gridx = 0;
-		gbc_toggleButton_5.gridy = 1;
-		panel_1.add(toggleButton_5, gbc_toggleButton_5);
+		JToggleButton panelDO5_tb = new JToggleButton("5");
+		GridBagConstraints gbc_panelDO5_tb = new GridBagConstraints();
+		gbc_panelDO5_tb.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDO5_tb.gridx = 0;
+		gbc_panelDO5_tb.gridy = 1;
+		panel_1.add(panelDO5_tb, gbc_panelDO5_tb);
 		
-		JToggleButton toggleButton_6 = new JToggleButton("6");
-		GridBagConstraints gbc_toggleButton_6 = new GridBagConstraints();
-		gbc_toggleButton_6.insets = new Insets(0, 0, 0, 5);
-		gbc_toggleButton_6.gridx = 1;
-		gbc_toggleButton_6.gridy = 1;
-		panel_1.add(toggleButton_6, gbc_toggleButton_6);
+		JToggleButton panelDO6_tb = new JToggleButton("6");
+		GridBagConstraints gbc_panelDO6_tb = new GridBagConstraints();
+		gbc_panelDO6_tb.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDO6_tb.gridx = 1;
+		gbc_panelDO6_tb.gridy = 1;
+		panel_1.add(panelDO6_tb, gbc_panelDO6_tb);
 		
-		JToggleButton toggleButton_7 = new JToggleButton("7");
-		GridBagConstraints gbc_toggleButton_7 = new GridBagConstraints();
-		gbc_toggleButton_7.insets = new Insets(0, 0, 0, 5);
-		gbc_toggleButton_7.gridx = 2;
-		gbc_toggleButton_7.gridy = 1;
-		panel_1.add(toggleButton_7, gbc_toggleButton_7);
+		JToggleButton panelDO7_tb = new JToggleButton("7");
+		GridBagConstraints gbc_panelDO7_tb = new GridBagConstraints();
+		gbc_panelDO7_tb.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDO7_tb.gridx = 2;
+		gbc_panelDO7_tb.gridy = 1;
+		panel_1.add(panelDO7_tb, gbc_panelDO7_tb);
 		
-		JToggleButton toggleButton_8 = new JToggleButton("8");
-		GridBagConstraints gbc_toggleButton_8 = new GridBagConstraints();
-		gbc_toggleButton_8.insets = new Insets(0, 0, 0, 5);
-		gbc_toggleButton_8.gridx = 3;
-		gbc_toggleButton_8.gridy = 1;
-		panel_1.add(toggleButton_8, gbc_toggleButton_8);
+		JToggleButton panelDO8_tb = new JToggleButton("8");
+		GridBagConstraints gbc_panelDO8_tb = new GridBagConstraints();
+		gbc_panelDO8_tb.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDO8_tb.gridx = 3;
+		gbc_panelDO8_tb.gridy = 1;
+		panel_1.add(panelDO8_tb, gbc_panelDO8_tb);
 		
-		JToggleButton toggleButton_9 = new JToggleButton("9");
-		GridBagConstraints gbc_toggleButton_9 = new GridBagConstraints();
-		gbc_toggleButton_9.insets = new Insets(0, 0, 0, 5);
-		gbc_toggleButton_9.gridx = 4;
-		gbc_toggleButton_9.gridy = 1;
-		panel_1.add(toggleButton_9, gbc_toggleButton_9);
+		JToggleButton panelDO9_tb = new JToggleButton("9");
+		GridBagConstraints gbc_panelDO9_tb = new GridBagConstraints();
+		gbc_panelDO9_tb.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDO9_tb.gridx = 4;
+		gbc_panelDO9_tb.gridy = 1;
+		panel_1.add(panelDO9_tb, gbc_panelDO9_tb);
 		
 		JLabel lblDigitalInputs = new JLabel("Digital Inputs");
 		GridBagConstraints gbc_lblDigitalInputs = new GridBagConstraints();
@@ -257,36 +257,36 @@ public class CATfish {
 		gbl_panel_2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 		
-		JLabel label = new JLabel("10");
-		label.setBackground(SystemColor.controlDkShadow);
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 0, 5);
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 0;
-		panel_2.add(label, gbc_label);
+		JLabel panelDI10_lbl = new JLabel("10");
+		panelDI10_lbl.setBackground(SystemColor.controlDkShadow);
+		GridBagConstraints gbc_panelDI10_lbl = new GridBagConstraints();
+		gbc_panelDI10_lbl.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDI10_lbl.gridx = 0;
+		gbc_panelDI10_lbl.gridy = 0;
+		panel_2.add(panelDI10_lbl, gbc_panelDI10_lbl);
 		
-		JLabel label_1 = new JLabel("11");
-		label_1.setBackground(SystemColor.controlDkShadow);
-		GridBagConstraints gbc_label_1 = new GridBagConstraints();
-		gbc_label_1.insets = new Insets(0, 0, 0, 5);
-		gbc_label_1.gridx = 1;
-		gbc_label_1.gridy = 0;
-		panel_2.add(label_1, gbc_label_1);
+		JLabel panelDI11_lbl = new JLabel("11");
+		panelDI11_lbl.setBackground(SystemColor.controlDkShadow);
+		GridBagConstraints gbc_panelDI11_lbl = new GridBagConstraints();
+		gbc_panelDI11_lbl.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDI11_lbl.gridx = 1;
+		gbc_panelDI11_lbl.gridy = 0;
+		panel_2.add(panelDI11_lbl, gbc_panelDI11_lbl);
 		
-		JLabel label_2 = new JLabel("12");
-		label_2.setBackground(SystemColor.controlDkShadow);
-		GridBagConstraints gbc_label_2 = new GridBagConstraints();
-		gbc_label_2.insets = new Insets(0, 0, 0, 5);
-		gbc_label_2.gridx = 2;
-		gbc_label_2.gridy = 0;
-		panel_2.add(label_2, gbc_label_2);
+		JLabel panelDI12_lbl = new JLabel("12");
+		panelDI12_lbl.setBackground(SystemColor.controlDkShadow);
+		GridBagConstraints gbc_panelDI12_lbl = new GridBagConstraints();
+		gbc_panelDI12_lbl.insets = new Insets(0, 0, 0, 5);
+		gbc_panelDI12_lbl.gridx = 2;
+		gbc_panelDI12_lbl.gridy = 0;
+		panel_2.add(panelDI12_lbl, gbc_panelDI12_lbl);
 		
-		JLabel label_3 = new JLabel("13");
-		label_3.setBackground(SystemColor.controlDkShadow);
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.gridx = 3;
-		gbc_label_3.gridy = 0;
-		panel_2.add(label_3, gbc_label_3);
+		JLabel panelDI13_lbl = new JLabel("13");
+		panelDI13_lbl.setBackground(SystemColor.controlDkShadow);
+		GridBagConstraints gbc_panelDI13_lbl = new GridBagConstraints();
+		gbc_panelDI13_lbl.gridx = 3;
+		gbc_panelDI13_lbl.gridy = 0;
+		panel_2.add(panelDI13_lbl, gbc_panelDI13_lbl);
 		
 		JLabel lblAnalogInputs = new JLabel("Analog Inputs");
 		GridBagConstraints gbc_lblAnalogInputs = new GridBagConstraints();
@@ -316,15 +316,15 @@ public class CATfish {
 		gbc_lblA.gridy = 0;
 		panel_3.add(lblA, gbc_lblA);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		panel_3.add(textField, gbc_textField);
-		textField.setColumns(10);
+		panelA0_t = new JTextField();
+		panelA0_t.setEditable(false);
+		GridBagConstraints gbc_panelA0_t = new GridBagConstraints();
+		gbc_panelA0_t.insets = new Insets(0, 0, 5, 5);
+		gbc_panelA0_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA0_t.gridx = 1;
+		gbc_panelA0_t.gridy = 0;
+		panel_3.add(panelA0_t, gbc_panelA0_t);
+		panelA0_t.setColumns(10);
 		
 		JLabel lblA_2 = new JLabel("A1:");
 		GridBagConstraints gbc_lblA_2 = new GridBagConstraints();
@@ -334,15 +334,15 @@ public class CATfish {
 		gbc_lblA_2.gridy = 0;
 		panel_3.add(lblA_2, gbc_lblA_2);
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 3;
-		gbc_textField_1.gridy = 0;
-		panel_3.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		panelA1_t = new JTextField();
+		panelA1_t.setEditable(false);
+		GridBagConstraints gbc_panelA1_t = new GridBagConstraints();
+		gbc_panelA1_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelA1_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA1_t.gridx = 3;
+		gbc_panelA1_t.gridy = 0;
+		panel_3.add(panelA1_t, gbc_panelA1_t);
+		panelA1_t.setColumns(10);
 		
 		JLabel lblA_1 = new JLabel("A2:");
 		GridBagConstraints gbc_lblA_1 = new GridBagConstraints();
@@ -352,15 +352,15 @@ public class CATfish {
 		gbc_lblA_1.gridy = 1;
 		panel_3.add(lblA_1, gbc_lblA_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 1;
-		panel_3.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
+		panelA2_t = new JTextField();
+		panelA2_t.setEditable(false);
+		GridBagConstraints gbc_panelA2_t = new GridBagConstraints();
+		gbc_panelA2_t.insets = new Insets(0, 0, 5, 5);
+		gbc_panelA2_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA2_t.gridx = 1;
+		gbc_panelA2_t.gridy = 1;
+		panel_3.add(panelA2_t, gbc_panelA2_t);
+		panelA2_t.setColumns(10);
 		
 		JLabel lblA_3 = new JLabel("A3:");
 		GridBagConstraints gbc_lblA_3 = new GridBagConstraints();
@@ -370,15 +370,15 @@ public class CATfish {
 		gbc_lblA_3.gridy = 1;
 		panel_3.add(lblA_3, gbc_lblA_3);
 		
-		textField_3 = new JTextField();
-		textField_3.setEditable(false);
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 3;
-		gbc_textField_3.gridy = 1;
-		panel_3.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		panelA3_t = new JTextField();
+		panelA3_t.setEditable(false);
+		GridBagConstraints gbc_panelA3_t = new GridBagConstraints();
+		gbc_panelA3_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelA3_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA3_t.gridx = 3;
+		gbc_panelA3_t.gridy = 1;
+		panel_3.add(panelA3_t, gbc_panelA3_t);
+		panelA3_t.setColumns(10);
 		
 		JLabel lblA_4 = new JLabel("A4:");
 		GridBagConstraints gbc_lblA_4 = new GridBagConstraints();
@@ -388,15 +388,15 @@ public class CATfish {
 		gbc_lblA_4.gridy = 2;
 		panel_3.add(lblA_4, gbc_lblA_4);
 		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 1;
-		gbc_textField_4.gridy = 2;
-		panel_3.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
+		panelA4_t = new JTextField();
+		panelA4_t.setEditable(false);
+		GridBagConstraints gbc_panelA4_t = new GridBagConstraints();
+		gbc_panelA4_t.insets = new Insets(0, 0, 0, 5);
+		gbc_panelA4_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA4_t.gridx = 1;
+		gbc_panelA4_t.gridy = 2;
+		panel_3.add(panelA4_t, gbc_panelA4_t);
+		panelA4_t.setColumns(10);
 		
 		JLabel lblA_5 = new JLabel("A5:");
 		GridBagConstraints gbc_lblA_5 = new GridBagConstraints();
@@ -406,14 +406,14 @@ public class CATfish {
 		gbc_lblA_5.gridy = 2;
 		panel_3.add(lblA_5, gbc_lblA_5);
 		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 3;
-		gbc_textField_5.gridy = 2;
-		panel_3.add(textField_5, gbc_textField_5);
-		textField_5.setColumns(10);
+		panelA5_t = new JTextField();
+		panelA5_t.setEditable(false);
+		GridBagConstraints gbc_panelA5_t = new GridBagConstraints();
+		gbc_panelA5_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelA5_t.gridx = 3;
+		gbc_panelA5_t.gridy = 2;
+		panel_3.add(panelA5_t, gbc_panelA5_t);
+		panelA5_t.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -482,15 +482,15 @@ public class CATfish {
 		gbc_lblHeading.gridy = 0;
 		panel_5.add(lblHeading, gbc_lblHeading);
 		
-		textField_6 = new JTextField();
-		textField_6.setEditable(false);
-		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
-		gbc_textField_6.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_6.gridx = 1;
-		gbc_textField_6.gridy = 0;
-		panel_5.add(textField_6, gbc_textField_6);
-		textField_6.setColumns(10);
+		panelHeading_t = new JTextField();
+		panelHeading_t.setEditable(false);
+		GridBagConstraints gbc_panelHeading_t = new GridBagConstraints();
+		gbc_panelHeading_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelHeading_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelHeading_t.gridx = 1;
+		gbc_panelHeading_t.gridy = 0;
+		panel_5.add(panelHeading_t, gbc_panelHeading_t);
+		panelHeading_t.setColumns(10);
 		
 		JLabel lblPitch = new JLabel("Pitch:");
 		GridBagConstraints gbc_lblPitch = new GridBagConstraints();
@@ -500,15 +500,15 @@ public class CATfish {
 		gbc_lblPitch.gridy = 1;
 		panel_5.add(lblPitch, gbc_lblPitch);
 		
-		textField_7 = new JTextField();
-		textField_7.setEditable(false);
-		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
-		gbc_textField_7.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_7.gridx = 1;
-		gbc_textField_7.gridy = 1;
-		panel_5.add(textField_7, gbc_textField_7);
-		textField_7.setColumns(10);
+		panelPitch_t = new JTextField();
+		panelPitch_t.setEditable(false);
+		GridBagConstraints gbc_panelPitch_t = new GridBagConstraints();
+		gbc_panelPitch_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelPitch_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPitch_t.gridx = 1;
+		gbc_panelPitch_t.gridy = 1;
+		panel_5.add(panelPitch_t, gbc_panelPitch_t);
+		panelPitch_t.setColumns(10);
 		
 		JLabel lblRoll = new JLabel("Roll:");
 		GridBagConstraints gbc_lblRoll = new GridBagConstraints();
@@ -518,15 +518,15 @@ public class CATfish {
 		gbc_lblRoll.gridy = 2;
 		panel_5.add(lblRoll, gbc_lblRoll);
 		
-		textField_8 = new JTextField();
-		textField_8.setEditable(false);
-		GridBagConstraints gbc_textField_8 = new GridBagConstraints();
-		gbc_textField_8.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_8.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_8.gridx = 1;
-		gbc_textField_8.gridy = 2;
-		panel_5.add(textField_8, gbc_textField_8);
-		textField_8.setColumns(10);
+		panelRoll_t = new JTextField();
+		panelRoll_t.setEditable(false);
+		GridBagConstraints gbc_panelRoll_t = new GridBagConstraints();
+		gbc_panelRoll_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelRoll_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelRoll_t.gridx = 1;
+		gbc_panelRoll_t.gridy = 2;
+		panel_5.add(panelRoll_t, gbc_panelRoll_t);
+		panelRoll_t.setColumns(10);
 		
 		JLabel lblAccelX = new JLabel("Accel X:");
 		GridBagConstraints gbc_lblAccelX = new GridBagConstraints();
@@ -536,15 +536,15 @@ public class CATfish {
 		gbc_lblAccelX.gridy = 3;
 		panel_5.add(lblAccelX, gbc_lblAccelX);
 		
-		textField_9 = new JTextField();
-		textField_9.setEditable(false);
-		GridBagConstraints gbc_textField_9 = new GridBagConstraints();
-		gbc_textField_9.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_9.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_9.gridx = 1;
-		gbc_textField_9.gridy = 3;
-		panel_5.add(textField_9, gbc_textField_9);
-		textField_9.setColumns(10);
+		panelAccX_t = new JTextField();
+		panelAccX_t.setEditable(false);
+		GridBagConstraints gbc_panelAccX_t = new GridBagConstraints();
+		gbc_panelAccX_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelAccX_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelAccX_t.gridx = 1;
+		gbc_panelAccX_t.gridy = 3;
+		panel_5.add(panelAccX_t, gbc_panelAccX_t);
+		panelAccX_t.setColumns(10);
 		
 		JLabel lblAccelY = new JLabel("Accel Y:");
 		GridBagConstraints gbc_lblAccelY = new GridBagConstraints();
@@ -554,15 +554,15 @@ public class CATfish {
 		gbc_lblAccelY.gridy = 4;
 		panel_5.add(lblAccelY, gbc_lblAccelY);
 		
-		textField_10 = new JTextField();
-		textField_10.setEditable(false);
-		GridBagConstraints gbc_textField_10 = new GridBagConstraints();
-		gbc_textField_10.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_10.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_10.gridx = 1;
-		gbc_textField_10.gridy = 4;
-		panel_5.add(textField_10, gbc_textField_10);
-		textField_10.setColumns(10);
+		panelAccY_t = new JTextField();
+		panelAccY_t.setEditable(false);
+		GridBagConstraints gbc_panelAccY_t = new GridBagConstraints();
+		gbc_panelAccY_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelAccY_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelAccY_t.gridx = 1;
+		gbc_panelAccY_t.gridy = 4;
+		panel_5.add(panelAccY_t, gbc_panelAccY_t);
+		panelAccY_t.setColumns(10);
 		
 		JLabel lblAccelZ = new JLabel("Accel Z:");
 		GridBagConstraints gbc_lblAccelZ = new GridBagConstraints();
@@ -572,14 +572,14 @@ public class CATfish {
 		gbc_lblAccelZ.gridy = 5;
 		panel_5.add(lblAccelZ, gbc_lblAccelZ);
 		
-		textField_11 = new JTextField();
-		textField_11.setEditable(false);
-		GridBagConstraints gbc_textField_11 = new GridBagConstraints();
-		gbc_textField_11.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_11.gridx = 1;
-		gbc_textField_11.gridy = 5;
-		panel_5.add(textField_11, gbc_textField_11);
-		textField_11.setColumns(10);
+		panelAccZ_t = new JTextField();
+		panelAccZ_t.setEditable(false);
+		GridBagConstraints gbc_panelAccZ_t = new GridBagConstraints();
+		gbc_panelAccZ_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelAccZ_t.gridx = 1;
+		gbc_panelAccZ_t.gridy = 5;
+		panel_5.add(panelAccZ_t, gbc_panelAccZ_t);
+		panelAccZ_t.setColumns(10);
 		
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setForeground(SystemColor.desktop);
@@ -684,39 +684,39 @@ public class CATfish {
 		gbc_lblJoystick_1.gridy = 3;
 		panel_9.add(lblJoystick_1, gbc_lblJoystick_1);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
-		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_2.gridx = 1;
-		gbc_comboBox_2.gridy = 3;
-		panel_9.add(comboBox_2, gbc_comboBox_2);
+		JComboBox panelPortJoy_cb = new JComboBox();
+		GridBagConstraints gbc_panelPortJoy_cb = new GridBagConstraints();
+		gbc_panelPortJoy_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelPortJoy_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPortJoy_cb.gridx = 1;
+		gbc_panelPortJoy_cb.gridy = 3;
+		panel_9.add(panelPortJoy_cb, gbc_panelPortJoy_cb);
 		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
-		comboBox_6.setSelectedIndex(2);
-		GridBagConstraints gbc_comboBox_6 = new GridBagConstraints();
-		gbc_comboBox_6.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_6.gridx = 2;
-		gbc_comboBox_6.gridy = 3;
-		panel_9.add(comboBox_6, gbc_comboBox_6);
+		JComboBox panelBaudJoy_cb = new JComboBox();
+		panelBaudJoy_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudJoy_cb.setSelectedIndex(2);
+		GridBagConstraints gbc_panelBaudJoy_cb = new GridBagConstraints();
+		gbc_panelBaudJoy_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelBaudJoy_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelBaudJoy_cb.gridx = 2;
+		gbc_panelBaudJoy_cb.gridy = 3;
+		panel_9.add(panelBaudJoy_cb, gbc_panelBaudJoy_cb);
 		
-		JButton btnConnect_3 = new JButton("Connect");
-		GridBagConstraints gbc_btnConnect_3 = new GridBagConstraints();
-		gbc_btnConnect_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConnect_3.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConnect_3.gridx = 3;
-		gbc_btnConnect_3.gridy = 3;
-		panel_9.add(btnConnect_3, gbc_btnConnect_3);
+		JButton panelConnJoy_b = new JButton("Connect");
+		GridBagConstraints gbc_panelConnJoy_b = new GridBagConstraints();
+		gbc_panelConnJoy_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConnJoy_b.insets = new Insets(0, 0, 5, 5);
+		gbc_panelConnJoy_b.gridx = 3;
+		gbc_panelConnJoy_b.gridy = 3;
+		panel_9.add(panelConnJoy_b, gbc_panelConnJoy_b);
 		
-		JCheckBox checkBox = new JCheckBox("");
-		checkBox.setEnabled(false);
-		GridBagConstraints gbc_checkBox = new GridBagConstraints();
-		gbc_checkBox.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBox.gridx = 4;
-		gbc_checkBox.gridy = 3;
-		panel_9.add(checkBox, gbc_checkBox);
+		JCheckBox panelStatusJoy_chk = new JCheckBox("");
+		panelStatusJoy_chk.setEnabled(false);
+		GridBagConstraints gbc_panelStatusJoy_chk = new GridBagConstraints();
+		gbc_panelStatusJoy_chk.insets = new Insets(0, 0, 5, 0);
+		gbc_panelStatusJoy_chk.gridx = 4;
+		gbc_panelStatusJoy_chk.gridy = 3;
+		panel_9.add(panelStatusJoy_chk, gbc_panelStatusJoy_chk);
 		
 		JLabel lblArduino_1 = new JLabel("Arduino");
 		GridBagConstraints gbc_lblArduino_1 = new GridBagConstraints();
@@ -726,39 +726,39 @@ public class CATfish {
 		gbc_lblArduino_1.gridy = 4;
 		panel_9.add(lblArduino_1, gbc_lblArduino_1);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		GridBagConstraints gbc_comboBox_3 = new GridBagConstraints();
-		gbc_comboBox_3.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_3.gridx = 1;
-		gbc_comboBox_3.gridy = 4;
-		panel_9.add(comboBox_3, gbc_comboBox_3);
+		JComboBox panelPortArd_cb = new JComboBox();
+		GridBagConstraints gbc_panelPortArd_cb = new GridBagConstraints();
+		gbc_panelPortArd_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelPortArd_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPortArd_cb.gridx = 1;
+		gbc_panelPortArd_cb.gridy = 4;
+		panel_9.add(panelPortArd_cb, gbc_panelPortArd_cb);
 		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
-		comboBox_7.setSelectedIndex(2);
-		GridBagConstraints gbc_comboBox_7 = new GridBagConstraints();
-		gbc_comboBox_7.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_7.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_7.gridx = 2;
-		gbc_comboBox_7.gridy = 4;
-		panel_9.add(comboBox_7, gbc_comboBox_7);
+		JComboBox panelBaudArd_cb = new JComboBox();
+		panelBaudArd_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudArd_cb.setSelectedIndex(2);
+		GridBagConstraints gbc_panelBaudArd_cb = new GridBagConstraints();
+		gbc_panelBaudArd_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelBaudArd_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelBaudArd_cb.gridx = 2;
+		gbc_panelBaudArd_cb.gridy = 4;
+		panel_9.add(panelBaudArd_cb, gbc_panelBaudArd_cb);
 		
-		JButton btnConnect_4 = new JButton("Connect");
-		GridBagConstraints gbc_btnConnect_4 = new GridBagConstraints();
-		gbc_btnConnect_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConnect_4.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConnect_4.gridx = 3;
-		gbc_btnConnect_4.gridy = 4;
-		panel_9.add(btnConnect_4, gbc_btnConnect_4);
+		JButton panelConnArd_B = new JButton("Connect");
+		GridBagConstraints gbc_panelConnArd_B = new GridBagConstraints();
+		gbc_panelConnArd_B.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConnArd_B.insets = new Insets(0, 0, 5, 5);
+		gbc_panelConnArd_B.gridx = 3;
+		gbc_panelConnArd_B.gridy = 4;
+		panel_9.add(panelConnArd_B, gbc_panelConnArd_B);
 		
-		JCheckBox checkBox_1 = new JCheckBox("");
-		checkBox_1.setEnabled(false);
-		GridBagConstraints gbc_checkBox_1 = new GridBagConstraints();
-		gbc_checkBox_1.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBox_1.gridx = 4;
-		gbc_checkBox_1.gridy = 4;
-		panel_9.add(checkBox_1, gbc_checkBox_1);
+		JCheckBox panelStatusArd_chk = new JCheckBox("");
+		panelStatusArd_chk.setEnabled(false);
+		GridBagConstraints gbc_panelStatusArd_chk = new GridBagConstraints();
+		gbc_panelStatusArd_chk.insets = new Insets(0, 0, 5, 0);
+		gbc_panelStatusArd_chk.gridx = 4;
+		gbc_panelStatusArd_chk.gridy = 4;
+		panel_9.add(panelStatusArd_chk, gbc_panelStatusArd_chk);
 		
 		JLabel lblCompass_1 = new JLabel("Compass");
 		GridBagConstraints gbc_lblCompass_1 = new GridBagConstraints();
@@ -768,39 +768,39 @@ public class CATfish {
 		gbc_lblCompass_1.gridy = 5;
 		panel_9.add(lblCompass_1, gbc_lblCompass_1);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		GridBagConstraints gbc_comboBox_4 = new GridBagConstraints();
-		gbc_comboBox_4.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_4.gridx = 1;
-		gbc_comboBox_4.gridy = 5;
-		panel_9.add(comboBox_4, gbc_comboBox_4);
+		JComboBox panelPortComp_cb = new JComboBox();
+		GridBagConstraints gbc_panelPortComp_cb = new GridBagConstraints();
+		gbc_panelPortComp_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelPortComp_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPortComp_cb.gridx = 1;
+		gbc_panelPortComp_cb.gridy = 5;
+		panel_9.add(panelPortComp_cb, gbc_panelPortComp_cb);
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
-		comboBox_8.setSelectedIndex(4);
-		GridBagConstraints gbc_comboBox_8 = new GridBagConstraints();
-		gbc_comboBox_8.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_8.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_8.gridx = 2;
-		gbc_comboBox_8.gridy = 5;
-		panel_9.add(comboBox_8, gbc_comboBox_8);
+		JComboBox panelBaudComp_cb = new JComboBox();
+		panelBaudComp_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudComp_cb.setSelectedIndex(4);
+		GridBagConstraints gbc_panelBaudComp_cb = new GridBagConstraints();
+		gbc_panelBaudComp_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelBaudComp_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelBaudComp_cb.gridx = 2;
+		gbc_panelBaudComp_cb.gridy = 5;
+		panel_9.add(panelBaudComp_cb, gbc_panelBaudComp_cb);
 		
-		JButton btnConnect_5 = new JButton("Connect");
-		GridBagConstraints gbc_btnConnect_5 = new GridBagConstraints();
-		gbc_btnConnect_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConnect_5.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConnect_5.gridx = 3;
-		gbc_btnConnect_5.gridy = 5;
-		panel_9.add(btnConnect_5, gbc_btnConnect_5);
+		JButton panelConnComp_b = new JButton("Connect");
+		GridBagConstraints gbc_panelConnComp_b = new GridBagConstraints();
+		gbc_panelConnComp_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConnComp_b.insets = new Insets(0, 0, 5, 5);
+		gbc_panelConnComp_b.gridx = 3;
+		gbc_panelConnComp_b.gridy = 5;
+		panel_9.add(panelConnComp_b, gbc_panelConnComp_b);
 		
-		JCheckBox checkBox_2 = new JCheckBox("");
-		checkBox_2.setEnabled(false);
-		GridBagConstraints gbc_checkBox_2 = new GridBagConstraints();
-		gbc_checkBox_2.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBox_2.gridx = 4;
-		gbc_checkBox_2.gridy = 5;
-		panel_9.add(checkBox_2, gbc_checkBox_2);
+		JCheckBox panelStatusComp_chk = new JCheckBox("");
+		panelStatusComp_chk.setEnabled(false);
+		GridBagConstraints gbc_panelStatusComp_chk = new GridBagConstraints();
+		gbc_panelStatusComp_chk.insets = new Insets(0, 0, 5, 0);
+		gbc_panelStatusComp_chk.gridx = 4;
+		gbc_panelStatusComp_chk.gridy = 5;
+		panel_9.add(panelStatusComp_chk, gbc_panelStatusComp_chk);
 		
 		JLabel lblMotors_1 = new JLabel("Motors");
 		GridBagConstraints gbc_lblMotors_1 = new GridBagConstraints();
@@ -810,39 +810,39 @@ public class CATfish {
 		gbc_lblMotors_1.gridy = 6;
 		panel_9.add(lblMotors_1, gbc_lblMotors_1);
 		
-		JComboBox comboBox_5 = new JComboBox();
-		GridBagConstraints gbc_comboBox_5 = new GridBagConstraints();
-		gbc_comboBox_5.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_5.gridx = 1;
-		gbc_comboBox_5.gridy = 6;
-		panel_9.add(comboBox_5, gbc_comboBox_5);
+		JComboBox panelPortMotors_cb = new JComboBox();
+		GridBagConstraints gbc_panelPortMotors_cb = new GridBagConstraints();
+		gbc_panelPortMotors_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelPortMotors_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPortMotors_cb.gridx = 1;
+		gbc_panelPortMotors_cb.gridy = 6;
+		panel_9.add(panelPortMotors_cb, gbc_panelPortMotors_cb);
 		
-		JComboBox comboBox_9 = new JComboBox();
-		comboBox_9.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
-		comboBox_9.setSelectedIndex(2);
-		GridBagConstraints gbc_comboBox_9 = new GridBagConstraints();
-		gbc_comboBox_9.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_9.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_9.gridx = 2;
-		gbc_comboBox_9.gridy = 6;
-		panel_9.add(comboBox_9, gbc_comboBox_9);
+		JComboBox panelBaudMotors_cb = new JComboBox();
+		panelBaudMotors_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudMotors_cb.setSelectedIndex(2);
+		GridBagConstraints gbc_panelBaudMotors_cb = new GridBagConstraints();
+		gbc_panelBaudMotors_cb.insets = new Insets(0, 0, 5, 5);
+		gbc_panelBaudMotors_cb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelBaudMotors_cb.gridx = 2;
+		gbc_panelBaudMotors_cb.gridy = 6;
+		panel_9.add(panelBaudMotors_cb, gbc_panelBaudMotors_cb);
 		
-		JButton btnConnect_6 = new JButton("Connect");
-		GridBagConstraints gbc_btnConnect_6 = new GridBagConstraints();
-		gbc_btnConnect_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConnect_6.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConnect_6.gridx = 3;
-		gbc_btnConnect_6.gridy = 6;
-		panel_9.add(btnConnect_6, gbc_btnConnect_6);
+		JButton panelConnMotors_b = new JButton("Connect");
+		GridBagConstraints gbc_panelConnMotors_b = new GridBagConstraints();
+		gbc_panelConnMotors_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConnMotors_b.insets = new Insets(0, 0, 5, 5);
+		gbc_panelConnMotors_b.gridx = 3;
+		gbc_panelConnMotors_b.gridy = 6;
+		panel_9.add(panelConnMotors_b, gbc_panelConnMotors_b);
 		
-		JCheckBox checkBox_3 = new JCheckBox("");
-		checkBox_3.setEnabled(false);
-		GridBagConstraints gbc_checkBox_3 = new GridBagConstraints();
-		gbc_checkBox_3.insets = new Insets(0, 0, 5, 0);
-		gbc_checkBox_3.gridx = 4;
-		gbc_checkBox_3.gridy = 6;
-		panel_9.add(checkBox_3, gbc_checkBox_3);
+		JCheckBox panelStatusMotors_chk = new JCheckBox("");
+		panelStatusMotors_chk.setEnabled(false);
+		GridBagConstraints gbc_panelStatusMotors_chk = new GridBagConstraints();
+		gbc_panelStatusMotors_chk.insets = new Insets(0, 0, 5, 0);
+		gbc_panelStatusMotors_chk.gridx = 4;
+		gbc_panelStatusMotors_chk.gridy = 6;
+		panel_9.add(panelStatusMotors_chk, gbc_panelStatusMotors_chk);
 		
 		JPanel panel_10 = new JPanel();
 		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
@@ -867,21 +867,21 @@ public class CATfish {
 		gbc_horizontalGlue.gridy = 0;
 		panel_10.add(horizontalGlue, gbc_horizontalGlue);
 		
-		JButton btnRefreshPorts = new JButton("Refresh Ports");
-		GridBagConstraints gbc_btnRefreshPorts = new GridBagConstraints();
-		gbc_btnRefreshPorts.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnRefreshPorts.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRefreshPorts.gridx = 1;
-		gbc_btnRefreshPorts.gridy = 0;
-		panel_10.add(btnRefreshPorts, gbc_btnRefreshPorts);
+		JButton panelRefreshPorts_b = new JButton("Refresh Ports");
+		GridBagConstraints gbc_panelRefreshPorts_b = new GridBagConstraints();
+		gbc_panelRefreshPorts_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelRefreshPorts_b.insets = new Insets(0, 0, 5, 5);
+		gbc_panelRefreshPorts_b.gridx = 1;
+		gbc_panelRefreshPorts_b.gridy = 0;
+		panel_10.add(panelRefreshPorts_b, gbc_panelRefreshPorts_b);
 		
-		JButton btnConnectAll = new JButton("Connect All");
-		GridBagConstraints gbc_btnConnectAll = new GridBagConstraints();
-		gbc_btnConnectAll.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConnectAll.insets = new Insets(0, 0, 5, 5);
-		gbc_btnConnectAll.gridx = 2;
-		gbc_btnConnectAll.gridy = 0;
-		panel_10.add(btnConnectAll, gbc_btnConnectAll);
+		JButton panelConnAll_b = new JButton("Connect All");
+		GridBagConstraints gbc_panelConnAll_b = new GridBagConstraints();
+		gbc_panelConnAll_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConnAll_b.insets = new Insets(0, 0, 5, 5);
+		gbc_panelConnAll_b.gridx = 2;
+		gbc_panelConnAll_b.gridy = 0;
+		panel_10.add(panelConnAll_b, gbc_panelConnAll_b);
 		
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
 		GridBagConstraints gbc_horizontalGlue_1 = new GridBagConstraints();
@@ -891,21 +891,21 @@ public class CATfish {
 		gbc_horizontalGlue_1.gridy = 0;
 		panel_10.add(horizontalGlue_1, gbc_horizontalGlue_1);
 		
-		JButton btnSavePresets = new JButton("Save Presets");
-		GridBagConstraints gbc_btnSavePresets = new GridBagConstraints();
-		gbc_btnSavePresets.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSavePresets.insets = new Insets(0, 0, 0, 5);
-		gbc_btnSavePresets.gridx = 1;
-		gbc_btnSavePresets.gridy = 1;
-		panel_10.add(btnSavePresets, gbc_btnSavePresets);
+		JButton panelSaveConfig_b = new JButton("Save Config");
+		GridBagConstraints gbc_panelSaveConfig_b = new GridBagConstraints();
+		gbc_panelSaveConfig_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelSaveConfig_b.insets = new Insets(0, 0, 0, 5);
+		gbc_panelSaveConfig_b.gridx = 1;
+		gbc_panelSaveConfig_b.gridy = 1;
+		panel_10.add(panelSaveConfig_b, gbc_panelSaveConfig_b);
 		
-		JButton btnLoadPresets = new JButton("Load Presets");
-		GridBagConstraints gbc_btnLoadPresets = new GridBagConstraints();
-		gbc_btnLoadPresets.insets = new Insets(0, 0, 0, 5);
-		gbc_btnLoadPresets.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnLoadPresets.gridx = 2;
-		gbc_btnLoadPresets.gridy = 1;
-		panel_10.add(btnLoadPresets, gbc_btnLoadPresets);
+		JButton panelLoadConfig_b = new JButton("Load Config");
+		GridBagConstraints gbc_panelLoadConfig_b = new GridBagConstraints();
+		gbc_panelLoadConfig_b.insets = new Insets(0, 0, 0, 5);
+		gbc_panelLoadConfig_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelLoadConfig_b.gridx = 2;
+		gbc_panelLoadConfig_b.gridy = 1;
+		panel_10.add(panelLoadConfig_b, gbc_panelLoadConfig_b);
 		
 		JSeparator separator_9 = new JSeparator();
 		separator_9.setForeground(SystemColor.desktop);
@@ -986,21 +986,21 @@ public class CATfish {
 		gbc_horizontalGlue_2.gridy = 0;
 		panel_7.add(horizontalGlue_2, gbc_horizontalGlue_2);
 		
-		JButton btnViewInputs = new JButton("View Inputs");
-		GridBagConstraints gbc_btnViewInputs = new GridBagConstraints();
-		gbc_btnViewInputs.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnViewInputs.insets = new Insets(0, 0, 0, 5);
-		gbc_btnViewInputs.gridx = 1;
-		gbc_btnViewInputs.gridy = 0;
-		panel_7.add(btnViewInputs, gbc_btnViewInputs);
+		JButton panelViewJoyInputs_b = new JButton("View Inputs");
+		GridBagConstraints gbc_panelViewJoyInputs_b = new GridBagConstraints();
+		gbc_panelViewJoyInputs_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelViewJoyInputs_b.insets = new Insets(0, 0, 0, 5);
+		gbc_panelViewJoyInputs_b.gridx = 1;
+		gbc_panelViewJoyInputs_b.gridy = 0;
+		panel_7.add(panelViewJoyInputs_b, gbc_panelViewJoyInputs_b);
 		
-		JButton btnConfigure = new JButton("Configure...");
-		GridBagConstraints gbc_btnConfigure = new GridBagConstraints();
-		gbc_btnConfigure.insets = new Insets(0, 0, 0, 5);
-		gbc_btnConfigure.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnConfigure.gridx = 2;
-		gbc_btnConfigure.gridy = 0;
-		panel_7.add(btnConfigure, gbc_btnConfigure);
+		JButton panelConfigJoy_b = new JButton("Configure...");
+		GridBagConstraints gbc_panelConfigJoy_b = new GridBagConstraints();
+		gbc_panelConfigJoy_b.insets = new Insets(0, 0, 0, 5);
+		gbc_panelConfigJoy_b.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelConfigJoy_b.gridx = 2;
+		gbc_panelConfigJoy_b.gridy = 0;
+		panel_7.add(panelConfigJoy_b, gbc_panelConfigJoy_b);
 		
 		Component horizontalGlue_3 = Box.createHorizontalGlue();
 		GridBagConstraints gbc_horizontalGlue_3 = new GridBagConstraints();
@@ -1051,15 +1051,15 @@ public class CATfish {
 		gbc_lblVerticalLeft.gridy = 2;
 		panel_8.add(lblVerticalLeft, gbc_lblVerticalLeft);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(50);
-		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar.gridwidth = 2;
-		gbc_progressBar.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar.gridx = 0;
-		gbc_progressBar.gridy = 3;
-		panel_8.add(progressBar, gbc_progressBar);
+		JProgressBar panelVL_pb = new JProgressBar();
+		panelVL_pb.setValue(50);
+		GridBagConstraints gbc_panelVL_pb = new GridBagConstraints();
+		gbc_panelVL_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelVL_pb.gridwidth = 2;
+		gbc_panelVL_pb.insets = new Insets(0, 0, 5, 0);
+		gbc_panelVL_pb.gridx = 0;
+		gbc_panelVL_pb.gridy = 3;
+		panel_8.add(panelVL_pb, gbc_panelVL_pb);
 		
 		JLabel lblVerticalRight = new JLabel("Vertical Right");
 		GridBagConstraints gbc_lblVerticalRight = new GridBagConstraints();
@@ -1070,15 +1070,15 @@ public class CATfish {
 		gbc_lblVerticalRight.gridy = 4;
 		panel_8.add(lblVerticalRight, gbc_lblVerticalRight);
 		
-		JProgressBar progressBar_1 = new JProgressBar();
-		progressBar_1.setValue(50);
-		GridBagConstraints gbc_progressBar_1 = new GridBagConstraints();
-		gbc_progressBar_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar_1.gridwidth = 2;
-		gbc_progressBar_1.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar_1.gridx = 0;
-		gbc_progressBar_1.gridy = 5;
-		panel_8.add(progressBar_1, gbc_progressBar_1);
+		JProgressBar panelVR_pb = new JProgressBar();
+		panelVR_pb.setValue(50);
+		GridBagConstraints gbc_panelVR_pb = new GridBagConstraints();
+		gbc_panelVR_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelVR_pb.gridwidth = 2;
+		gbc_panelVR_pb.insets = new Insets(0, 0, 5, 0);
+		gbc_panelVR_pb.gridx = 0;
+		gbc_panelVR_pb.gridy = 5;
+		panel_8.add(panelVR_pb, gbc_panelVR_pb);
 		
 		JLabel lblPortForward = new JLabel("Port Forward");
 		GridBagConstraints gbc_lblPortForward = new GridBagConstraints();
@@ -1089,15 +1089,15 @@ public class CATfish {
 		gbc_lblPortForward.gridy = 6;
 		panel_8.add(lblPortForward, gbc_lblPortForward);
 		
-		JProgressBar progressBar_2 = new JProgressBar();
-		progressBar_2.setValue(50);
-		GridBagConstraints gbc_progressBar_2 = new GridBagConstraints();
-		gbc_progressBar_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar_2.gridwidth = 2;
-		gbc_progressBar_2.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar_2.gridx = 0;
-		gbc_progressBar_2.gridy = 7;
-		panel_8.add(progressBar_2, gbc_progressBar_2);
+		JProgressBar panelPF_pb = new JProgressBar();
+		panelPF_pb.setValue(50);
+		GridBagConstraints gbc_panelPF_pb = new GridBagConstraints();
+		gbc_panelPF_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPF_pb.gridwidth = 2;
+		gbc_panelPF_pb.insets = new Insets(0, 0, 5, 0);
+		gbc_panelPF_pb.gridx = 0;
+		gbc_panelPF_pb.gridy = 7;
+		panel_8.add(panelPF_pb, gbc_panelPF_pb);
 		
 		JLabel lblStarboardFront = new JLabel("Starboard Front");
 		GridBagConstraints gbc_lblStarboardFront = new GridBagConstraints();
@@ -1108,15 +1108,15 @@ public class CATfish {
 		gbc_lblStarboardFront.gridy = 8;
 		panel_8.add(lblStarboardFront, gbc_lblStarboardFront);
 		
-		JProgressBar progressBar_3 = new JProgressBar();
-		progressBar_3.setValue(50);
-		GridBagConstraints gbc_progressBar_3 = new GridBagConstraints();
-		gbc_progressBar_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar_3.gridwidth = 2;
-		gbc_progressBar_3.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar_3.gridx = 0;
-		gbc_progressBar_3.gridy = 9;
-		panel_8.add(progressBar_3, gbc_progressBar_3);
+		JProgressBar panelSF_pb = new JProgressBar();
+		panelSF_pb.setValue(50);
+		GridBagConstraints gbc_panelSF_pb = new GridBagConstraints();
+		gbc_panelSF_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelSF_pb.gridwidth = 2;
+		gbc_panelSF_pb.insets = new Insets(0, 0, 5, 0);
+		gbc_panelSF_pb.gridx = 0;
+		gbc_panelSF_pb.gridy = 9;
+		panel_8.add(panelSF_pb, gbc_panelSF_pb);
 		
 		JLabel lblPortAft = new JLabel("Port Aft");
 		GridBagConstraints gbc_lblPortAft = new GridBagConstraints();
@@ -1127,15 +1127,15 @@ public class CATfish {
 		gbc_lblPortAft.gridy = 10;
 		panel_8.add(lblPortAft, gbc_lblPortAft);
 		
-		JProgressBar progressBar_4 = new JProgressBar();
-		progressBar_4.setValue(50);
-		GridBagConstraints gbc_progressBar_4 = new GridBagConstraints();
-		gbc_progressBar_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar_4.gridwidth = 2;
-		gbc_progressBar_4.insets = new Insets(0, 0, 5, 0);
-		gbc_progressBar_4.gridx = 0;
-		gbc_progressBar_4.gridy = 11;
-		panel_8.add(progressBar_4, gbc_progressBar_4);
+		JProgressBar panelPA_pb = new JProgressBar();
+		panelPA_pb.setValue(50);
+		GridBagConstraints gbc_panelPA_pb = new GridBagConstraints();
+		gbc_panelPA_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelPA_pb.gridwidth = 2;
+		gbc_panelPA_pb.insets = new Insets(0, 0, 5, 0);
+		gbc_panelPA_pb.gridx = 0;
+		gbc_panelPA_pb.gridy = 11;
+		panel_8.add(panelPA_pb, gbc_panelPA_pb);
 		
 		JLabel lblStarboardAft = new JLabel("Starboard Aft");
 		GridBagConstraints gbc_lblStarboardAft = new GridBagConstraints();
@@ -1146,14 +1146,14 @@ public class CATfish {
 		gbc_lblStarboardAft.gridy = 12;
 		panel_8.add(lblStarboardAft, gbc_lblStarboardAft);
 		
-		JProgressBar progressBar_5 = new JProgressBar();
-		progressBar_5.setValue(50);
-		GridBagConstraints gbc_progressBar_5 = new GridBagConstraints();
-		gbc_progressBar_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_progressBar_5.gridwidth = 2;
-		gbc_progressBar_5.gridx = 0;
-		gbc_progressBar_5.gridy = 13;
-		panel_8.add(progressBar_5, gbc_progressBar_5);
+		JProgressBar panelSA_pb = new JProgressBar();
+		panelSA_pb.setValue(50);
+		GridBagConstraints gbc_panelSA_pb = new GridBagConstraints();
+		gbc_panelSA_pb.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelSA_pb.gridwidth = 2;
+		gbc_panelSA_pb.gridx = 0;
+		gbc_panelSA_pb.gridy = 13;
+		panel_8.add(panelSA_pb, gbc_panelSA_pb);
 	}
 
 	/**
