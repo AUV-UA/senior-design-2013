@@ -26,8 +26,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 
 	private String port_name;
 
-	protected final static Logger LOGGER = Logger.getLogger(Arduino.class
-			.getName());
+	protected final static Logger LOGGER = Logger.getGlobal();
 
 	public SerialHardware(String port_name, int timeout, int baud_rate,
 			int databits, int parity, int stopbit) {
@@ -76,8 +75,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			port.addEventListener(this);
 			port.notifyOnDataAvailable(true);
 		} catch (Exception e) {
-			msg = String.format("Unable to connect to arduino.\n %s",
-					e.toString());
+			msg = String.format("Unable to connect to hardware on port %s.\n %s", port.getName(), e.toString());
 			LOGGER.log(Level.SEVERE, msg);
 		}
 

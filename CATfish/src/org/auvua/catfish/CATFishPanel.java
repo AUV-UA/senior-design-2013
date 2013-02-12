@@ -1,20 +1,18 @@
 package org.auvua.catfish;
 
-import gnu.io.CommPort;
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
@@ -25,16 +23,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.plaf.nimbus.*;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 
-public class CATfish {
+public class CATFishPanel implements ActionListener {
 
-	private JFrame frmCatfish;
+	public JFrame frmCatfish;
 	private JTextField panelA0_t;
 	private JTextField panelA1_t;
 	private JTextField panelA2_t;
@@ -47,34 +48,53 @@ public class CATfish {
 	private JTextField panelAccX_t;
 	private JTextField panelAccY_t;
 	private JTextField panelAccZ_t;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				Iterator<CommPortIdentifier> portsSet = getAvailableSerialPorts().iterator();
-				
-				while(portsSet.hasNext()) {
-					System.out.println(portsSet.next().getName());
-				}
-				
-				try {
-					CATfish window = new CATfish();
-					window.frmCatfish.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JComboBox<String> panelPortJoy_cb;
+	private JComboBox<String> panelPortArd_cb;
+	private JComboBox<String> panelPortComp_cb;
+	private JComboBox<String> panelPortMotors_cb;
+	private JComboBox<String> panelBaudJoy_cb;
+	private JComboBox<String> panelBaudArd_cb;
+	private JComboBox<String> panelBaudComp_cb;
+	private JComboBox<String> panelBaudMotors_cb;
+	private JButton panelConnJoy_b;
+	private JButton panelConnArd_B;
+	private JButton panelConnComp_b;
+	private JButton panelConnMotors_b;
+	private JCheckBox panelStatusJoy_chk;
+	private JCheckBox panelStatusArd_chk;
+	private JCheckBox panelStatusComp_chk;
+	private JCheckBox panelStatusMotors_chk;
+	public JEditorPane panelLog_ta;
+	private JButton panelClsOutput_b;
 
 	/**
 	 * Create the application.
 	 */
-	public CATfish() {
+	public CATFishPanel() {
 		initialize();
+		
+		//set global logging output stream to textarea
+		Logger.getGlobal().addHandler(new Handler() {
+		      public void publish(LogRecord logRecord) {
+		    	  StringBuilder msg = new StringBuilder();
+		    	  msg.append(logRecord.getLevel() + ": ");
+		    	  msg.append(logRecord.getMessage());
+		    	  msg.append(" [<span style=\"color:blue;\">" + logRecord.getSourceClassName() + ":");
+		    	  msg.append(logRecord.getSourceMethodName() + "</span>]<br/>");
+		    	  System.out.println(panelLog_ta.getText().substring(0, panelLog_ta.getText().indexOf("</body>")) + msg.toString() + "</body></html>");
+		    	  panelLog_ta.setText(panelLog_ta.getText().substring(0, panelLog_ta.getText().indexOf("</body>")) + msg.toString() + "</body></html>");
+		      }
+
+			@Override
+			public void close() throws SecurityException {
+			}
+
+			@Override
+			public void flush() {
+			}
+		});
+		
+		Logger.getGlobal().log(Level.INFO, "Testing LOGGER. If you can read me, it works.");
 	}
 
 	/**
@@ -84,7 +104,7 @@ public class CATfish {
 		frmCatfish = new JFrame();
 		frmCatfish.setResizable(false);
 		frmCatfish.setTitle("CATfish Interface Panel");
-		frmCatfish.setBounds(100, 100, 958, 354);
+		frmCatfish.setBounds(100, 100, 958, 476);
 		frmCatfish.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		UIManager.put("nimbusBase", new Color(230, 230, 230));
@@ -97,16 +117,16 @@ public class CATfish {
 			e.printStackTrace();
 		}
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{11, 323, 17, 203, 15, 165, 15, 0, 8, 0};
-		gridBagLayout.rowHeights = new int[]{0, 166, 11, 0, 0};
+		gridBagLayout.columnWidths = new int[]{11, 357, 17, 203, 15, 165, 15, 0, 8, 0};
+		gridBagLayout.rowHeights = new int[]{0, 166, 11, 68, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		frmCatfish.getContentPane().setLayout(gridBagLayout);
 		
 		JSeparator separator_3 = new JSeparator();
 		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
 		gbc_separator_3.gridheight = 4;
-		gbc_separator_3.insets = new Insets(0, 0, 0, 5);
+		gbc_separator_3.insets = new Insets(0, 0, 5, 5);
 		gbc_separator_3.gridx = 0;
 		gbc_separator_3.gridy = 0;
 		frmCatfish.getContentPane().add(separator_3, gbc_separator_3);
@@ -114,7 +134,7 @@ public class CATfish {
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 4;
-		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.anchor = GridBagConstraints.EAST;
 		gbc_panel.fill = GridBagConstraints.VERTICAL;
 		gbc_panel.gridx = 3;
@@ -421,7 +441,7 @@ public class CATfish {
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.gridheight = 4;
 		gbc_separator.fill = GridBagConstraints.VERTICAL;
-		gbc_separator.insets = new Insets(0, 0, 0, 5);
+		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 4;
 		gbc_separator.gridy = 0;
 		frmCatfish.getContentPane().add(separator, gbc_separator);
@@ -429,7 +449,7 @@ public class CATfish {
 		JPanel panel_4 = new JPanel();
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
 		gbc_panel_4.gridheight = 4;
-		gbc_panel_4.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_4.gridx = 5;
 		gbc_panel_4.gridy = 0;
@@ -586,7 +606,7 @@ public class CATfish {
 		separator_4.setOrientation(SwingConstants.VERTICAL);
 		GridBagConstraints gbc_separator_4 = new GridBagConstraints();
 		gbc_separator_4.gridheight = 4;
-		gbc_separator_4.insets = new Insets(0, 0, 0, 5);
+		gbc_separator_4.insets = new Insets(0, 0, 5, 5);
 		gbc_separator_4.fill = GridBagConstraints.VERTICAL;
 		gbc_separator_4.gridx = 6;
 		gbc_separator_4.gridy = 0;
@@ -684,7 +704,7 @@ public class CATfish {
 		gbc_lblJoystick_1.gridy = 3;
 		panel_9.add(lblJoystick_1, gbc_lblJoystick_1);
 		
-		JComboBox panelPortJoy_cb = new JComboBox();
+		panelPortJoy_cb = new JComboBox<String>();
 		GridBagConstraints gbc_panelPortJoy_cb = new GridBagConstraints();
 		gbc_panelPortJoy_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortJoy_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -692,8 +712,8 @@ public class CATfish {
 		gbc_panelPortJoy_cb.gridy = 3;
 		panel_9.add(panelPortJoy_cb, gbc_panelPortJoy_cb);
 		
-		JComboBox panelBaudJoy_cb = new JComboBox();
-		panelBaudJoy_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudJoy_cb = new JComboBox<String>();
+		panelBaudJoy_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudJoy_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudJoy_cb = new GridBagConstraints();
 		gbc_panelBaudJoy_cb.insets = new Insets(0, 0, 5, 5);
@@ -702,7 +722,7 @@ public class CATfish {
 		gbc_panelBaudJoy_cb.gridy = 3;
 		panel_9.add(panelBaudJoy_cb, gbc_panelBaudJoy_cb);
 		
-		JButton panelConnJoy_b = new JButton("Connect");
+		panelConnJoy_b = new JButton("Connect");
 		GridBagConstraints gbc_panelConnJoy_b = new GridBagConstraints();
 		gbc_panelConnJoy_b.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelConnJoy_b.insets = new Insets(0, 0, 5, 5);
@@ -710,7 +730,7 @@ public class CATfish {
 		gbc_panelConnJoy_b.gridy = 3;
 		panel_9.add(panelConnJoy_b, gbc_panelConnJoy_b);
 		
-		JCheckBox panelStatusJoy_chk = new JCheckBox("");
+		panelStatusJoy_chk = new JCheckBox("");
 		panelStatusJoy_chk.setEnabled(false);
 		GridBagConstraints gbc_panelStatusJoy_chk = new GridBagConstraints();
 		gbc_panelStatusJoy_chk.insets = new Insets(0, 0, 5, 0);
@@ -726,7 +746,7 @@ public class CATfish {
 		gbc_lblArduino_1.gridy = 4;
 		panel_9.add(lblArduino_1, gbc_lblArduino_1);
 		
-		JComboBox panelPortArd_cb = new JComboBox();
+		panelPortArd_cb = new JComboBox<String>();
 		GridBagConstraints gbc_panelPortArd_cb = new GridBagConstraints();
 		gbc_panelPortArd_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortArd_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -734,8 +754,8 @@ public class CATfish {
 		gbc_panelPortArd_cb.gridy = 4;
 		panel_9.add(panelPortArd_cb, gbc_panelPortArd_cb);
 		
-		JComboBox panelBaudArd_cb = new JComboBox();
-		panelBaudArd_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudArd_cb = new JComboBox<String>();
+		panelBaudArd_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudArd_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudArd_cb = new GridBagConstraints();
 		gbc_panelBaudArd_cb.insets = new Insets(0, 0, 5, 5);
@@ -744,7 +764,7 @@ public class CATfish {
 		gbc_panelBaudArd_cb.gridy = 4;
 		panel_9.add(panelBaudArd_cb, gbc_panelBaudArd_cb);
 		
-		JButton panelConnArd_B = new JButton("Connect");
+		panelConnArd_B = new JButton("Connect");
 		GridBagConstraints gbc_panelConnArd_B = new GridBagConstraints();
 		gbc_panelConnArd_B.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelConnArd_B.insets = new Insets(0, 0, 5, 5);
@@ -752,7 +772,7 @@ public class CATfish {
 		gbc_panelConnArd_B.gridy = 4;
 		panel_9.add(panelConnArd_B, gbc_panelConnArd_B);
 		
-		JCheckBox panelStatusArd_chk = new JCheckBox("");
+		panelStatusArd_chk = new JCheckBox("");
 		panelStatusArd_chk.setEnabled(false);
 		GridBagConstraints gbc_panelStatusArd_chk = new GridBagConstraints();
 		gbc_panelStatusArd_chk.insets = new Insets(0, 0, 5, 0);
@@ -768,7 +788,7 @@ public class CATfish {
 		gbc_lblCompass_1.gridy = 5;
 		panel_9.add(lblCompass_1, gbc_lblCompass_1);
 		
-		JComboBox panelPortComp_cb = new JComboBox();
+		panelPortComp_cb = new JComboBox<String>();
 		GridBagConstraints gbc_panelPortComp_cb = new GridBagConstraints();
 		gbc_panelPortComp_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortComp_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -776,8 +796,8 @@ public class CATfish {
 		gbc_panelPortComp_cb.gridy = 5;
 		panel_9.add(panelPortComp_cb, gbc_panelPortComp_cb);
 		
-		JComboBox panelBaudComp_cb = new JComboBox();
-		panelBaudComp_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudComp_cb = new JComboBox<String>();
+		panelBaudComp_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudComp_cb.setSelectedIndex(4);
 		GridBagConstraints gbc_panelBaudComp_cb = new GridBagConstraints();
 		gbc_panelBaudComp_cb.insets = new Insets(0, 0, 5, 5);
@@ -786,7 +806,7 @@ public class CATfish {
 		gbc_panelBaudComp_cb.gridy = 5;
 		panel_9.add(panelBaudComp_cb, gbc_panelBaudComp_cb);
 		
-		JButton panelConnComp_b = new JButton("Connect");
+		panelConnComp_b = new JButton("Connect");
 		GridBagConstraints gbc_panelConnComp_b = new GridBagConstraints();
 		gbc_panelConnComp_b.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelConnComp_b.insets = new Insets(0, 0, 5, 5);
@@ -794,7 +814,7 @@ public class CATfish {
 		gbc_panelConnComp_b.gridy = 5;
 		panel_9.add(panelConnComp_b, gbc_panelConnComp_b);
 		
-		JCheckBox panelStatusComp_chk = new JCheckBox("");
+		panelStatusComp_chk = new JCheckBox("");
 		panelStatusComp_chk.setEnabled(false);
 		GridBagConstraints gbc_panelStatusComp_chk = new GridBagConstraints();
 		gbc_panelStatusComp_chk.insets = new Insets(0, 0, 5, 0);
@@ -810,7 +830,7 @@ public class CATfish {
 		gbc_lblMotors_1.gridy = 6;
 		panel_9.add(lblMotors_1, gbc_lblMotors_1);
 		
-		JComboBox panelPortMotors_cb = new JComboBox();
+		panelPortMotors_cb = new JComboBox<String>();
 		GridBagConstraints gbc_panelPortMotors_cb = new GridBagConstraints();
 		gbc_panelPortMotors_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortMotors_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -818,8 +838,8 @@ public class CATfish {
 		gbc_panelPortMotors_cb.gridy = 6;
 		panel_9.add(panelPortMotors_cb, gbc_panelPortMotors_cb);
 		
-		JComboBox panelBaudMotors_cb = new JComboBox();
-		panelBaudMotors_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudMotors_cb = new JComboBox<String>();
+		panelBaudMotors_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudMotors_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudMotors_cb = new GridBagConstraints();
 		gbc_panelBaudMotors_cb.insets = new Insets(0, 0, 5, 5);
@@ -828,7 +848,7 @@ public class CATfish {
 		gbc_panelBaudMotors_cb.gridy = 6;
 		panel_9.add(panelBaudMotors_cb, gbc_panelBaudMotors_cb);
 		
-		JButton panelConnMotors_b = new JButton("Connect");
+		panelConnMotors_b = new JButton("Connect");
 		GridBagConstraints gbc_panelConnMotors_b = new GridBagConstraints();
 		gbc_panelConnMotors_b.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelConnMotors_b.insets = new Insets(0, 0, 5, 5);
@@ -836,7 +856,7 @@ public class CATfish {
 		gbc_panelConnMotors_b.gridy = 6;
 		panel_9.add(panelConnMotors_b, gbc_panelConnMotors_b);
 		
-		JCheckBox panelStatusMotors_chk = new JCheckBox("");
+		panelStatusMotors_chk = new JCheckBox("");
 		panelStatusMotors_chk.setEnabled(false);
 		GridBagConstraints gbc_panelStatusMotors_chk = new GridBagConstraints();
 		gbc_panelStatusMotors_chk.insets = new Insets(0, 0, 5, 0);
@@ -913,7 +933,7 @@ public class CATfish {
 		GridBagConstraints gbc_separator_9 = new GridBagConstraints();
 		gbc_separator_9.fill = GridBagConstraints.VERTICAL;
 		gbc_separator_9.gridheight = 4;
-		gbc_separator_9.insets = new Insets(0, 0, 0, 5);
+		gbc_separator_9.insets = new Insets(0, 0, 5, 5);
 		gbc_separator_9.gridx = 2;
 		gbc_separator_9.gridy = 0;
 		frmCatfish.getContentPane().add(separator_9, gbc_separator_9);
@@ -937,7 +957,7 @@ public class CATfish {
 		
 		JPanel panel_6 = new JPanel();
 		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
-		gbc_panel_6.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_6.fill = GridBagConstraints.BOTH;
 		gbc_panel_6.gridx = 1;
 		gbc_panel_6.gridy = 3;
@@ -1010,7 +1030,7 @@ public class CATfish {
 		
 		JPanel panel_8 = new JPanel();
 		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
-		gbc_panel_8.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_8.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_8.gridheight = 4;
 		gbc_panel_8.fill = GridBagConstraints.BOTH;
 		gbc_panel_8.gridx = 7;
@@ -1154,30 +1174,69 @@ public class CATfish {
 		gbc_panelSA_pb.gridx = 0;
 		gbc_panelSA_pb.gridy = 13;
 		panel_8.add(panelSA_pb, gbc_panelSA_pb);
+		
+		JPanel panel_11 = new JPanel();
+		GridBagConstraints gbc_panel_11 = new GridBagConstraints();
+		gbc_panel_11.gridwidth = 7;
+		gbc_panel_11.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_11.fill = GridBagConstraints.BOTH;
+		gbc_panel_11.gridx = 1;
+		gbc_panel_11.gridy = 4;
+		frmCatfish.getContentPane().add(panel_11, gbc_panel_11);
+		GridBagLayout gbl_panel_11 = new GridBagLayout();
+		gbl_panel_11.columnWidths = new int[]{0, 134, 0};
+		gbl_panel_11.rowHeights = new int[]{0, 0, 0};
+		gbl_panel_11.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_11.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		panel_11.setLayout(gbl_panel_11);
+		
+		JLabel lblLoggerOutput = new JLabel("Logger Output");
+		GridBagConstraints gbc_lblLoggerOutput = new GridBagConstraints();
+		gbc_lblLoggerOutput.anchor = GridBagConstraints.WEST;
+		gbc_lblLoggerOutput.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLoggerOutput.gridx = 0;
+		gbc_lblLoggerOutput.gridy = 0;
+		panel_11.add(lblLoggerOutput, gbc_lblLoggerOutput);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 1;
+		panel_11.add(scrollPane, gbc_scrollPane);
+		
+		panelLog_ta = new JEditorPane();
+		panelLog_ta.setContentType("text/html");
+		panelLog_ta.setText("<html><body> </body></html>");
+		scrollPane.setViewportView(panelLog_ta);
+		panelLog_ta.setFont(new Font("Consolas", Font.PLAIN, 10));
+		panelLog_ta.setEditable(false);
+		
+		JPanel panel_12 = new JPanel();
+		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
+		gbc_panel_12.fill = GridBagConstraints.BOTH;
+		gbc_panel_12.gridx = 1;
+		gbc_panel_12.gridy = 1;
+		panel_11.add(panel_12, gbc_panel_12);
+		GridBagLayout gbl_panel_12 = new GridBagLayout();
+		gbl_panel_12.columnWidths = new int[]{0, 0};
+		gbl_panel_12.rowHeights = new int[]{0, 0};
+		gbl_panel_12.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_12.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_12.setLayout(gbl_panel_12);
+		
+		panelClsOutput_b = new JButton("Clear Output");
+		GridBagConstraints gbc_panelClsOutput_b = new GridBagConstraints();
+		gbc_panelClsOutput_b.gridx = 0;
+		gbc_panelClsOutput_b.gridy = 0;
+		panel_12.add(panelClsOutput_b, gbc_panelClsOutput_b);
 	}
 
-	/**
-     * @return    A HashSet containing the CommPortIdentifier for all serial ports that are not currently being used.
-     */
-    public static HashSet<CommPortIdentifier> getAvailableSerialPorts() {
-        HashSet<CommPortIdentifier> h = new HashSet<CommPortIdentifier>();
-        Enumeration thePorts = CommPortIdentifier.getPortIdentifiers();
-        while (thePorts.hasMoreElements()) {
-            CommPortIdentifier com = (CommPortIdentifier) thePorts.nextElement();
-            switch (com.getPortType()) {
-            case CommPortIdentifier.PORT_SERIAL:
-                try {
-                    CommPort thePort = com.open("CommUtil", 50);
-                    thePort.close();
-                    h.add(com);
-                } catch (PortInUseException e) {
-                    System.out.println("Port, "  + com.getName() + ", is in use.");
-                } catch (Exception e) {
-                    System.err.println("Failed to open port " +  com.getName());
-                    e.printStackTrace();
-                }
-            }
-        }
-        return h;
-    }
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
