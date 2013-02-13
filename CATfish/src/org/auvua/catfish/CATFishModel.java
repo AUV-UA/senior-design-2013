@@ -12,10 +12,21 @@ import java.util.logging.Logger;
 
 public class CATFishModel {
 	
-	public static final Logger LOGGER = Logger.getGlobal();
+	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private CATFishPanel panel;
 
-	public CATFishModel() {
+	public CATFishModel(CATFishPanel panel) {
+		this.panel = panel;
 		
+		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
+		if(ports.size() > 0 ) {
+			for(CommPortIdentifier port: ports) {
+				LOGGER.info("USB port available: " + port.getName());
+			}
+			panel.setAvailablePorts(ports);
+		} else {
+			LOGGER.info("No USB ports available.");
+		}
 	}
 	
 	/**

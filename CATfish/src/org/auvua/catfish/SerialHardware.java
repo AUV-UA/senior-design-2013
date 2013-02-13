@@ -26,7 +26,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 
 	private String port_name;
 
-	protected final static Logger LOGGER = Logger.getGlobal();
+	protected final static Logger LOGGER = Logger.getLogger("");
 
 	public SerialHardware(String port_name, int timeout, int baud_rate,
 			int databits, int parity, int stopbit) {

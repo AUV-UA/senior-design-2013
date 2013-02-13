@@ -33,6 +33,9 @@ import javax.swing.UIManager;
 import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
 
+import gnu.io.*;
+import java.util.HashSet;
+
 public class CATFishPanel implements ActionListener {
 
 	public JFrame frmCatfish;
@@ -48,14 +51,14 @@ public class CATFishPanel implements ActionListener {
 	private JTextField panelAccX_t;
 	private JTextField panelAccY_t;
 	private JTextField panelAccZ_t;
-	private JComboBox<String> panelPortJoy_cb;
-	private JComboBox<String> panelPortArd_cb;
-	private JComboBox<String> panelPortComp_cb;
-	private JComboBox<String> panelPortMotors_cb;
-	private JComboBox<String> panelBaudJoy_cb;
-	private JComboBox<String> panelBaudArd_cb;
-	private JComboBox<String> panelBaudComp_cb;
-	private JComboBox<String> panelBaudMotors_cb;
+	private JComboBox panelPortJoy_cb;
+	private JComboBox panelPortArd_cb;
+	private JComboBox panelPortComp_cb;
+	private JComboBox panelPortMotors_cb;
+	private JComboBox panelBaudJoy_cb;
+	private JComboBox panelBaudArd_cb;
+	private JComboBox panelBaudComp_cb;
+	private JComboBox panelBaudMotors_cb;
 	private JButton panelConnJoy_b;
 	private JButton panelConnArd_B;
 	private JButton panelConnComp_b;
@@ -74,14 +77,13 @@ public class CATFishPanel implements ActionListener {
 		initialize();
 		
 		//set global logging output stream to textarea
-		Logger.getGlobal().addHandler(new Handler() {
+		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).addHandler(new Handler() {
 		      public void publish(LogRecord logRecord) {
 		    	  StringBuilder msg = new StringBuilder();
 		    	  msg.append(logRecord.getLevel() + ": ");
 		    	  msg.append(logRecord.getMessage());
 		    	  msg.append(" [<span style=\"color:blue;\">" + logRecord.getSourceClassName() + ":");
 		    	  msg.append(logRecord.getSourceMethodName() + "</span>]<br/>");
-		    	  System.out.println(panelLog_ta.getText().substring(0, panelLog_ta.getText().indexOf("</body>")) + msg.toString() + "</body></html>");
 		    	  panelLog_ta.setText(panelLog_ta.getText().substring(0, panelLog_ta.getText().indexOf("</body>")) + msg.toString() + "</body></html>");
 		      }
 
@@ -93,8 +95,6 @@ public class CATFishPanel implements ActionListener {
 			public void flush() {
 			}
 		});
-		
-		Logger.getGlobal().log(Level.INFO, "Testing LOGGER. If you can read me, it works.");
 	}
 
 	/**
@@ -704,7 +704,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_lblJoystick_1.gridy = 3;
 		panel_9.add(lblJoystick_1, gbc_lblJoystick_1);
 		
-		panelPortJoy_cb = new JComboBox<String>();
+		panelPortJoy_cb = new JComboBox();
 		GridBagConstraints gbc_panelPortJoy_cb = new GridBagConstraints();
 		gbc_panelPortJoy_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortJoy_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -712,8 +712,8 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelPortJoy_cb.gridy = 3;
 		panel_9.add(panelPortJoy_cb, gbc_panelPortJoy_cb);
 		
-		panelBaudJoy_cb = new JComboBox<String>();
-		panelBaudJoy_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudJoy_cb = new JComboBox();
+		panelBaudJoy_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudJoy_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudJoy_cb = new GridBagConstraints();
 		gbc_panelBaudJoy_cb.insets = new Insets(0, 0, 5, 5);
@@ -746,7 +746,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_lblArduino_1.gridy = 4;
 		panel_9.add(lblArduino_1, gbc_lblArduino_1);
 		
-		panelPortArd_cb = new JComboBox<String>();
+		panelPortArd_cb = new JComboBox();
 		GridBagConstraints gbc_panelPortArd_cb = new GridBagConstraints();
 		gbc_panelPortArd_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortArd_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -754,8 +754,8 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelPortArd_cb.gridy = 4;
 		panel_9.add(panelPortArd_cb, gbc_panelPortArd_cb);
 		
-		panelBaudArd_cb = new JComboBox<String>();
-		panelBaudArd_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudArd_cb = new JComboBox();
+		panelBaudArd_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudArd_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudArd_cb = new GridBagConstraints();
 		gbc_panelBaudArd_cb.insets = new Insets(0, 0, 5, 5);
@@ -788,7 +788,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_lblCompass_1.gridy = 5;
 		panel_9.add(lblCompass_1, gbc_lblCompass_1);
 		
-		panelPortComp_cb = new JComboBox<String>();
+		panelPortComp_cb = new JComboBox();
 		GridBagConstraints gbc_panelPortComp_cb = new GridBagConstraints();
 		gbc_panelPortComp_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortComp_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -796,8 +796,8 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelPortComp_cb.gridy = 5;
 		panel_9.add(panelPortComp_cb, gbc_panelPortComp_cb);
 		
-		panelBaudComp_cb = new JComboBox<String>();
-		panelBaudComp_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudComp_cb = new JComboBox();
+		panelBaudComp_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudComp_cb.setSelectedIndex(4);
 		GridBagConstraints gbc_panelBaudComp_cb = new GridBagConstraints();
 		gbc_panelBaudComp_cb.insets = new Insets(0, 0, 5, 5);
@@ -830,7 +830,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_lblMotors_1.gridy = 6;
 		panel_9.add(lblMotors_1, gbc_lblMotors_1);
 		
-		panelPortMotors_cb = new JComboBox<String>();
+		panelPortMotors_cb = new JComboBox();
 		GridBagConstraints gbc_panelPortMotors_cb = new GridBagConstraints();
 		gbc_panelPortMotors_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelPortMotors_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -838,8 +838,8 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelPortMotors_cb.gridy = 6;
 		panel_9.add(panelPortMotors_cb, gbc_panelPortMotors_cb);
 		
-		panelBaudMotors_cb = new JComboBox<String>();
-		panelBaudMotors_cb.setModel(new DefaultComboBoxModel<String>(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
+		panelBaudMotors_cb = new JComboBox();
+		panelBaudMotors_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
 		panelBaudMotors_cb.setSelectedIndex(2);
 		GridBagConstraints gbc_panelBaudMotors_cb = new GridBagConstraints();
 		gbc_panelBaudMotors_cb.insets = new Insets(0, 0, 5, 5);
@@ -1237,6 +1237,15 @@ public class CATFishPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setAvailablePorts(HashSet<CommPortIdentifier> ports) {
+		for(CommPortIdentifier port: ports) {
+			panelPortJoy_cb.addItem(port.getName());
+			panelPortArd_cb.addItem(port.getName());
+			panelPortComp_cb.addItem(port.getName());
+			panelPortMotors_cb.addItem(port.getName());
+		}
 	}
 
 }
