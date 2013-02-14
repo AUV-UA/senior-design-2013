@@ -1,6 +1,7 @@
 package org.auvua.catfish;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -28,8 +29,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 
 	private String port_name;
 
-	protected final static Logger LOGGER = Logger.getLogger(Arduino.class
-			.getName());
+	protected final static Logger LOGGER = Logger.getLogger("");
 
 	public SerialHardware(String port_name, int timeout, int baud_rate,
 			int databits, int parity, int stopbit) {
@@ -48,8 +48,8 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	public void initalize() {
 		String msg = null;
 		CommPortIdentifier identifier = null;
-
-		@SuppressWarnings("rawtypes")
+		
+                @SuppressWarnings("rawtypes")
 		Enumeration ports = (Enumeration) CommPortIdentifier
 				.getPortIdentifiers();
 
@@ -85,8 +85,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			port.addEventListener(this);
 			port.notifyOnDataAvailable(true);
 		} catch (Exception e) {
-			msg = String.format("Unable to connect to arduino.\n %s",
-					e.toString());
+			msg = String.format("Unable to connect to hardware on port %s.\n %s", port.getName(), e.toString());
 			LOGGER.log(Level.SEVERE, msg);
 		}
 		worker = new Thread(this);
@@ -98,6 +97,30 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			System.out.println(e);
+		}
+	}
+	
+	public byte[] read() {
+		byte[] buffer = new byte[1024];
+		byte next;
+		
+		try {
+			for(int i = 0; (next = (byte)input.read()) >= 0; i++)
+				buffer[i] = next; 
+		} catch (IOException e) {
+			String msg = String.format("Nothing to read.\n %s", e.toString());
+			LOGGER.log(Level.WARNING, msg);
+		}
+		
+		return buffer;
+	}
+	
+	public void write(byte[] message) {
+		try {
+			output.write(message);
+		} catch (IOException e) {
+			String msg = String.format("Failed to write to port.\n %s", e.toString());
+			LOGGER.log(Level.WARNING, msg);
 		}
 	}
 
