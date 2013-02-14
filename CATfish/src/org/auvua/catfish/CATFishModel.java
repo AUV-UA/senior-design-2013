@@ -6,6 +6,8 @@ import gnu.io.PortInUseException;
 
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,9 +16,22 @@ public class CATFishModel {
 	
 	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private CATFishPanel panel;
+	private Arduino arduino;
+	private Timer timer_ard;
+	private boolean connected_ard;
+	private boolean connected_comp;
+	private boolean connected_joy;
+	private boolean connected_motors;
+	private boolean pins_do[];
+	private boolean pins_di[];
+	private int pins_ai[];
 
 	public CATFishModel(CATFishPanel panel) {
 		this.panel = panel;
+		
+		pins_do = new boolean[10];
+		pins_di = new boolean[4];
+		pins_ai = new int[6];
 		
 		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
 		if(ports.size() > 0 ) {
@@ -56,4 +71,28 @@ public class CATFishModel {
         }
         return h;
     }
+    /*
+    public boolean connectArduino(String port_name, int baud_rate) {
+    	arduino = new Arduino(port_name, 100, baud_rate);
+    	if(timer_ard != null) {
+    		timer_ard.cancel();
+    	}
+    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 0, 20);
+    	connected_ard = true;
+    	return true;
+    }
+    
+    private class ArduinoTimer extends TimerTask {
+		@Override
+		public void run() {
+			if(connected_ard) {
+				byte msg[] = new byte[14];
+				msg[0] = msg[1] = msg[12] = msg[13] = '*';
+				for(int n = 0; n < 10; n++)
+					msg[n+2] = (byte) (pins_do[n] ? 'h' : 'l');
+				arduino.write(msg);
+				
+			}
+		}
+    }*/
 }
