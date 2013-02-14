@@ -3,6 +3,7 @@ package org.auvua.catfish;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,9 +13,11 @@ import gnu.io.*;
 public abstract class SerialHardware implements SerialPortEventListener,
 		Runnable {
 	private SerialPort port;
-	private BufferedReader input;
-	private OutputStream output;
 	private Thread worker;
+	private ArrayList<HardwareEventListener> hardware_listeners;
+
+	BufferedReader input;
+	OutputStream output;
 
 	// 2000ms
 	private int TIME_OUT = 2000;
@@ -36,16 +39,23 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		this.databits = databits;
 		this.parity = parity;
 		this.stopbit = stopbit;
+		this.hardware_listeners = new ArrayList<HardwareEventListener>();
 	}
 
+	/**
+	 * Opens the hardware to listen on the serial port on seperate thread.
+	 */
 	public void initalize() {
 		String msg = null;
 		CommPortIdentifier identifier = null;
-		Enumeration<CommPortIdentifier> ports = CommPortIdentifier
+
+		@SuppressWarnings("rawtypes")
+		Enumeration ports = (Enumeration) CommPortIdentifier
 				.getPortIdentifiers();
 
 		while (ports.hasMoreElements()) {
-			CommPortIdentifier cur_identifier = ports.nextElement();
+			CommPortIdentifier cur_identifier = (CommPortIdentifier) ports
+					.nextElement();
 
 			if (cur_identifier.getName() == port_name) {
 				identifier = cur_identifier;
@@ -63,8 +73,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 					TIME_OUT);
 
 			// Configure serial port
-			port.setSerialPortParams(BAUD_RATE, databits,
-					stopbit, parity);
+			port.setSerialPortParams(BAUD_RATE, databits, stopbit, parity);
 
 			// Configure input/output streams
 			InputStreamReader input_stream;
@@ -80,7 +89,6 @@ public abstract class SerialHardware implements SerialPortEventListener,
 					e.toString());
 			LOGGER.log(Level.SEVERE, msg);
 		}
-
 		worker = new Thread(this);
 		worker.start();
 	}
@@ -93,10 +101,77 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		}
 	}
 
+	/**
+	 * Closes the connection to the serial port.
+	 */
 	public void close() {
 		if (port != null) {
 			port.removeEventListener();
 			port.close();
+		}
+	}
+
+	// Event handling
+
+	/**
+	 * Handles a serial port event and passes it along to the hardware event
+	 * listeners.
+	 */
+	@Override
+	public synchronized void serialEvent(SerialPortEvent arg0) {
+		switch (arg0.getEventType()) {
+		case SerialPortEvent.BI:
+		case SerialPortEvent.OE:
+		case SerialPortEvent.FE:
+		case SerialPortEvent.PE:
+		case SerialPortEvent.CD:
+		case SerialPortEvent.CTS:
+		case SerialPortEvent.DSR:
+		case SerialPortEvent.RI:
+		case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+			break;
+		case SerialPortEvent.DATA_AVAILABLE:
+			try {
+				String data = input.readLine();
+				sendHardwareEvent(data);
+			} catch (Exception e) {
+				String msg = String.format(
+						"Unable to read from input stream.\n %s", e.toString());
+				LOGGER.log(Level.SEVERE, msg);
+			}
+			break;
+		}
+	}
+
+	/**
+	 * Adds a listener for hardware events being passed from the serial port.
+	 * 
+	 * @param listener
+	 */
+	public synchronized void addHardwareListener(HardwareEventListener listener) {
+		this.hardware_listeners.add(listener);
+	}
+
+	/**
+	 * Removes the listener on events from the serial port.
+	 * 
+	 * @param listener
+	 */
+	public synchronized void removeHardwareListener(
+			HardwareEventListener listener) {
+		hardware_listeners.remove(listener);
+	}
+
+	/**
+	 * Generates hardware events for each listener
+	 * 
+	 * @param data
+	 */
+	private synchronized void sendHardwareEvent(String data) {
+		HardwareEvent event = new HardwareEvent(this, data);
+
+		for (HardwareEventListener listener : hardware_listeners) {
+			listener.hardwareEvent(event);
 		}
 	}
 }
