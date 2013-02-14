@@ -118,8 +118,8 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 * listeners.
 	 */
 	@Override
-	public synchronized void serialEvent(SerialPortEvent arg0) {
-		switch (arg0.getEventType()) {
+	public synchronized void serialEvent(SerialPortEvent event) {
+		switch (event.getEventType()) {
 		case SerialPortEvent.BI:
 		case SerialPortEvent.OE:
 		case SerialPortEvent.FE:
