@@ -43,7 +43,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	}
 
 	/**
-	 * Opens the hardware to listen on the serial port on seperate thread.
+	 * Opens the hardware to listen on the serial port on separate thread.
 	 */
 	public void initalize() {
 		String msg = null;
@@ -57,7 +57,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			CommPortIdentifier cur_identifier = (CommPortIdentifier) ports
 					.nextElement();
 
-			if (cur_identifier.getName() == port_name) {
+			if (cur_identifier.getName().equals(port_name)) {
 				identifier = cur_identifier;
 				break;
 			}
