@@ -25,8 +25,6 @@ public class Main {
 				
 				model = new CATFishModel(panel);
 				LOGGER.info("Model initialized");
-				
-				model.connectArduino("/dev/ttyUSB0", 9600);
 			}
 		});
 	}
