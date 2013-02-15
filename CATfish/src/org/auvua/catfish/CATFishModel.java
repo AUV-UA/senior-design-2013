@@ -12,6 +12,8 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.auvua.catfish.CATFishPanel.Connections;
+
 public class CATFishModel {
 	
 	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -71,14 +73,17 @@ public class CATFishModel {
         }
         return h;
     }
-    /*
+    
     public boolean connectArduino(String port_name, int baud_rate) {
     	arduino = new Arduino(port_name, 100, baud_rate);
     	if(timer_ard != null) {
     		timer_ard.cancel();
+    	} else {
+    		timer_ard = new Timer();
     	}
     	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 0, 20);
     	connected_ard = true;
+    	panel.setStatus(Connections.ARDUINO, true);
     	return true;
     }
     
@@ -91,8 +96,7 @@ public class CATFishModel {
 				for(int n = 0; n < 10; n++)
 					msg[n+2] = (byte) (pins_do[n] ? 'h' : 'l');
 				arduino.write(msg);
-				
 			}
 		}
-    }*/
+    }
 }

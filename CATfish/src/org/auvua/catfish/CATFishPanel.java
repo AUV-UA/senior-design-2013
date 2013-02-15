@@ -34,10 +34,15 @@ import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
 
 import gnu.io.*;
+
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class CATFishPanel implements ActionListener {
+	
+	public enum Connections { ARDUINO, COMPASS, JOYSTICK, MOTORS }
 
+	public Connections connections;
 	public JFrame frmCatfish;
 	private JTextField panelA0_t;
 	private JTextField panelA1_t;
@@ -69,7 +74,10 @@ public class CATFishPanel implements ActionListener {
 	private JCheckBox panelStatusMotors_chk;
 	public JEditorPane panelLog_ta;
 	private JButton panelClsOutput_b;
-
+	private HashMap<Connections, JCheckBox> statuses;
+	private HashMap<Connections, JComboBox> portNames;
+	private HashMap<Connections, JComboBox> baudRates;
+	
 	/**
 	 * Create the application.
 	 */
@@ -1231,6 +1239,25 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelClsOutput_b.gridx = 0;
 		gbc_panelClsOutput_b.gridy = 0;
 		panel_12.add(panelClsOutput_b, gbc_panelClsOutput_b);
+		
+		
+		statuses = new HashMap<Connections, JCheckBox>();
+		statuses.put(Connections.ARDUINO, panelStatusArd_chk);
+		statuses.put(Connections.COMPASS, panelStatusComp_chk);
+		statuses.put(Connections.JOYSTICK, panelStatusJoy_chk);
+		statuses.put(Connections.MOTORS, panelStatusMotors_chk);
+		
+		portNames = new HashMap<Connections, JComboBox>();
+		portNames.put(Connections.ARDUINO, panelPortArd_cb);
+		portNames.put(Connections.COMPASS, panelPortComp_cb);
+		portNames.put(Connections.JOYSTICK, panelPortJoy_cb);
+		portNames.put(Connections.MOTORS, panelPortMotors_cb);
+		
+		baudRates = new HashMap<Connections, JComboBox>();
+		baudRates.put(Connections.ARDUINO, panelBaudArd_cb);
+		baudRates.put(Connections.COMPASS, panelBaudComp_cb);
+		baudRates.put(Connections.JOYSTICK, panelBaudJoy_cb);
+		baudRates.put(Connections.MOTORS, panelBaudMotors_cb);
 	}
 
 	@Override
@@ -1245,6 +1272,22 @@ public class CATFishPanel implements ActionListener {
 			panelPortComp_cb.addItem(port.getName());
 			panelPortMotors_cb.addItem(port.getName());
 		}
+	}
+	
+	public void setStatus(Connections conn, boolean connected) {
+		JCheckBox temp = statuses.get(conn);
+		if(temp.isSelected() && !connected || !temp.isSelected() && connected) 
+			temp.doClick();
+	}
+	
+	public String getPortName(Connections conn) {
+		return (String)portNames.get(conn).getSelectedItem();
+	}
+	
+	public int getBaudRate(Connections conn) {
+		String baud = (String)baudRates.get(conn).getSelectedItem();
+		if(baud.trim().equals("")) return 0;
+		else return Integer.parseInt(baud);
 	}
 
 }
