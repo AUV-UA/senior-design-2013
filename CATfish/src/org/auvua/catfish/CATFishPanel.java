@@ -35,6 +35,7 @@ import javax.swing.JEditorPane;
 
 import gnu.io.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -88,6 +89,8 @@ public class CATFishPanel implements ActionListener {
 		Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).addHandler(new Handler() {
 		      public void publish(LogRecord logRecord) {
 		    	  StringBuilder msg = new StringBuilder();
+		    	  Date time = new Date(System.currentTimeMillis());
+		    	  msg.append("<span style=\"color:green;\">" + time.toString() + "</span> - ");
 		    	  msg.append(logRecord.getLevel() + ": ");
 		    	  msg.append(logRecord.getMessage());
 		    	  msg.append(" [<span style=\"color:blue;\">" + logRecord.getSourceClassName() + ":");

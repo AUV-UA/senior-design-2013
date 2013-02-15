@@ -14,11 +14,13 @@ import java.util.logging.Logger;
 
 import org.auvua.catfish.CATFishPanel.Connections;
 
-public class CATFishModel {
+public class CATFishModel implements HardwareEventListener {
 	
 	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private CATFishPanel panel;
-	private Arduino arduino;
+	private SerialHardware arduino;
+	private SerialHardware compass;
+	private SerialHardware motors;
 	private Timer timer_ard;
 	private boolean connected_ard;
 	private boolean connected_comp;
@@ -76,6 +78,8 @@ public class CATFishModel {
     
     public boolean connectArduino(String port_name, int baud_rate) {
     	arduino = new Arduino(port_name, 100, baud_rate);
+    	arduino.initalize();
+    	arduino.addHardwareListener(this);
     	if(timer_ard != null) {
     		timer_ard.cancel();
     	} else {
@@ -99,4 +103,12 @@ public class CATFishModel {
 			}
 		}
     }
+
+	@Override
+	public void hardwareEvent(HardwareEvent event) {
+		LOGGER.info("Harware event");
+		if(event.getSource().equals(arduino)) {
+			LOGGER.info("Received data from Arduino: " + event.data);
+		}
+	}
 }
