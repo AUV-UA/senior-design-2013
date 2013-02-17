@@ -44,6 +44,7 @@ public class CATFishPanel implements ActionListener {
 	public enum Connections { ARDUINO, COMPASS, JOYSTICK, MOTORS }
 
 	public Connections connections;
+	private CATFishModel model;
 	public JFrame frmCatfish;
 	private JTextField panelA0_t;
 	private JTextField panelA1_t;
@@ -781,6 +782,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelConnArd_B.insets = new Insets(0, 0, 5, 5);
 		gbc_panelConnArd_B.gridx = 3;
 		gbc_panelConnArd_B.gridy = 4;
+		panelConnArd_B.addActionListener(this);
 		panel_9.add(panelConnArd_B, gbc_panelConnArd_B);
 		
 		panelStatusArd_chk = new JCheckBox("");
@@ -1263,9 +1265,16 @@ public class CATFishPanel implements ActionListener {
 		baudRates.put(Connections.MOTORS, panelBaudMotors_cb);
 	}
 
+	public void setModel(CATFishModel model) {
+		this.model = model;
+	}
+	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
+	public void actionPerformed(ActionEvent event) {
+		System.out.println(event.getActionCommand());
+		if(event.getSource().equals(panelConnArd_B)) {
+			model.connectArduino(getPortName(Connections.ARDUINO), getBaudRate(Connections.ARDUINO));
+		}
 	}
 	
 	public void setAvailablePorts(HashSet<CommPortIdentifier> ports) {

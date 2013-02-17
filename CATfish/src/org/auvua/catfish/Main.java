@@ -24,6 +24,8 @@ public class Main {
 				}
 				
 				model = new CATFishModel(panel);
+				panel.setModel(model);
+				
 				LOGGER.info("Model initialized");
 			}
 		});
