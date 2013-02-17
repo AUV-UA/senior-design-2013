@@ -77,7 +77,7 @@ public class CATFishModel implements HardwareEventListener {
     }
     
     public boolean connectArduino(String port_name, int baud_rate) {
-    	arduino = new Arduino(port_name, 100, baud_rate);
+    	arduino = new Arduino(port_name, 2000, baud_rate);
     	arduino.initalize();
     	arduino.addHardwareListener(this);
     	if(timer_ard != null) {
@@ -85,7 +85,7 @@ public class CATFishModel implements HardwareEventListener {
     	} else {
     		timer_ard = new Timer();
     	}
-    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 0, 20);
+    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 1000, 20);
     	connected_ard = true;
     	panel.setStatus(Connections.ARDUINO, true);
     	return true;
