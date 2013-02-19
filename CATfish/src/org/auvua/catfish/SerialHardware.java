@@ -17,7 +17,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	private Thread worker;
 	private ArrayList<HardwareEventListener> hardware_listeners;
 
-	BufferedReader input;
+	InputStreamReader input;
 	OutputStream output;
 
 	// 2000ms
@@ -76,9 +76,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			port.setSerialPortParams(BAUD_RATE, databits, stopbit, parity);
 
 			// Configure input/output streams
-			InputStreamReader input_stream;
-			input_stream = new InputStreamReader(port.getInputStream());
-			input = new BufferedReader(input_stream);
+			input = new InputStreamReader(port.getInputStream());
 			output = port.getOutputStream();
 
 			// Register listener
@@ -155,7 +153,11 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
 			try {
-				String data = input.readLine();
+				byte[] data = new byte[1024];
+				int c;
+				for(int i = 0; (c = input.read()) >= 0 && i < 1024; i++)
+					data[i] = (byte)(c & 0xff);
+					
 				sendHardwareEvent(data);
 			} catch (Exception e) {
 				String msg = String.format(
@@ -190,7 +192,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 * 
 	 * @param data
 	 */
-	private synchronized void sendHardwareEvent(String data) {
+	protected synchronized void sendHardwareEvent(byte[] data) {
 		HardwareEvent event = new HardwareEvent(this, data);
 
 		for (HardwareEventListener listener : hardware_listeners) {
