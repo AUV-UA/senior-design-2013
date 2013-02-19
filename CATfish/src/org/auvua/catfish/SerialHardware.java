@@ -153,10 +153,10 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
 			try {
-				byte[] data = new byte[1024];
+				char[] data = new char[1024];
 				int c;
 				for(int i = 0; (c = input.read()) >= 0 && i < 1024; i++)
-					data[i] = (byte)(c & 0xff);
+					data[i] = (char)(c & 0xff);
 					
 				sendHardwareEvent(data);
 			} catch (Exception e) {
@@ -192,7 +192,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 * 
 	 * @param data
 	 */
-	protected synchronized void sendHardwareEvent(byte[] data) {
+	protected synchronized void sendHardwareEvent(char[] data) {
 		HardwareEvent event = new HardwareEvent(this, data);
 
 		for (HardwareEventListener listener : hardware_listeners) {
