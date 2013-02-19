@@ -26,8 +26,8 @@ public class Arduino extends SerialHardware {
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
 			try {
-				byte[] data = new byte[18];
-				int c;
+				char[] data = new char[18];
+				char c;
 				int bytes_read = 0;
 				
 				//find beginning of message
@@ -35,9 +35,9 @@ public class Arduino extends SerialHardware {
 				data[0] = '*';
 				
 				//read all bytes
-				while(bytes_read < 17 && (c = input.read()) >= 0) {
+				while(bytes_read < 17 && (c = (char)input.read()) >= 0) {
 					bytes_read++;
-					data[bytes_read] = (byte)(c & 0xff);
+					data[bytes_read] = c;
 				}
 				
 				//clear the input buffer in case any stray messages are left
