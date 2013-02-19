@@ -4,7 +4,7 @@
  * Runs on a standard Arduino (Duemilanove, Uno, etc).
  * Digital pins 0-9 are outputs set by host computer,
  * digital pins 10-13 and analog pins 0-5 are telemetry
- * inputs sent to host. Messages are sent at 50Hz.
+ * inputs sent to host. Messages are sent at 20Hz.
  **/
  
 //analog input references and associated values
