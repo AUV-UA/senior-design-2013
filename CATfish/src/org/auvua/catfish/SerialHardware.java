@@ -1,6 +1,5 @@
 package org.auvua.catfish;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -96,21 +95,6 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		} catch (InterruptedException e) {
 			System.out.println(e);
 		}
-	}
-	
-	public byte[] read() {
-		byte[] buffer = new byte[1024];
-		byte next;
-		
-		try {
-			for(int i = 0; (next = (byte)input.read()) >= 0; i++)
-				buffer[i] = next; 
-		} catch (IOException e) {
-			String msg = String.format("Nothing to read.\n %s", e.toString());
-			LOGGER.log(Level.WARNING, msg);
-		}
-		
-		return buffer;
 	}
 	
 	public void write(byte[] message) {
