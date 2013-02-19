@@ -70,6 +70,20 @@ public class CATFishPanel implements ActionListener {
 	private JButton panelConnArd_B;
 	private JButton panelConnComp_b;
 	private JButton panelConnMotors_b;
+	private JToggleButton panelDO0_tb;
+	private JToggleButton panelDO1_tb;
+	private JToggleButton panelDO2_tb;
+	private JToggleButton panelDO3_tb;
+	private JToggleButton panelDO4_tb;
+	private JToggleButton panelDO5_tb;
+	private JToggleButton panelDO6_tb;
+	private JToggleButton panelDO7_tb;
+	private JToggleButton panelDO8_tb;
+	private JToggleButton panelDO9_tb;
+	private JLabel panelDI10_lbl;
+	private JLabel panelDI11_lbl;
+	private JLabel panelDI12_lbl;
+	private JLabel panelDI13_lbl;
 	private JCheckBox panelStatusJoy_chk;
 	private JCheckBox panelStatusArd_chk;
 	private JCheckBox panelStatusComp_chk;
@@ -198,74 +212,84 @@ public class CATFishPanel implements ActionListener {
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JToggleButton panelDO0_tb = new JToggleButton("0");
+		panelDO0_tb = new JToggleButton("0");
 		GridBagConstraints gbc_panelDO0_tb = new GridBagConstraints();
 		gbc_panelDO0_tb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDO0_tb.gridx = 0;
 		gbc_panelDO0_tb.gridy = 0;
+		panelDO0_tb.addActionListener(this);
 		panel_1.add(panelDO0_tb, gbc_panelDO0_tb);
 		
-		JToggleButton panelDO1_tb = new JToggleButton("1");
+		panelDO1_tb = new JToggleButton("1");
 		GridBagConstraints gbc_panelDO1_tb = new GridBagConstraints();
 		gbc_panelDO1_tb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDO1_tb.gridx = 1;
 		gbc_panelDO1_tb.gridy = 0;
+		panelDO1_tb.addActionListener(this);
 		panel_1.add(panelDO1_tb, gbc_panelDO1_tb);
 		
-		JToggleButton panelDO2_tb = new JToggleButton("2");
+		panelDO2_tb = new JToggleButton("2");
 		GridBagConstraints gbc_panelDO2_tb = new GridBagConstraints();
 		gbc_panelDO2_tb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDO2_tb.gridx = 2;
 		gbc_panelDO2_tb.gridy = 0;
+		panelDO2_tb.addActionListener(this);
 		panel_1.add(panelDO2_tb, gbc_panelDO2_tb);
 		
-		JToggleButton panelDO3_tb = new JToggleButton("3");
+		panelDO3_tb = new JToggleButton("3");
 		GridBagConstraints gbc_panelDO3_tb = new GridBagConstraints();
 		gbc_panelDO3_tb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDO3_tb.gridx = 3;
 		gbc_panelDO3_tb.gridy = 0;
+		panelDO3_tb.addActionListener(this);
 		panel_1.add(panelDO3_tb, gbc_panelDO3_tb);
 		
-		JToggleButton panelDO4_tb = new JToggleButton("4");
+		panelDO4_tb = new JToggleButton("4");
 		GridBagConstraints gbc_panelDO4_tb = new GridBagConstraints();
 		gbc_panelDO4_tb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDO4_tb.gridx = 4;
 		gbc_panelDO4_tb.gridy = 0;
+		panelDO4_tb.addActionListener(this);
 		panel_1.add(panelDO4_tb, gbc_panelDO4_tb);
 		
-		JToggleButton panelDO5_tb = new JToggleButton("5");
+		panelDO5_tb = new JToggleButton("5");
 		GridBagConstraints gbc_panelDO5_tb = new GridBagConstraints();
 		gbc_panelDO5_tb.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDO5_tb.gridx = 0;
 		gbc_panelDO5_tb.gridy = 1;
+		panelDO5_tb.addActionListener(this);
 		panel_1.add(panelDO5_tb, gbc_panelDO5_tb);
 		
-		JToggleButton panelDO6_tb = new JToggleButton("6");
+		panelDO6_tb = new JToggleButton("6");
 		GridBagConstraints gbc_panelDO6_tb = new GridBagConstraints();
 		gbc_panelDO6_tb.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDO6_tb.gridx = 1;
 		gbc_panelDO6_tb.gridy = 1;
+		panelDO6_tb.addActionListener(this);
 		panel_1.add(panelDO6_tb, gbc_panelDO6_tb);
 		
-		JToggleButton panelDO7_tb = new JToggleButton("7");
+		panelDO7_tb = new JToggleButton("7");
 		GridBagConstraints gbc_panelDO7_tb = new GridBagConstraints();
 		gbc_panelDO7_tb.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDO7_tb.gridx = 2;
 		gbc_panelDO7_tb.gridy = 1;
+		panelDO7_tb.addActionListener(this);
 		panel_1.add(panelDO7_tb, gbc_panelDO7_tb);
 		
-		JToggleButton panelDO8_tb = new JToggleButton("8");
+		panelDO8_tb = new JToggleButton("8");
 		GridBagConstraints gbc_panelDO8_tb = new GridBagConstraints();
 		gbc_panelDO8_tb.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDO8_tb.gridx = 3;
 		gbc_panelDO8_tb.gridy = 1;
+		panelDO8_tb.addActionListener(this);
 		panel_1.add(panelDO8_tb, gbc_panelDO8_tb);
 		
-		JToggleButton panelDO9_tb = new JToggleButton("9");
+		panelDO9_tb = new JToggleButton("9");
 		GridBagConstraints gbc_panelDO9_tb = new GridBagConstraints();
 		gbc_panelDO9_tb.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDO9_tb.gridx = 4;
 		gbc_panelDO9_tb.gridy = 1;
+		panelDO9_tb.addActionListener(this);
 		panel_1.add(panelDO9_tb, gbc_panelDO9_tb);
 		
 		JLabel lblDigitalInputs = new JLabel("Digital Inputs");
@@ -289,32 +313,40 @@ public class CATFishPanel implements ActionListener {
 		gbl_panel_2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
 		
-		JLabel panelDI10_lbl = new JLabel("10");
-		panelDI10_lbl.setBackground(SystemColor.controlDkShadow);
+		panelDI10_lbl = new JLabel("10");
+		panelDI10_lbl.setOpaque(true);
+		panelDI10_lbl.setForeground(Color.WHITE);
+		panelDI10_lbl.setBackground(Color.RED);
 		GridBagConstraints gbc_panelDI10_lbl = new GridBagConstraints();
 		gbc_panelDI10_lbl.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDI10_lbl.gridx = 0;
 		gbc_panelDI10_lbl.gridy = 0;
 		panel_2.add(panelDI10_lbl, gbc_panelDI10_lbl);
 		
-		JLabel panelDI11_lbl = new JLabel("11");
-		panelDI11_lbl.setBackground(SystemColor.controlDkShadow);
+		panelDI11_lbl = new JLabel("11");
+		panelDI11_lbl.setForeground(Color.WHITE);
+		panelDI11_lbl.setOpaque(true);
+		panelDI11_lbl.setBackground(Color.RED);
 		GridBagConstraints gbc_panelDI11_lbl = new GridBagConstraints();
 		gbc_panelDI11_lbl.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDI11_lbl.gridx = 1;
 		gbc_panelDI11_lbl.gridy = 0;
 		panel_2.add(panelDI11_lbl, gbc_panelDI11_lbl);
 		
-		JLabel panelDI12_lbl = new JLabel("12");
-		panelDI12_lbl.setBackground(SystemColor.controlDkShadow);
+		panelDI12_lbl = new JLabel("12");
+		panelDI12_lbl.setForeground(Color.WHITE);
+		panelDI12_lbl.setOpaque(true);
+		panelDI12_lbl.setBackground(Color.RED);
 		GridBagConstraints gbc_panelDI12_lbl = new GridBagConstraints();
 		gbc_panelDI12_lbl.insets = new Insets(0, 0, 0, 5);
 		gbc_panelDI12_lbl.gridx = 2;
 		gbc_panelDI12_lbl.gridy = 0;
 		panel_2.add(panelDI12_lbl, gbc_panelDI12_lbl);
 		
-		JLabel panelDI13_lbl = new JLabel("13");
-		panelDI13_lbl.setBackground(SystemColor.controlDkShadow);
+		panelDI13_lbl = new JLabel("13");
+		panelDI13_lbl.setForeground(Color.WHITE);
+		panelDI13_lbl.setOpaque(true);
+		panelDI13_lbl.setBackground(Color.RED);
 		GridBagConstraints gbc_panelDI13_lbl = new GridBagConstraints();
 		gbc_panelDI13_lbl.gridx = 3;
 		gbc_panelDI13_lbl.gridy = 0;
@@ -768,7 +800,7 @@ public class CATFishPanel implements ActionListener {
 		
 		panelBaudArd_cb = new JComboBox();
 		panelBaudArd_cb.setModel(new DefaultComboBoxModel(new String[] {"2400", "4800", "9600", "19200", "38400", "57600", "115200"}));
-		panelBaudArd_cb.setSelectedIndex(2);
+		panelBaudArd_cb.setSelectedIndex(5);
 		GridBagConstraints gbc_panelBaudArd_cb = new GridBagConstraints();
 		gbc_panelBaudArd_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelBaudArd_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -1271,9 +1303,29 @@ public class CATFishPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		System.out.println(event.getActionCommand());
+		//TODO: hopefully there's a better way to do the toggle buttons
 		if(event.getSource().equals(panelConnArd_B)) {
 			model.connectArduino(getPortName(Connections.ARDUINO), getBaudRate(Connections.ARDUINO));
+		} else if(event.getSource().equals(panelDO0_tb)) {
+			model.pins_do[0] = panelDO0_tb.isSelected();
+		} else if(event.getSource().equals(panelDO1_tb)) {
+			model.pins_do[1] = panelDO1_tb.isSelected();
+		} else if(event.getSource().equals(panelDO2_tb)) {
+			model.pins_do[2] = panelDO2_tb.isSelected();
+		} else if(event.getSource().equals(panelDO3_tb)) {
+			model.pins_do[3] = panelDO3_tb.isSelected();
+		} else if(event.getSource().equals(panelDO4_tb)) {
+			model.pins_do[4] = panelDO4_tb.isSelected();
+		} else if(event.getSource().equals(panelDO5_tb)) {
+			model.pins_do[5] = panelDO5_tb.isSelected();
+		} else if(event.getSource().equals(panelDO6_tb)) {
+			model.pins_do[6] = panelDO6_tb.isSelected();
+		} else if(event.getSource().equals(panelDO7_tb)) {
+			model.pins_do[7] = panelDO7_tb.isSelected();
+		} else if(event.getSource().equals(panelDO8_tb)) {
+			model.pins_do[8] = panelDO8_tb.isSelected();
+		} else if(event.getSource().equals(panelDO9_tb)) {
+			model.pins_do[9] = panelDO9_tb.isSelected();
 		}
 	}
 	
@@ -1300,6 +1352,50 @@ public class CATFishPanel implements ActionListener {
 		String baud = (String)baudRates.get(conn).getSelectedItem();
 		if(baud.trim().equals("")) return 0;
 		else return Integer.parseInt(baud);
+	}
+	
+	public void setDigitalInput(int input, boolean val) {
+		switch(input) {
+			case 10:	
+				panelDI10_lbl.setBackground((val ? Color.GREEN : Color.RED));	
+				break;
+			case 11:	
+				panelDI11_lbl.setBackground((val ? Color.GREEN : Color.RED));	
+				break;
+			case 12:	
+				panelDI12_lbl.setBackground((val ? Color.GREEN : Color.RED));	
+				break;
+			case 13:	
+				panelDI13_lbl.setBackground((val ? Color.GREEN : Color.RED));	
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public void setAnalogInput(int input, int val) {
+		switch(input) {
+			case 0:
+				panelA0_t.setText(""+val);
+				break;
+			case 1:
+				panelA1_t.setText(""+val);
+				break;
+			case 2:
+				panelA2_t.setText(""+val);
+				break;
+			case 3:
+				panelA3_t.setText(""+val);
+				break;
+			case 4:
+				panelA4_t.setText(""+val);
+				break;
+			case 5:
+				panelA5_t.setText(""+val);
+				break;
+			default:
+				break;
+		}
 	}
 
 }

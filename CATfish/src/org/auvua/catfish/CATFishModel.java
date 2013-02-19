@@ -26,9 +26,9 @@ public class CATFishModel implements HardwareEventListener {
 	private boolean connected_comp;
 	private boolean connected_joy;
 	private boolean connected_motors;
-	private boolean pins_do[];
-	private boolean pins_di[];
-	private int pins_ai[];
+	public boolean pins_do[];
+	public boolean pins_di[];
+	public int pins_ai[];
 
 	public CATFishModel(CATFishPanel panel) {
 		this.panel = panel;
@@ -77,7 +77,7 @@ public class CATFishModel implements HardwareEventListener {
     }
     
     public boolean connectArduino(String port_name, int baud_rate) {
-    	arduino = new Arduino(port_name, 2000, baud_rate);
+    	arduino = new Arduino(port_name, 1000, baud_rate);
     	arduino.initalize();
     	arduino.addHardwareListener(this);
     	if(timer_ard != null) {
@@ -85,7 +85,7 @@ public class CATFishModel implements HardwareEventListener {
     	} else {
     		timer_ard = new Timer();
     	}
-    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 1000, 20);
+    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 500, 100);
     	connected_ard = true;
     	panel.setStatus(Connections.ARDUINO, true);
     	return true;
@@ -106,9 +106,17 @@ public class CATFishModel implements HardwareEventListener {
 
 	@Override
 	public void hardwareEvent(HardwareEvent event) {
-		LOGGER.info("Harware event");
+		//Arduino input
 		if(event.getSource().equals(arduino)) {
-			LOGGER.info("Received data from Arduino: " + event.data);
+			char[] data = event.data;
+			for(int i = 1; i < 5; i++)
+				panel.setDigitalInput(i+9, (data[i] == 1 ? true : false));
+			
+			for(int i = 5; i < 17; i+=2) {
+				char highbyte = (char)(data[i] & 0x00ff);
+				char lowbyte = (char)(data[i+1] & 0x00ff);
+				panel.setAnalogInput((i-5)/2, ((highbyte * 256) + lowbyte));
+			}
 		}
 	}
 }
