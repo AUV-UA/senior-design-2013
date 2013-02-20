@@ -1,4 +1,4 @@
 **bin
 **lib
 CATfish/.classpath
-CATfish/librxtxSerial.so
+CATfish/*.so
