@@ -10,6 +10,15 @@ import java.util.logging.Logger;
 
 import gnu.io.*;
 
+/** 
+ * Abstract serial port connection scheme. Uses RxTx package to connect to a 
+ * given serial port on a new thread. Uses input and output streams to channel data to and from
+ * a serial port. Capable of variable baud rates, data/parity/stop bits, and
+ * port timeouts. Override serialEvent method for control of input formatting.
+ * 
+ * @author forbesk
+ * @author erbriones
+ */
 public abstract class SerialHardware implements SerialPortEventListener,
 		Runnable {
 	private SerialPort port;
@@ -19,7 +28,6 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	InputStreamReader input;
 	OutputStream output;
 
-	// 2000ms
 	private int TIME_OUT = 2000;
 	private int BAUD_RATE = 9600;
 	private int databits;
@@ -30,6 +38,16 @@ public abstract class SerialHardware implements SerialPortEventListener,
 
 	protected final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+	/** 
+	 * Initializes SerialHardware port and associated parameters.
+	 * 
+	 * @param port_name		Port identifier string.
+	 * @param timeout		Connection timeout in milliseconds.
+	 * @param baud_rate		Baud rate in bits per second.
+	 * @param databits		Number of data bits.
+	 * @param parity		Parity bit (SerialPort.PARITY_*)
+	 * @param stopbit		Number of stop bits.
+	 */
 	public SerialHardware(String port_name, int timeout, int baud_rate,
 			int databits, int parity, int stopbit) {
 		TIME_OUT = timeout;
@@ -97,6 +115,11 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		}
 	}
 	
+	/** 
+	 * Writes an array of bytes to the output stream.
+	 * 
+	 * @param message	Message to send formatted as a byte array.
+	 */
 	public void write(byte[] message) {
 		try {
 			output.write(message);
@@ -115,8 +138,6 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			port.close();
 		}
 	}
-
-	// Event handling
 
 	/**
 	 * Handles a serial port event and passes it along to the hardware event
@@ -152,10 +173,10 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		}
 	}
 
-	/**
+	/** 
 	 * Adds a listener for hardware events being passed from the serial port.
 	 * 
-	 * @param listener
+	 * @param listener		HardwareEventListener to attach to this SerialHardware.
 	 */
 	public synchronized void addHardwareListener(HardwareEventListener listener) {
 		this.hardware_listeners.add(listener);
@@ -164,7 +185,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	/**
 	 * Removes the listener on events from the serial port.
 	 * 
-	 * @param listener
+	 * @param listener		HardwareEventListener to remove from this SerialHardware.
 	 */
 	public synchronized void removeHardwareListener(
 			HardwareEventListener listener) {
@@ -174,7 +195,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	/**
 	 * Generates hardware events for each listener
 	 * 
-	 * @param data
+	 * @param data		Array of characters to pass to attached HardwareEventListeners.
 	 */
 	protected synchronized void sendHardwareEvent(char[] data) {
 		HardwareEvent event = new HardwareEvent(this, data);
