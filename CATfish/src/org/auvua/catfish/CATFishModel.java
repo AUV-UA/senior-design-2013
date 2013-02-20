@@ -14,8 +14,9 @@ import java.util.logging.Logger;
 
 import org.auvua.catfish.CATFishPanel.Connections;
 
-/** Collects data from telemetry sources, writes values to motors, and 
- *  interfaces with the CATFishPanel to deliver information to user. 
+/** 
+ * Collects data from telemetry sources, writes values to motors, and 
+ * interfaces with the CATFishPanel to deliver information to user. 
  *  
  * @author forbesk
  * @author erbriones
@@ -40,7 +41,9 @@ public class CATFishModel implements HardwareEventListener {
 	/** Arduino analog inputs */
 	public int pins_ai[];		
 
-	/** Initializes data and collects initial list of available serial ports.
+	/** 
+	 * Initializes data and collects initial list of available serial ports.
+	 * 
 	 * @param panel		Associated CATFishPanel object (view/controller of MVC paradigm)
 	 */
 	public CATFishModel(CATFishPanel panel) {
@@ -61,7 +64,9 @@ public class CATFishModel implements HardwareEventListener {
 		}
 	}
 	
-	/** Identifies and returns a hashset of all available Comm ports.
+	/** 
+	 * Identifies and returns a hashset of all available Comm ports.
+     * 
      * @return    A HashSet containing the CommPortIdentifier for all serial ports that are not currently being used.
      */
     public HashSet<CommPortIdentifier> getAvailableSerialPorts() {
@@ -89,9 +94,10 @@ public class CATFishModel implements HardwareEventListener {
         return h;
     }
     
-    /** Attempts to connect to the Arduino on the given port name at the given baud rate.
-     *  A failure to connect can occur if the port is already in use, the port is not
-     *  available, the baud rate is nonstandard, or the Arduino is already connected.
+    /** 
+     * Attempts to connect to the Arduino on the given port name at the given baud rate.
+     * A failure to connect can occur if the port is already in use, the port is not
+     * available, the baud rate is nonstandard, or the Arduino is already connected.
      *  
      * @param port_name		Title of the connected USB port.
      * @param baud_rate		Baud rate, in bits per second.
@@ -117,7 +123,9 @@ public class CATFishModel implements HardwareEventListener {
     	return false;
     }
     
-    /** Constant thread that sends formatted messages to the current Arduino port.
+    /** 
+     * Constant thread that sends formatted messages to the current Arduino port.
+     * 
      * @author forbesk
      */
     private class ArduinoTimer extends TimerTask {
