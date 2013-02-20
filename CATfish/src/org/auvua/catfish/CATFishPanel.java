@@ -39,8 +39,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/** 
+ * Displays information in a Swing application. Interfaces with a  
+ * CATFishModel as the view-controller of an MVC paradigm. 
+ *  
+ * @author forbesk
+ * @author erbriones
+ */
 public class CATFishPanel implements ActionListener {
 	
+	/** Enumeration of various serial connections with the CATFish */
 	public enum Connections { ARDUINO, COMPASS, JOYSTICK, MOTORS }
 
 	public Connections connections;
@@ -133,15 +141,6 @@ public class CATFishPanel implements ActionListener {
 		frmCatfish.setBounds(100, 100, 958, 476);
 		frmCatfish.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		UIManager.put("nimbusBase", new Color(230, 230, 230));
-		UIManager.put("nimbusBlueGrey", new Color(190, 190, 190));
-		UIManager.put("control", new Color(240, 240, 240));
-		
-		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{11, 357, 17, 203, 15, 165, 15, 0, 8, 0};
 		gridBagLayout.rowHeights = new int[]{0, 166, 11, 68, 0, 0};
@@ -1297,6 +1296,9 @@ public class CATFishPanel implements ActionListener {
 		baudRates.put(Connections.MOTORS, panelBaudMotors_cb);
 	}
 
+	/**
+	 * @param model		Associated CATFishModel object
+	 */
 	public void setModel(CATFishModel model) {
 		this.model = model;
 	}
@@ -1329,6 +1331,11 @@ public class CATFishPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Sets port name combobox options to given ports.
+	 * 
+	 * @param ports		HashSet of ports to add to port name comboboxes.
+	 */
 	public void setAvailablePorts(HashSet<CommPortIdentifier> ports) {
 		for(CommPortIdentifier port: ports) {
 			panelPortJoy_cb.addItem(port.getName());
@@ -1338,22 +1345,38 @@ public class CATFishPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * @param conn			Serial object to connect to
+	 * @param connected		Connection status (true = connected)
+	 */
 	public void setStatus(Connections conn, boolean connected) {
 		JCheckBox temp = statuses.get(conn);
 		if(temp.isSelected() && !connected || !temp.isSelected() && connected) 
 			temp.doClick();
 	}
 	
+	/**
+	 * @param conn		Serial object.
+	 * @return			Current port name for given serial object.
+	 */
 	public String getPortName(Connections conn) {
 		return (String)portNames.get(conn).getSelectedItem();
 	}
 	
+	/**
+	 * @param conn		Serial object.
+	 * @return			Current baud rate for given serial object.
+	 */
 	public int getBaudRate(Connections conn) {
 		String baud = (String)baudRates.get(conn).getSelectedItem();
 		if(baud.trim().equals("")) return 0;
 		else return Integer.parseInt(baud);
 	}
 	
+	/**
+	 * @param input		Digital input number.
+	 * @param val		Value of input.
+	 */
 	public void setDigitalInput(int input, boolean val) {
 		switch(input) {
 			case 10:	
@@ -1373,6 +1396,10 @@ public class CATFishPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * @param input		Analog input number.
+	 * @param val		Value of input.
+	 */
 	public void setAnalogInput(int input, int val) {
 		switch(input) {
 			case 0:

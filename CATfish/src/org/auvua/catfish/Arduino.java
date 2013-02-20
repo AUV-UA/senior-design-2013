@@ -4,6 +4,24 @@ import java.util.logging.Level;
 
 import gnu.io.*;
 
+/**
+ * Handles communication between an Arduino sending custom formatted messages.
+ * Messages to the Arduino should follow this format:
+ * 		**xxxxxxxxxx**
+ * where two '*'s mark the start and end of a message and each consecutive 'x'
+ * represents the digital state of the target digital outputs from 0 to 10. 
+ * 'x' should be 'h' to set the given output high and 'l' to set it low.
+ * Received messages are formatted as follows:
+ * 		*xxxxabababababab-
+ * where '*' marks the beginning of a message, '-' marks the end, 'x' represents
+ * one of four digital inputs, and 'ab' is a two-byte unsigned representation of 
+ * one of six 10-bit analog inputs.
+ * 
+ * @author forbesk
+ * @author erbriones
+ * 
+ * TODO: adjust formatting of messages to match that of received messages.
+ */
 public class Arduino extends SerialHardware {
 
 	public Arduino(String port_name, int timeout, int baud_rate) {
