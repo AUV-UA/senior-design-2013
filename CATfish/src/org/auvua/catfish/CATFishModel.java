@@ -14,8 +14,15 @@ import java.util.logging.Logger;
 
 import org.auvua.catfish.CATFishPanel.Connections;
 
+/** Collects data from telemetry sources, writes values to motors, and 
+ *  interfaces with the CATFishPanel to deliver information to user. 
+ *  
+ * @author forbesk
+ * @author erbriones
+ */
 public class CATFishModel implements HardwareEventListener {
 	
+	/** Global Java logger reference */
 	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private CATFishPanel panel;
 	private SerialHardware arduino;
@@ -26,10 +33,16 @@ public class CATFishModel implements HardwareEventListener {
 	private boolean connected_comp;
 	private boolean connected_joy;
 	private boolean connected_motors;
-	public boolean pins_do[];
-	public boolean pins_di[];
-	public int pins_ai[];
+	/**	Arduino digital outputs */
+	public boolean pins_do[];	
+	/** Arduino digital inputs */
+	public boolean pins_di[];	
+	/** Arduino analog inputs */
+	public int pins_ai[];		
 
+	/** Initializes data and collects initial list of available serial ports.
+	 * @param panel		Associated CATFishPanel object (view/controller of MVC paradigm)
+	 */
 	public CATFishModel(CATFishPanel panel) {
 		this.panel = panel;
 		
@@ -48,7 +61,7 @@ public class CATFishModel implements HardwareEventListener {
 		}
 	}
 	
-	/**
+	/** Identifies and returns a hashset of all available Comm ports.
      * @return    A HashSet containing the CommPortIdentifier for all serial ports that are not currently being used.
      */
     public HashSet<CommPortIdentifier> getAvailableSerialPorts() {
@@ -76,21 +89,37 @@ public class CATFishModel implements HardwareEventListener {
         return h;
     }
     
+    /** Attempts to connect to the Arduino on the given port name at the given baud rate.
+     *  A failure to connect can occur if the port is already in use, the port is not
+     *  available, the baud rate is nonstandard, or the Arduino is already connected.
+     *  
+     * @param port_name		Title of the connected USB port.
+     * @param baud_rate		Baud rate, in bits per second.
+     * @return				Status of connection - true if successful, false otherwise.
+     * 
+     * TODO: incorporate logging features for finer detailed error messages 
+     */
     public boolean connectArduino(String port_name, int baud_rate) {
-    	arduino = new Arduino(port_name, 1000, baud_rate);
-    	arduino.initalize();
-    	arduino.addHardwareListener(this);
-    	if(timer_ard != null) {
-    		timer_ard.cancel();
-    	} else {
-    		timer_ard = new Timer();
+    	if(!connected_ard) {
+	    	arduino = new Arduino(port_name, 1000, baud_rate);
+	    	arduino.initalize();
+	    	arduino.addHardwareListener(this);
+	    	if(timer_ard != null) {
+	    		timer_ard.cancel();
+	    	} else {
+	    		timer_ard = new Timer();
+	    	}
+	    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 500, 100);
+	    	connected_ard = true;
+	    	panel.setStatus(Connections.ARDUINO, true);
+	    	return true;
     	}
-    	timer_ard.scheduleAtFixedRate(new ArduinoTimer(), 500, 100);
-    	connected_ard = true;
-    	panel.setStatus(Connections.ARDUINO, true);
-    	return true;
+    	return false;
     }
     
+    /** Constant thread that sends formatted messages to the current Arduino port.
+     * @author forbesk
+     */
     private class ArduinoTimer extends TimerTask {
 		@Override
 		public void run() {
@@ -104,6 +133,9 @@ public class CATFishModel implements HardwareEventListener {
 		}
     }
 
+	/* (non-Javadoc)
+	 * @see org.auvua.catfish.HardwareEventListener#hardwareEvent(org.auvua.catfish.HardwareEvent)
+	 */
 	@Override
 	public void hardwareEvent(HardwareEvent event) {
 		//Arduino input
