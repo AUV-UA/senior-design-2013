@@ -33,6 +33,8 @@ import javax.swing.UIManager;
 import javax.swing.JTextPane;
 import javax.swing.JEditorPane;
 
+import net.java.games.input.Controller;
+
 import gnu.io.*;
 
 import java.util.Date;
@@ -771,6 +773,7 @@ public class CATFishPanel implements ActionListener {
 		gbc_panelConnJoy_b.insets = new Insets(0, 0, 5, 5);
 		gbc_panelConnJoy_b.gridx = 3;
 		gbc_panelConnJoy_b.gridy = 3;
+		panelConnJoy_b.addActionListener(this);
 		panel_9.add(panelConnJoy_b, gbc_panelConnJoy_b);
 		
 		panelStatusJoy_chk = new JCheckBox("");
@@ -1308,6 +1311,8 @@ public class CATFishPanel implements ActionListener {
 		//TODO: hopefully there's a better way to do the toggle buttons
 		if(event.getSource().equals(panelConnArd_B)) {
 			model.connectArduino(getPortName(Connections.ARDUINO), getBaudRate(Connections.ARDUINO));
+		} else if(event.getSource().equals(panelConnJoy_b)) {
+			model.connectJoystick(Integer.parseInt(getPortName(Connections.JOYSTICK)));
 		} else if(event.getSource().equals(panelDO0_tb)) {
 			model.pins_do[0] = panelDO0_tb.isSelected();
 		} else if(event.getSource().equals(panelDO1_tb)) {
@@ -1336,12 +1341,22 @@ public class CATFishPanel implements ActionListener {
 	 * 
 	 * @param ports		HashSet of ports to add to port name comboboxes.
 	 */
-	public void setAvailablePorts(HashSet<CommPortIdentifier> ports) {
+	public void setAvailableSerialPorts(HashSet<CommPortIdentifier> ports) {
 		for(CommPortIdentifier port: ports) {
-			panelPortJoy_cb.addItem(port.getName());
 			panelPortArd_cb.addItem(port.getName());
 			panelPortComp_cb.addItem(port.getName());
 			panelPortMotors_cb.addItem(port.getName());
+		}
+	}
+
+	/**
+	 * Sets available controller port numbers to joystick port combobox.
+	 * 
+	 * @param controllers	HashSet of controllers to add to port name comboboxes.
+	 */
+	public void setAvailableControllers(HashSet<Controller> controllers) {
+		for(Controller c: controllers) {
+			panelPortJoy_cb.addItem(Integer.toString(c.getPortNumber()));
 		}
 	}
 	

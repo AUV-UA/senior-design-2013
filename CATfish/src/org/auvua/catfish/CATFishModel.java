@@ -4,6 +4,7 @@ import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Timer;
@@ -11,6 +12,9 @@ import java.util.TimerTask;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
 
 import org.auvua.catfish.CATFishPanel.Connections;
 
@@ -21,7 +25,7 @@ import org.auvua.catfish.CATFishPanel.Connections;
  * @author forbesk
  * @author erbriones
  */
-public class CATFishModel implements HardwareEventListener {
+public class CATFishModel implements HardwareEventListener, JoystickEventListener {
 	
 	/** Global Java logger reference */
 	public static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -29,6 +33,7 @@ public class CATFishModel implements HardwareEventListener {
 	private SerialHardware arduino;
 	private SerialHardware compass;
 	private SerialHardware motors;
+	private Joystick joystick;
 	private Timer timer_ard;
 	private boolean connected_ard;
 	private boolean connected_comp;
@@ -53,14 +58,25 @@ public class CATFishModel implements HardwareEventListener {
 		pins_di = new boolean[4];
 		pins_ai = new int[6];
 		
+		//check for generic comm ports
 		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
 		if(ports.size() > 0 ) {
 			for(CommPortIdentifier port: ports) {
 				LOGGER.info("USB port available: " + port.getName());
 			}
-			panel.setAvailablePorts(ports);
+			panel.setAvailableSerialPorts(ports);
 		} else {
 			LOGGER.info("No USB ports available.");
+		}
+		
+		//check for joysticks, gamepads, etc.
+		HashSet<Controller> controllers = getAvailableControllers();
+		if(controllers.size() > 0) {
+			for(Controller c: controllers) 
+				LOGGER.info("Controller available: " + c.getPortNumber() + " - " + c.getName());
+			panel.setAvailableControllers(controllers);
+		} else {
+			LOGGER.info("No controllers available.");
 		}
 	}
 	
@@ -95,6 +111,22 @@ public class CATFishModel implements HardwareEventListener {
     }
     
     /** 
+	 * Identifies and returns a hashset of all available controllers seen by JInput api.
+     * 
+     * @return    A HashSet containing the Controller reference for all controllers in the environment.
+     */
+    public HashSet<Controller> getAvailableControllers() {
+    	HashSet<Controller> h = new HashSet<Controller>();
+    	ControllerEnvironment env = ControllerEnvironment.getDefaultEnvironment();
+    	Controller[] controllers = env.getControllers();
+    	
+    	for(int i = 0; i < controllers.length; i++)
+    		h.add(controllers[i]);
+    	
+    	return h;
+    }
+    
+    /** 
      * Attempts to connect to the Arduino on the given port name at the given baud rate.
      * A failure to connect can occur if the port is already in use, the port is not
      * available, the baud rate is nonstandard, or the Arduino is already connected.
@@ -119,6 +151,32 @@ public class CATFishModel implements HardwareEventListener {
 	    	connected_ard = true;
 	    	panel.setStatus(Connections.ARDUINO, true);
 	    	return true;
+    	}
+    	return false;
+    }
+    
+    /**
+     * Attempts to connect the chosen joystick. Joysticks are referenced by their 
+     * Controller port number. If the controller does not exist or a joystick
+     * is already connected, the connecting process will fail and return false;
+     * @param port_number		Controller joystick port number reference.
+     * @return					True if connected. False otherwise.
+     */
+    public boolean connectJoystick(int port_number) {
+    	if(!connected_joy) {
+    		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+    		Controller c = null;
+    		System.out.println("Checking for port number: " + port_number);
+    		for(int i = 0; i < controllers.length; i++) {
+    			if(controllers[i].getPortNumber() == port_number) {
+    				c = controllers[i];
+    				break;
+    			}
+    		}
+    		if(c == null) return false;
+    		joystick = new Joystick(c);
+    		joystick.setJoystickListener(this);
+    		return true;
     	}
     	return false;
     }
@@ -158,5 +216,13 @@ public class CATFishModel implements HardwareEventListener {
 				panel.setAnalogInput((i-5)/2, ((highbyte * 256) + lowbyte));
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.auvua.catfish.JoystickEventListener#joystickEvent(org.auvua.catfish.JoystickEvent)
+	 */
+	@Override
+	public void joystickEvent(JoystickEvent event) {
+		System.out.println(event.getComponentName() + ": " + event.isPressed());		
 	}
 }
