@@ -11,9 +11,8 @@
 #include <SoftwareSerial.h>
 
 // Serial
-#define TXPIN 1
-#define RXPIN 0
-#define CNTRL 3
+#define TXPIN 2
+#define RXPIN 3
 
 #define BAUD_RATE 19200
 #define PACKET_LENGTH 14
@@ -21,27 +20,33 @@
 
 // Motor control
 #define MAX_VALUE 254
-#define STOP_SPEED 0
-#define CONTROL_FLAG 0xFF
+#define STOP_SPEED 100
+#define CONTROL_FLAG 0xAA
+#define MOTOR_FWD 0x05
+#define MOTOR_REV 0x06
 
-unsigned long current_time;
-unsigned long previous_time;
+long current_time;
+long previous_time;
 SoftwareSerial serial_controller = SoftwareSerial(RXPIN, TXPIN);
 
 /*
- * Set the speed between -127 to 127 which is
- * is shifted to 0 to 254.
+ * Set the speed between 0 and 200 which is
+ * percentage reverse or forward (-100 and 100) 
+ * centered around 100 (0 percent). 
  */
 void setMotorSpeed(int speed, byte device_id) {
-    uint8_t output;
-
-    // Set the value between 0 to 254
-    output = (speed > 0) ? max(speed + 127, 0) : min(speed + 127, MAX_VALUE);
-
-    // Send Mini SSC packet.
-    serial_controller.write(CONTROL_FLAG);
-    serial_controller.write(device_id);
-    serial_controller.write(output);
+    byte packet[5] = {0};
+    
+    speed = speed < 0 ? 0 : (speed > 200 ? 200 : speed);
+    speed = (speed - 100) / 2;
+    
+    packet[0] = CONTROL_FLAG;
+    packet[1] = device_id;
+    packet[2] = (speed < 0) ? 0x06 : 0x05;
+    packet[3] = 0x00;
+    packet[4] = abs(speed);
+    
+    serial_controller.write(packet, 5);
 }
 
 void setup() {
@@ -51,10 +56,13 @@ void setup() {
     // Setup pins
     pinMode(TXPIN, OUTPUT);
     pinMode(RXPIN, INPUT);
-    pinMode(CNTRL, INPUT);
 
     // Setup timer
     current_time = previous_time = millis();
+    
+    // Start motor controllers
+    serial_controller.write(0x83);
+    delay(10);
 }
 
 void loop() {
@@ -68,8 +76,11 @@ void loop() {
           packet[i] = Serial.read(); 
         }
         
-        if (get_checksum(packet) > 0)
-            return;
+        while(Serial.available())
+          Serial.read();
+        
+        //if (get_checksum(packet) > 0)
+        //    return;
 
         for (int i = 0; i < PACKET_LENGTH - 2; i += 2) {
             setMotorSpeed((int) packet[i+1], packet[i]);
@@ -78,8 +89,8 @@ void loop() {
         previous_time = millis();
     }
 
-    if (abs(current_time - previous_time) > TIMEOUT_THRESHOLD) {
-        for (int i = 0; i < PACKET_LENGTH -2; i +=2)
+    if ((current_time - previous_time) > TIMEOUT_THRESHOLD) {
+        for (int i = 0; i < 6; i++)
            setMotorSpeed(STOP_SPEED, byte(i));
     }
 
