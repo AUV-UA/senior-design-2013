@@ -8,6 +8,20 @@ public class MotionVector {
 	private int y;
 	private int z;
 
+	public MotionVector() {
+		this(0, 0, 0);
+	}
+
+	// TODO: Add support for magnitude and angles
+	public MotionVector(int magnitude, float theta, float phi) {
+	}
+
+	public MotionVector(int x, int y, int z) {
+		setXComponent(x);
+		setYComponent(y);
+		setZComponent(z);
+	}
+
 	public int getXComponent() {
 		return x;
 	}
@@ -45,5 +59,29 @@ public class MotionVector {
 			this.z = MIN_VALUE;
 		else
 			this.z = z;
+	}
+
+	public int dotproduct(MotionVector v) {
+		int vx = v.getXComponent();
+		int vy = v.getYComponent();
+		int vz = v.getZComponent();
+
+		return (x * vx) + (vy * y) + (vz * z);
+	}
+
+	public MotionVector crossproduct(MotionVector v) {
+		int vx = v.getXComponent();
+		int vy = v.getYComponent();
+		int vz = v.getZComponent();
+
+		int nx = (y * vz) - (z * vy);
+		int ny = (z * vx) - (x * vz);
+		int nz = (x * vy) - (y * vx);
+
+		return new MotionVector(nx, ny, nz);
+	}
+
+	public long getMagnitude() {
+		return Math.round(Math.sqrt(x * x + y * y + z * z));
 	}
 }
