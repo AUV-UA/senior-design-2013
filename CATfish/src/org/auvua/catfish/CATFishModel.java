@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +34,9 @@ public class CATFishModel implements HardwareEventListener,
 
 	private CATFishPanel panel;
 
+	/* Current desired motion of the robot */
+	MotionVector motion;
+
 	/* Hardware */
 	private HashMap<String, SerialHardware> hardware;
 	private Timer scheduler;
@@ -45,9 +49,6 @@ public class CATFishModel implements HardwareEventListener,
 
 	/* Arduino analog inputs */
 	public int pins_ai[];
-	
-	/* Current motion vector */
-	public MotionVector motion;
 
 	/**
 	 * Initializes data and collects initial list of available serial ports.
@@ -57,6 +58,8 @@ public class CATFishModel implements HardwareEventListener,
 	 *            paradigm)
 	 */
 	public CATFishModel(CATFishPanel panel) {
+		motion = new MotionVector();
+
 		hardware = new HashMap<String, SerialHardware>();
 		scheduler = new Timer();
 
@@ -65,7 +68,6 @@ public class CATFishModel implements HardwareEventListener,
 		pins_do = new boolean[10];
 		pins_di = new boolean[4];
 		pins_ai = new int[6];
-		motion = new MotionVector(0.0f, 0.0f, 0.0f, 0.0f);
 
 		// check for generic comm ports
 		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
@@ -129,11 +131,12 @@ public class CATFishModel implements HardwareEventListener,
 	 */
 	public boolean connectArduino(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
-			Arduino arduino = new Arduino(port_name, 1000, baud_rate);
-			arduino.initalize();
-			arduino.addHardwareListener(this);
+			PowerOutputs power_arduino = new PowerOutputs(port_name, 1000,
+					baud_rate);
+			power_arduino.initalize();
+			power_arduino.addHardwareListener(this);
 
-			hardware.put(port_name, arduino);
+			hardware.put(port_name, power_arduino);
 			ArduinoTimer timer = new ArduinoTimer(port_name);
 			scheduler.scheduleAtFixedRate(timer, 500, 100);
 			panel.setStatus(Connections.ARDUINO, true);
@@ -155,6 +158,13 @@ public class CATFishModel implements HardwareEventListener,
 		 */
 		@Override
 		public void run() {
+			for (Entry<String, SerialHardware> entry : hardware.entrySet()) {
+				if (entry.getValue() instanceof Motors) {
+					Motors motors = (Motors) entry.getValue();
+					motors.update(motion);
+				}
+			}
+
 			if (hardware.containsKey(port_name)) {
 				Arduino arduino = (Arduino) hardware.get(port_name);
 
@@ -178,7 +188,8 @@ public class CATFishModel implements HardwareEventListener,
 	public void hardwareEvent(HardwareEvent event) {
 		SerialHardware obj = (SerialHardware) event.getSource();
 
-		if (obj instanceof Arduino) {
+		// TODO: move pins into PowerOutputs
+		if (obj instanceof PowerOutputs) {
 			char[] data = event.data;
 			for (int i = 1; i < 5; i++)
 				panel.setDigitalInput(i + 9, (data[i] == 1 ? true : false));
@@ -200,10 +211,9 @@ public class CATFishModel implements HardwareEventListener,
 	@Override
 	public void controllerEvent(ControllerEvent event) {
 		Controller controller = (Controller) event.getSource();
-		
+
 		switch (event.getControlType()) {
 		case Movement:
-			motion = (MotionVector) event.getData();
 			break;
 		case Acuator:
 			break;
@@ -213,13 +223,5 @@ public class CATFishModel implements HardwareEventListener,
 		default:
 			break;
 		}
-	}
-
-	/**
-	 * Updates the motor speeds given a movement.
-	 * 
-	 * @param direction
-	 */
-	private void updateMotors(MotionVector movement) {
 	}
 }

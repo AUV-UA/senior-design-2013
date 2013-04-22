@@ -10,11 +10,12 @@ import java.util.logging.Logger;
 
 import gnu.io.*;
 
-/** 
- * Abstract serial port connection scheme. Uses RxTx package to connect to a 
- * given serial port on a new thread. Uses input and output streams to channel data to and from
- * a serial port. Capable of variable baud rates, data/parity/stop bits, and
- * port timeouts. Override serialEvent method for control of input formatting.
+/**
+ * Abstract serial port connection scheme. Uses RxTx package to connect to a
+ * given serial port on a new thread. Uses input and output streams to channel
+ * data to and from a serial port. Capable of variable baud rates,
+ * data/parity/stop bits, and port timeouts. Override serialEvent method for
+ * control of input formatting.
  * 
  * @author forbesk
  * @author erbriones
@@ -36,17 +37,24 @@ public abstract class SerialHardware implements SerialPortEventListener,
 
 	private String port_name;
 
-	protected final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	protected final static Logger LOGGER = Logger
+			.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	/** 
+	/**
 	 * Initializes SerialHardware port and associated parameters.
 	 * 
-	 * @param port_name		Port identifier string.
-	 * @param timeout		Connection timeout in milliseconds.
-	 * @param baud_rate		Baud rate in bits per second.
-	 * @param databits		Number of data bits.
-	 * @param parity		Parity bit (SerialPort.PARITY_*)
-	 * @param stopbit		Number of stop bits.
+	 * @param port_name
+	 *            Port identifier string.
+	 * @param timeout
+	 *            Connection timeout in milliseconds.
+	 * @param baud_rate
+	 *            Baud rate in bits per second.
+	 * @param databits
+	 *            Number of data bits.
+	 * @param parity
+	 *            Parity bit (SerialPort.PARITY_*)
+	 * @param stopbit
+	 *            Number of stop bits.
 	 */
 	public SerialHardware(String port_name, int timeout, int baud_rate,
 			int databits, int parity, int stopbit) {
@@ -65,8 +73,8 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	public void initalize() {
 		String msg = null;
 		CommPortIdentifier identifier = null;
-		
-                @SuppressWarnings("rawtypes")
+
+		@SuppressWarnings("rawtypes")
 		Enumeration ports = (Enumeration) CommPortIdentifier
 				.getPortIdentifiers();
 
@@ -100,7 +108,9 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			port.addEventListener(this);
 			port.notifyOnDataAvailable(true);
 		} catch (Exception e) {
-			msg = String.format("Unable to connect to hardware on port %s.\n %s", port.getName(), e.toString());
+			msg = String.format(
+					"Unable to connect to hardware on port %s.\n %s",
+					port.getName(), e.toString());
 			LOGGER.log(Level.SEVERE, msg);
 		}
 		worker = new Thread(this);
@@ -114,17 +124,19 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			System.out.println(e);
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Writes an array of bytes to the output stream.
 	 * 
-	 * @param message	Message to send formatted as a byte array.
+	 * @param message
+	 *            Message to send formatted as a byte array.
 	 */
 	public void write(byte[] message) {
 		try {
 			output.write(message);
 		} catch (IOException e) {
-			String msg = String.format("Failed to write to port.\n %s", e.toString());
+			String msg = String.format("Failed to write to port.\n %s",
+					e.toString());
 			LOGGER.log(Level.WARNING, msg);
 		}
 	}
@@ -144,7 +156,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 * listeners.
 	 */
 	@Override
-	public synchronized void serialEvent(SerialPortEvent event) {
+	public final synchronized void serialEvent(SerialPortEvent event) {
 		switch (event.getEventType()) {
 		case SerialPortEvent.BI:
 		case SerialPortEvent.OE:
@@ -157,26 +169,32 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
-			try {
-				char[] data = new char[1024];
-				int c;
-				for(int i = 0; (c = input.read()) >= 0 && i < 1024; i++)
-					data[i] = (char)(c & 0xff);
-					
+			char[] data = received();
+
+			if (data != null)
 				sendHardwareEvent(data);
-			} catch (Exception e) {
-				String msg = String.format(
-						"Unable to read from input stream.\n %s", e.toString());
-				LOGGER.log(Level.SEVERE, msg);
-			}
 			break;
 		}
 	}
 
-	/** 
+	/**
+	 * 
+	 * @param data
+	 */
+	public abstract void send(char[] data);
+
+	/**
+	 * Data to event listener
+	 * 
+	 * @return
+	 */
+	public abstract char[] received();
+
+	/**
 	 * Adds a listener for hardware events being passed from the serial port.
 	 * 
-	 * @param listener		HardwareEventListener to attach to this SerialHardware.
+	 * @param listener
+	 *            HardwareEventListener to attach to this SerialHardware.
 	 */
 	public synchronized void addHardwareListener(HardwareEventListener listener) {
 		this.hardware_listeners.add(listener);
@@ -185,7 +203,8 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	/**
 	 * Removes the listener on events from the serial port.
 	 * 
-	 * @param listener		HardwareEventListener to remove from this SerialHardware.
+	 * @param listener
+	 *            HardwareEventListener to remove from this SerialHardware.
 	 */
 	public synchronized void removeHardwareListener(
 			HardwareEventListener listener) {
@@ -195,7 +214,9 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	/**
 	 * Generates hardware events for each listener
 	 * 
-	 * @param data		Array of characters to pass to attached HardwareEventListeners.
+	 * @param data
+	 *            Array of characters to pass to attached
+	 *            HardwareEventListeners.
 	 */
 	protected synchronized void sendHardwareEvent(char[] data) {
 		HardwareEvent event = new HardwareEvent(this, data);

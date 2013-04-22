@@ -6,6 +6,17 @@ public class Motors extends Arduino {
 
 	public Motors(String port_name, int timeout, int baud_rate) {
 		super(port_name, timeout, baud_rate);
-		// TODO Auto-generated constructor stub
-	}	
+	}
+
+	@Override
+	public void send(char[] data) {
+	}
+
+	public void update(MotionVector v) {
+	}
+
+	@Override
+	public char[] received() {
+		return null;
+	}
 }
