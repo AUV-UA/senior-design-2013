@@ -62,7 +62,7 @@ public class MotionVector {
 		else
 			this.z = z;
 	}
-	
+
 	public float getAComponent() {
 		return a;
 	}
@@ -85,18 +85,18 @@ public class MotionVector {
 	}
 
 	public MotionVector crossproduct(MotionVector v) {
-		float vx = v.getXComponent();
-		float vy = v.getYComponent();
-		float vz = v.getZComponent();
+		float vx = v.getXComponent() / v.getMagnitude();
+		float vy = v.getYComponent() / v.getMagnitude();
+		float vz = v.getZComponent() / v.getMagnitude();
 
-		float nx = (y * vz) - (z * vy);
-		float ny = (z * vx) - (x * vz);
-		float nz = (x * vy) - (y * vx);
+		float nx = (y / getMagnitude() * vz) - (z / getMagnitude() * vy);
+		float ny = (z / getMagnitude() * vx) - (x / getMagnitude() * vz);
+		float nz = (x / getMagnitude() * vy) - (y / getMagnitude() * vx);
 
-		return new MotionVector(nx, ny, nz);
+		return new MotionVector(MAX_VALUE * nx, MAX_VALUE * ny, MAX_VALUE * nz);
 	}
 
-	public long getMagnitude() {
-		return Math.round(Math.sqrt(x * x + y * y + z * z));
+	public float getMagnitude() {
+		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
 }
