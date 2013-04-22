@@ -26,7 +26,9 @@ public class KeyboardController extends Controller implements KeyListener {
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_RIGHT:
 			case KeyEvent.VK_LEFT:
-				m = new MotionVector();
+				m = new MotionVector(0f, 0f, 0f, 0f);
+				
+				
 				break;
 		}
 
