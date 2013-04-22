@@ -36,8 +36,8 @@ public abstract class Controller {
 	 *            Array of characters to pass to attached
 	 *            ControllerEventListener.
 	 */
-	protected final synchronized void sendControllerEvent(ControlType type) {
-		ControllerEvent event = new ControllerEvent(this, type);
+	protected final synchronized void sendControllerEvent(ControlType type, Object data) {
+		ControllerEvent event = new ControllerEvent(this, type, data);
 
 		for (ControllerEventListener listener : controller_listeners) {
 			listener.controllerEvent(event);
