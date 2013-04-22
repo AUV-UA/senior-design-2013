@@ -45,6 +45,9 @@ public class CATFishModel implements HardwareEventListener,
 
 	/* Arduino analog inputs */
 	public int pins_ai[];
+	
+	/* Current motion vector */
+	public MotionVector motion;
 
 	/**
 	 * Initializes data and collects initial list of available serial ports.
@@ -62,6 +65,7 @@ public class CATFishModel implements HardwareEventListener,
 		pins_do = new boolean[10];
 		pins_di = new boolean[4];
 		pins_ai = new int[6];
+		motion = new MotionVector(0.0f, 0.0f, 0.0f, 0.0f);
 
 		// check for generic comm ports
 		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
@@ -196,9 +200,10 @@ public class CATFishModel implements HardwareEventListener,
 	@Override
 	public void controllerEvent(ControllerEvent event) {
 		Controller controller = (Controller) event.getSource();
-
+		
 		switch (event.getControlType()) {
 		case Movement:
+			motion = (MotionVector) event.getData();
 			break;
 		case Acuator:
 			break;
