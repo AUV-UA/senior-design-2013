@@ -7,6 +7,7 @@ public class MotionVector {
 	private int x;
 	private int y;
 	private int z;
+	private int a;
 
 	public MotionVector() {
 		this(0, 0, 0);
@@ -16,10 +17,11 @@ public class MotionVector {
 	public MotionVector(int magnitude, float theta, float phi) {
 	}
 
-	public MotionVector(int x, int y, int z) {
+	public MotionVector(int x, int y, int z, int a) {
 		setXComponent(x);
 		setYComponent(y);
 		setZComponent(z);
+		setAComponent(a);
 	}
 
 	public int getXComponent() {
@@ -59,6 +61,19 @@ public class MotionVector {
 			this.z = MIN_VALUE;
 		else
 			this.z = z;
+	}
+	
+	public int getAComponent() {
+		return a;
+	}
+
+	public void setAComponent(int a) {
+		if (a > MAX_VALUE)
+			this.a = MAX_VALUE;
+		else if (a < MIN_VALUE)
+			this.a = MIN_VALUE;
+		else
+			this.a = a;
 	}
 
 	public int dotproduct(MotionVector v) {
