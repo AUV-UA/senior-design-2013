@@ -2,60 +2,47 @@ package org.auvua.catfish;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.HashMap;
 
 public class KeyboardController extends Controller implements KeyListener {
-	Queue<MotionVector> movement_queue;
+	HashMap<Integer, Boolean> keymap;
 
 	public KeyboardController() {
-		movement_queue = new ConcurrentLinkedQueue<MotionVector>();
+		keymap = new HashMap<Integer, Boolean>();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent event) {
 		MotionVector m = null;
+		
+		keymap.put(event.getKeyCode(), true);
 
-		switch (event.getKeyChar()) {
-		case 'W':
-			m = new MotionVector();
-			break;
-		case 'S':
-			m = new MotionVector();
-			break;
-		case 'A':
-			if (event.isShiftDown())
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_W:
+			case KeyEvent.VK_S:
+			case KeyEvent.VK_A:
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_UP:
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_LEFT:
 				m = new MotionVector();
-			else
-				m = new MotionVector();
-			break;
-		case 'D':
-			if (event.isShiftDown())
-				m = new MotionVector();
-			else
-				m = new MotionVector();
-			break;
+				break;
 		}
 
 		if (m == null) {
-			movement_queue.add(m);
-			this.sendControllerEvent(ControlType.Movement);
+			this.sendControllerEvent(ControlType.Movement, m);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent event) {
-		this.sendControllerEvent(ControlType.Movement);
+		keymap.put(event.getKeyCode(), false);
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent event) {
 	}
 
-	public MotionVector getLastMovement() {
-		if (movement_queue.isEmpty())
-			return null;
-
-		return movement_queue.remove();
-	}
 }
