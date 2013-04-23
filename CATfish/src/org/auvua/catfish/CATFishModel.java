@@ -35,7 +35,7 @@ public class CATFishModel implements HardwareEventListener,
 	private CATFishPanel panel;
 
 	/* Current desired motion of the robot */
-	MotionVector motion;
+	private MotionVector motion;
 
 	/* Hardware */
 	private HashMap<String, SerialHardware> hardware;
@@ -214,6 +214,8 @@ public class CATFishModel implements HardwareEventListener,
 
 		switch (event.getControlType()) {
 		case Movement:
+			//update motion vector
+			motion = (MotionVector) event.getData();
 			break;
 		case Acuator:
 			break;
