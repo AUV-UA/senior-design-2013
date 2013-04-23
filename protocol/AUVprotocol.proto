@@ -1,0 +1,73 @@
+# AUV protocol buffer
+# thank you google.
+
+# AUV model --> agent
+message AUV_State {
+
+	required bool mission = 1; 				#boolean mission switch state
+	required float batt = 2; 				#battery voltage
+	required bool aligning = 3;				#alignment status for heading/depth
+
+	message Telemetry {
+		optional float heading = 1;			#float heading, degrees cw from north
+		optional float depth = 2; 			#float depth, meters from surface
+		optional float acc_x = 3; 			#float accelerations 
+		optional float acc_y = 4;
+		optional float acc_z = 5;
+		optional float yaw = 6; 			#float principal angles
+		optional float pitch = 7;
+		optional float roll = 8;
+		
+		enum CameraLocation {
+			FORWARD = 0;
+			DOWN = 1;
+			PORT = 2;
+			STARBOARD = 3;
+		}
+		
+		message Camera {
+			required CameraLocation auv_loc = 1; 	#position on camera of AUV
+			required string file_loc = 2; 		#file location of camera output
+		}
+		
+		repeated Camera camera = 9 [packed=true]; 	#list of 1 or more cameras
+		
+		message Pinger {
+			required float heading = 1; 		#heading to pinger source relative to AUV
+			required float elevation = 2; 		#elevation angle to pinger source
+		}
+	
+		optional Pinger pinger_loc = 10; 		#angles to pinger source
+	}
+	
+	optional Telemetry telemetry = 4;
+	optional string msg = 5; 				#arbitrary message from AUV to mission (logging?)
+	
+}
+
+
+# agent --> AUV model
+message Command {
+
+	message Movement {
+		required float x = 1;
+		required float y = 2;
+		required float z = 3;
+		optional float yaw = 4;
+		optional float pitch = 5;
+		optional float roll = 6;
+	}
+	
+	optional Movement speed = 1;				#6-degree movement vector
+	
+	optional float heading = 2;				#requested heading, degrees cw from north
+	optional float depth = 3;				#requested depth, meters from surface
+	optional uint16 freq = 4;				#requested tracking frequency
+	
+	message Output {
+		required string id = 1;
+		required float value = 2;
+	}
+	
+	repeated Output outputs = 5 [packed=true];
+}
