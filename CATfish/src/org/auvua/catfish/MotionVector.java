@@ -8,16 +8,17 @@ public class MotionVector {
 	private float y;
 	private float z;
 	private float a;
+	private float scaling;
 
 	public MotionVector() {
-		this(0f, 0f, 0f);
+		this(0f, 0f, 0f, 0f, 1f);
 	}
 
 	// TODO: Add support for magnitude and angles
 	public MotionVector(float magnitude, float theta, float phi) {
 	}
 
-	public MotionVector(float x, float y, float z, float a) {
+	public MotionVector(float x, float y, float z, float a, float scaling) {
 		setXComponent(x);
 		setYComponent(y);
 		setZComponent(z);
@@ -29,12 +30,7 @@ public class MotionVector {
 	}
 
 	public void setXComponent(float x) {
-		if (x > MAX_VALUE)
-			this.x = MAX_VALUE;
-		else if (x < MIN_VALUE)
-			this.x = MIN_VALUE;
-		else
-			this.x = x;
+		this.x = x;
 	}
 
 	public float getYComponent() {
@@ -42,12 +38,7 @@ public class MotionVector {
 	}
 
 	public void setYComponent(float y) {
-		if (y > MAX_VALUE)
-			this.y = MAX_VALUE;
-		else if (y < MIN_VALUE)
-			this.y = MIN_VALUE;
-		else
-			this.y = y;
+		this.y = y;
 	}
 
 	public float getZComponent() {
@@ -55,12 +46,7 @@ public class MotionVector {
 	}
 
 	public void setZComponent(float z) {
-		if (z > MAX_VALUE)
-			this.z = MAX_VALUE;
-		else if (z < MIN_VALUE)
-			this.z = MIN_VALUE;
-		else
-			this.z = z;
+		this.z = z;
 	}
 
 	public float getAComponent() {
@@ -68,12 +54,18 @@ public class MotionVector {
 	}
 
 	public void setAComponent(float a) {
-		if (a > MAX_VALUE)
-			this.a = MAX_VALUE;
-		else if (a < MIN_VALUE)
-			this.a = MIN_VALUE;
-		else
-			this.a = a;
+		this.a = a;
+	}
+	
+	public float getScaling() {
+		return scaling;
+	}
+	
+	public void addVector(MotionVector v) {
+		x += v.getXComponent();
+		y += v.getYComponent();
+		z += v.getZComponent();
+		a += v.getAComponent();
 	}
 
 	public float dotproduct(MotionVector v) {
@@ -98,5 +90,15 @@ public class MotionVector {
 
 	public float getMagnitude() {
 		return (float) Math.sqrt(x * x + y * y + z * z);
+	}
+	
+	public void normalize() {
+		x /= getMagnitude();
+		y /= getMagnitude();
+		z /= getMagnitude();
+	}
+	
+	public boolean isNormalized() {
+		return (Math.abs(1 - Math.sqrt(x * x + y * y + z * z)) < 0.001);
 	}
 }
