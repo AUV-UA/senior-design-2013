@@ -7,6 +7,7 @@ public abstract class Controller {
 	private ArrayList<ControllerEventListener> controller_listeners;
 
 	public Controller() {
+		controller_listeners = new ArrayList<ControllerEventListener>();
 	}
 
 	/**

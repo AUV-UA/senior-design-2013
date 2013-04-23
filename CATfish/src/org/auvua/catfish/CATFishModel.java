@@ -35,7 +35,7 @@ public class CATFishModel implements HardwareEventListener,
 	private CATFishPanel panel;
 
 	/* Current desired motion of the robot */
-	private MotionVector motion;
+	public MotionVector motion;
 
 	/* Hardware */
 	private HashMap<String, SerialHardware> hardware;
@@ -114,70 +114,37 @@ public class CATFishModel implements HardwareEventListener,
 		return h;
 	}
 
-	/**
-	 * Attempts to connect to the Arduino on the given port name at the given
-	 * baud rate. A failure to connect can occur if the port is already in use,
-	 * the port is not available, the baud rate is nonstandard, or the Arduino
-	 * is already connected.
-	 * 
-	 * @param port_name
-	 *            Title of the connected USB port.
-	 * @param baud_rate
-	 *            Baud rate, in bits per second.
-	 * @return Status of connection - true if successful, false otherwise.
-	 * 
-	 *         TODO: incorporate logging features for finer detailed error
-	 *         messages
-	 */
-	public boolean connectArduino(String port_name, int baud_rate) {
+	public boolean connectPowerOutputs(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
 			PowerOutputs power_arduino = new PowerOutputs(port_name, 1000,
-					baud_rate);
+					baud_rate, this);
 			power_arduino.initalize();
 			power_arduino.addHardwareListener(this);
 
 			hardware.put(port_name, power_arduino);
-			ArduinoTimer timer = new ArduinoTimer(port_name);
-			scheduler.scheduleAtFixedRate(timer, 500, 100);
+			power_arduino.scheduleAtFixedRate(500, 50);
 			panel.setStatus(Connections.ARDUINO, true);
 		}
 
 		return true;
 	}
+	
+	public boolean connectMotors(String port_name, int baud_rate) {
+		if (!hardware.containsKey(port_name)) {
+			System.out.println("Creating motors arduino and starting task...");
+			Motors motors_arduino = new Motors(port_name, 1000,
+					baud_rate, this);
+			motors_arduino.initalize();
+			motors_arduino.addHardwareListener(this);
 
-	private class ArduinoTimer extends TimerTask {
-		String port_name;
-
-		public ArduinoTimer(String port_name) {
-			this.port_name = port_name;
+			hardware.put(port_name, motors_arduino);
+			motors_arduino.scheduleAtFixedRate(500, 50);
+			panel.setStatus(Connections.MOTORS, true);
 		}
 
-		/**
-		 * Constant thread that sends formatted messages to the current Arduino
-		 * port.
-		 */
-		@Override
-		public void run() {
-			for (Entry<String, SerialHardware> entry : hardware.entrySet()) {
-				if (entry.getValue() instanceof Motors) {
-					Motors motors = (Motors) entry.getValue();
-					motors.update(motion);
-				}
-			}
-
-			if (hardware.containsKey(port_name)) {
-				PowerOutputs arduino = (PowerOutputs) hardware.get(port_name);
-
-				byte msg[] = new byte[14];
-				msg[0] = msg[1] = msg[12] = msg[13] = '*';
-				for (int n = 0; n < 10; n++)
-					msg[n + 2] = (byte) (pins_do[n] ? 'h' : 'l');
-
-				arduino.write(msg);
-			}
-		}
+		return true;
 	}
-
+	
 	/**
 	 * (non-Javadoc)
 	 * 

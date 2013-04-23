@@ -27,8 +27,8 @@ public class PowerOutputs extends Arduino {
 	private boolean[] analog_inputs;
 	private boolean[] analog_outputs;
 	
-	public PowerOutputs(String port_name, int timeout, int baud_rate) {
-		super(port_name, timeout, baud_rate);
+	public PowerOutputs(String port_name, int timeout, int baud_rate, CATFishModel model) {
+		super(port_name, timeout, baud_rate, model);
 		
 		digital_inputs = new boolean[5];
 		digital_outputs = new boolean[10];
@@ -73,6 +73,16 @@ public class PowerOutputs extends Arduino {
 	public void send(char[] data) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void backgroundTask() {
+		byte msg[] = new byte[14];
+		msg[0] = msg[1] = msg[12] = msg[13] = '*';
+		for (int n = 0; n < 10; n++)
+			msg[n + 2] = (byte) (model.pins_do[n] ? 'h' : 'l');
+
+		write(msg);
 	}
 	
 }

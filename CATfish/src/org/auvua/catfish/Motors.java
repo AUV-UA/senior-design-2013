@@ -1,18 +1,25 @@
 package org.auvua.catfish;
 
+import java.util.Arrays;
+
 
 public class Motors extends Arduino {
 
-	public Motors(String port_name, int timeout, int baud_rate) {
-		super(port_name, timeout, baud_rate);
+	public Motors(String port_name, int timeout, int baud_rate, CATFishModel model) {
+		super(port_name, timeout, baud_rate, model);
 	}
 
 	@Override
 	public void send(char[] data) {
-		byte[] msg = new byte[14];
-		for(int i = 0; i < data.length; i++) 
-			msg[i] = (byte)data[i];
-		msg[12] = msg[13] = 0x00;
+		byte[] msg = new byte[21];
+		msg[0] = 127;
+		for(byte i = 0; i < data.length; i++) {
+			msg[3*i+1] = i;
+			msg[3*i+2] = (byte)(data[i] > 127 ? 1 : 0);
+			msg[3*i+3] = (byte)(data[i] > 127 ? -data[i] : data[i]);
+		}
+		msg[19] = msg[20] = 0x00;
+		System.out.println(Arrays.toString(msg));
 		write(msg);
 	}
 
@@ -32,13 +39,14 @@ public class Motors extends Arduino {
 		rr = -y - x + a;
 		vert = (z > 1 ? 1 : (z < -1 ? -1 : z));
 		
-		float max_motor_speed = Math.max(fl, Math.max(fr, Math.max(rl, rr)));
-		float motor_scaling = speed * (max_motor_speed == 0 ? 0 : 1/max_motor_speed);
-		speeds[0] = (char)(fl * motor_scaling + 100);
-		speeds[1] = (char)(fr * motor_scaling + 100);
-		speeds[2] = (char)(rl * motor_scaling + 100);
-		speeds[3] = (char)(rr * motor_scaling + 100);
-		speeds[4] = speeds[5] = (char)(vert * speed + 100);
+		float max_motor_speed = Math.max(Math.abs(fl), Math.max(Math.abs(fr), Math.max(Math.abs(rl), Math.abs(rr))));
+		float motor_scaling = speed * (max_motor_speed == 0 ? 0 : 1.0f/max_motor_speed);
+		
+		speeds[0] = (char)(fl * motor_scaling);
+		speeds[1] = (char)(fr * motor_scaling);
+		speeds[2] = (char)(rl * motor_scaling);
+		speeds[3] = (char)(rr * motor_scaling);
+		speeds[4] = speeds[5] = (char)(vert * speed);
 		
 		send(speeds);
 	}
@@ -46,5 +54,10 @@ public class Motors extends Arduino {
 	@Override
 	public char[] received() {
 		return null;
+	}
+
+	@Override
+	public void backgroundTask() {
+		update(model.motion);
 	}
 }

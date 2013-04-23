@@ -128,7 +128,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			System.out.println(e);
 		}
 	}
-
+	
 	/**
 	 * Writes an array of bytes to the output stream.
 	 * 

@@ -23,6 +23,7 @@ public class MotionVector {
 		setYComponent(y);
 		setZComponent(z);
 		setAComponent(a);
+		this.scaling = scaling;
 	}
 
 	public float getXComponent() {
@@ -100,5 +101,9 @@ public class MotionVector {
 	
 	public boolean isNormalized() {
 		return (Math.abs(1 - Math.sqrt(x * x + y * y + z * z)) < 0.001);
+	}
+	
+	public String toString() {
+		return "<" + x + ", " + y + ", " + z + ", " + a + "> scale: " + scaling;
 	}
 }

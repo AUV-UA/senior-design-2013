@@ -147,6 +147,9 @@ public class CATFishPanel implements ActionListener, KeyListener {
 	 */
 	private void initialize() {
 		frmCatfish = new JFrame();
+		frmCatfish.addKeyListener(this);
+		frmCatfish.setFocusable(true);
+		frmCatfish.setFocusableWindowState(true);
 		frmCatfish.setResizable(false);
 		frmCatfish.setTitle("CATfish Interface Panel");
 		frmCatfish.setBounds(100, 100, 958, 476);
@@ -910,7 +913,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		panelBaudMotors_cb = new JComboBox();
 		panelBaudMotors_cb.setModel(new DefaultComboBoxModel(new String[] {
 				"2400", "4800", "9600", "19200", "38400", "57600", "115200" }));
-		panelBaudMotors_cb.setSelectedIndex(2);
+		panelBaudMotors_cb.setSelectedIndex(3);
 		GridBagConstraints gbc_panelBaudMotors_cb = new GridBagConstraints();
 		gbc_panelBaudMotors_cb.insets = new Insets(0, 0, 5, 5);
 		gbc_panelBaudMotors_cb.fill = GridBagConstraints.HORIZONTAL;
@@ -924,6 +927,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		gbc_panelConnMotors_b.insets = new Insets(0, 0, 5, 5);
 		gbc_panelConnMotors_b.gridx = 3;
 		gbc_panelConnMotors_b.gridy = 6;
+		panelConnMotors_b.addActionListener(this);
 		panel_9.add(panelConnMotors_b, gbc_panelConnMotors_b);
 
 		panelStatusMotors_chk = new JCheckBox("");
@@ -1331,14 +1335,19 @@ public class CATFishPanel implements ActionListener, KeyListener {
 	 */
 	public void setModel(CATFishModel model) {
 		this.model = model;
+		keycontrol.addControllerListener(model);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// TODO: hopefully there's a better way to do the toggle buttons
 		if (event.getSource().equals(panelConnArd_B)) {
-			model.connectArduino(getPortName(Connections.ARDUINO),
+			model.connectPowerOutputs(getPortName(Connections.ARDUINO),
 					getBaudRate(Connections.ARDUINO));
+		} else if (event.getSource().equals(panelConnMotors_b)) {
+			if(model.connectMotors(getPortName(Connections.MOTORS),
+					getBaudRate(Connections.MOTORS)))
+				setStatus(Connections.MOTORS, true);
 		} else if (event.getSource().equals(panelDO0_tb)) {
 			model.pins_do[0] = panelDO0_tb.isSelected();
 		} else if (event.getSource().equals(panelDO1_tb)) {
@@ -1360,6 +1369,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		} else if (event.getSource().equals(panelDO9_tb)) {
 			model.pins_do[9] = panelDO9_tb.isSelected();
 		}
+		frmCatfish.requestFocus();
 	}
 
 	/**
@@ -1384,8 +1394,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 	 */
 	public void setStatus(Connections conn, boolean connected) {
 		JCheckBox temp = statuses.get(conn);
-		if (temp.isSelected() && !connected || !temp.isSelected() && connected)
-			temp.doClick();
+		temp.setSelected(connected);
 	}
 
 	/**

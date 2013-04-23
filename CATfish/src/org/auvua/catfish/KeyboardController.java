@@ -10,6 +10,7 @@ public class KeyboardController extends Controller {
 	final HashMap<Integer, MotionVector> motionmap;
 
 	public KeyboardController() {
+		super();
 		keymap = new HashMap<Integer, Boolean>();
 		motionmap = new HashMap<Integer, MotionVector>();
 		motionmap.put(KeyEvent.VK_W, new MotionVector(0f, 1f, 0f, 0f, 1f));
@@ -23,48 +24,54 @@ public class KeyboardController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent event) {
-		switch (event.getKeyCode()) {
-		case KeyEvent.VK_W:
-		case KeyEvent.VK_S:
-		case KeyEvent.VK_A:
-		case KeyEvent.VK_D:
-		case KeyEvent.VK_UP:
-		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_LEFT:
-			updateMotion();
-			break;
-		}
-
+		if(keymap.containsKey(event.getKeyCode()) && keymap.get(event.getKeyCode()))
+			return;
 		keymap.put(event.getKeyCode(), true);
+		
+		switch (event.getKeyCode()) {
+			case KeyEvent.VK_W:
+			case KeyEvent.VK_S:
+			case KeyEvent.VK_A:
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_UP:
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_LEFT:
+				updateMotion();
+				break;
+			default:
+				break;
+		}
 	}
 
 	public void updateMotion() {
-		MotionVector m = new MotionVector(0f, 0f, 0f, 0f, 0.5f);
+		MotionVector m = new MotionVector(0f, 0f, 0f, 0f, 25.0f);
 
 		for (Entry<Integer, Boolean> entry : keymap.entrySet()) {
 			if (motionmap.containsKey(entry.getKey()) && entry.getValue()) {
 				m.addVector(motionmap.get(entry.getKey()));
 			}
 		}
-
+		
 		sendControllerEvent(ControlType.Movement, m);
 	}
 
 	public void keyReleased(KeyEvent event) {
 		keymap.put(event.getKeyCode(), false);
 
-		switch (event.getKeyCode()) {
-		case KeyEvent.VK_W:
-		case KeyEvent.VK_S:
-		case KeyEvent.VK_A:
-		case KeyEvent.VK_D:
-		case KeyEvent.VK_UP:
-		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_LEFT:
-			updateMotion();
-			break;
+			switch (event.getKeyCode()) {
+			case KeyEvent.VK_W:
+			case KeyEvent.VK_S:
+			case KeyEvent.VK_A:
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_UP:
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_RIGHT:
+			case KeyEvent.VK_LEFT:
+				updateMotion();
+				break;
+			default:
+				break;
 		}
 	}
 }

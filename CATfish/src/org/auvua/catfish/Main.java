@@ -3,6 +3,8 @@ package org.auvua.catfish;
 import java.awt.EventQueue;
 import java.util.logging.Logger;
 
+import com.stolsvik.tech.keyeventfixer.RepeatingReleasedEventsFixer;
+
 public class Main {
 
 	public static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -13,6 +15,8 @@ public class Main {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		new RepeatingReleasedEventsFixer().install();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
