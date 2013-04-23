@@ -9,6 +9,8 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -46,7 +48,7 @@ import java.util.HashSet;
  * @author forbesk
  * @author erbriones
  */
-public class CATFishPanel implements ActionListener {
+public class CATFishPanel implements ActionListener, KeyListener {
 
 	/** Enumeration of various serial connections with the CATFish */
 	public enum Connections {
@@ -56,6 +58,7 @@ public class CATFishPanel implements ActionListener {
 	public Connections connections;
 	private CATFishModel model;
 	public JFrame frmCatfish;
+	private KeyboardController keycontrol;
 	private JTextField panelA0_t;
 	private JTextField panelA1_t;
 	private JTextField panelA2_t;
@@ -135,6 +138,8 @@ public class CATFishPanel implements ActionListener {
 			public void flush() {
 			}
 		});
+		
+		keycontrol = new KeyboardController();
 	}
 
 	/**
@@ -1459,6 +1464,21 @@ public class CATFishPanel implements ActionListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		keycontrol.keyPressed(e);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		keycontrol.keyReleased(e);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 
 }
