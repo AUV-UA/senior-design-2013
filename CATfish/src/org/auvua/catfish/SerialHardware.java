@@ -67,6 +67,10 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		this.hardware_listeners = new ArrayList<HardwareEventListener>();
 	}
 
+	public String getPortName() {
+		return port_name;
+	}
+
 	/**
 	 * Opens the hardware to listen on the serial port on separate thread.
 	 */
