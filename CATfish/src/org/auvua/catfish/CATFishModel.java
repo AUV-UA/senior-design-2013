@@ -166,7 +166,7 @@ public class CATFishModel implements HardwareEventListener,
 			}
 
 			if (hardware.containsKey(port_name)) {
-				Arduino arduino = (Arduino) hardware.get(port_name);
+				PowerOutputs arduino = (PowerOutputs) hardware.get(port_name);
 
 				byte msg[] = new byte[14];
 				msg[0] = msg[1] = msg[12] = msg[13] = '*';
