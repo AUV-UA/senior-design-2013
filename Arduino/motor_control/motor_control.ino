@@ -20,8 +20,7 @@
 #define EMPTY_BYTE 0x00
 #define PACKET_LENGTH 20
 #define STOP_SPEED 0
-#define FORWARD_ACCELERATION_LIMIT 5
-#define REVERSE_ACCELERATION_LIMIT 9
+#define ACCELERATION_LIMIT 1
 #define DECELERATION_LIMIT 2
 #define LIMIT_VALUE 2
 
@@ -86,8 +85,10 @@ void setup() {
     delay(5);
 
     for (uint8_t i = 0; i < 6; i++) {
-        setMotorLimit(i, FORWARD_ACCELERATION_LIMIT, LIMIT_VALUE);
-        setMotorLimit(i, REVERSE_ACCELERATION_LIMIT, LIMIT_VALUE);
+        setMotorLimit(i, ACCELERATION_LIMIT, LIMIT_VALUE);
+        delay(1);  //wait one ms between commands
+        setMotorLimit(i, DECELERATION_LIMIT, LIMIT_VALUE);
+        delay(1);
     }
 }
 
@@ -114,7 +115,9 @@ void loop() {
             setMotorSpeed(packet[i+1], packet[i+2], packet[i]);
         }
 
+        //temporary fix for semi-broken motor controller
         serial_controller.write(SAFE_START_FLAG);
+        
         previous_time = millis();
     }
 
