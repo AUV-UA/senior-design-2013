@@ -59,7 +59,7 @@ public class CrcChecksum {
 	 * @param checksum
 	 * @return
 	 */
-	public boolean verify(byte[] args, int checksum) {
+	public boolean verify(int checksum) {
 		return Integer.compare(crc, checksum) == 0;
 	}
 
