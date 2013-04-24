@@ -2,6 +2,10 @@ package org.auvua.catfish.test;
 
 import static org.junit.Assert.*;
 
+import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import org.auvua.catfish.ControlType;
 import org.auvua.catfish.Controller;
 import org.auvua.catfish.ControllerEvent;
@@ -16,8 +20,10 @@ public class ControllerTest {
 	private TestListener tester;
 
 	private class TestController extends Controller {
+		final static String data = "TestData";
+
 		public void fireEvent(ControlType type) {
-			this.sendControllerEvent(type);
+			this.sendControllerEvent(type, data);
 		}
 	}
 
