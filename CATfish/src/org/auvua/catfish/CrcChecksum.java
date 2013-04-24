@@ -8,26 +8,14 @@ package org.auvua.catfish;
 public class CrcChecksum {
 	/* Represents x^16+x^12+x^5+1 */
 	private final static int polynomial = 0x1021;
-	private int crc;
-
-	public CrcChecksum() {
-		crc = 0x0000;
-	}
 
 	/**
-	 * Fetch the integer representation of the checksum
+	 * Generate a new checksum
 	 * 
 	 * @return
 	 */
-	public int getChecksum() {
-		return crc;
-	}
-
-	/**
-	 * Resets the current checksum back to null.
-	 */
-	public void reset() {
-		crc = 0x0000;
+	public static int generate(byte[] data) {
+		return update(data, 0x0000);
 	}
 
 	/**
@@ -35,21 +23,24 @@ public class CrcChecksum {
 	 * 
 	 * @param args
 	 */
-	public void update(byte[] args) {
+	public static int update(byte[] args, int checksum) {
+
 		for (byte b : args) {
 			for (int i = 0; i < 8; i++) {
 				boolean bit = ((b >> (7 - i) & 0x1) == 1);
-				boolean c15 = ((crc >> 15 & 0x1) == 1);
-				crc <<= 1;
+				boolean c15 = ((checksum >> 15 & 0x1) == 1);
+				checksum <<= 1;
 				// If coefficient of bit and remainder polynomial = 1 xor crc
 				// with polynomial
 				if (c15 ^ bit) {
-					crc ^= polynomial;
+					checksum ^= polynomial;
 				}
 			}
 		}
 
-		crc &= 0xffff;
+		checksum &= 0xffff;
+
+		return checksum;
 	}
 
 	/**
@@ -59,16 +50,14 @@ public class CrcChecksum {
 	 * @param checksum
 	 * @return
 	 */
-	public boolean verify(int checksum) {
-		Integer crcInt = new Integer(crc);
-		return crcInt.compareTo(new Integer(checksum)) == 0;
+	public static boolean verify(int checksum1, byte[] data) {
+		return checksum1 == generate(data);
 	}
 
 	/**
 	 * Returns a Hex String representation of the checksum.
 	 */
-	@Override
-	public String toString() {
-		return Integer.toHexString(crc);
+	public static String toHexString(int checksum) {
+		return Integer.toHexString(checksum);
 	}
 }

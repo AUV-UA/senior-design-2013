@@ -12,63 +12,42 @@ public class CrcChecksumTest {
 	private CrcChecksum checksum;
 	private byte data1[] = { 0x00, 0x05, 0x01 };
 	private byte data2[] = { 0x00, 0x09, 0x0a, 0x00, 0x00, 0x00, 0x14 };
+	private byte data3[] = { 0x00 };
+	private byte data4[] = { 0x00 };
 	private int checksum1 = 1243;
 	private int checksum2 = 23;
+	private int checksum3;
+	private int checksum4;
 	private int invalid1 = 1241;
 	private int invalid2 = 22;
 
-	@Before
-	public void setup() {
-		checksum = new CrcChecksum();
-	}
-
-	@After
-	public void cleanup() {
-		checksum = null;
-	}
-
 	@Test
 	public void testChecksumToString() {
-		String hex1 = "0x00";
-		String hex2 = "0x12";
+		String hex1 = "0x0A";
+		String hex2 = "0x64";
 
-		assertEquals(checksum.toString(), hex1);
-
-		checksum.update(data1);
-		assertEquals(checksum.toString(), hex2);
-
-		checksum.reset();
-		checksum.update(data2);
-		assertEquals(checksum.toString(), hex2);
+		assertEquals(CrcChecksum.toHexString(10), hex1);
+		assertEquals(CrcChecksum.toHexString(100), hex2);
 	}
 
 	@Test
-	public void testChecksumReset() {
-		int reset = 0;
-		assertEquals(checksum.getChecksum(), reset);
-
-		checksum.update(data1);
-		checksum.reset();
-
-		assertEquals(checksum.getChecksum(), reset);
-	}
-
-	@Test
-	public void testChecksums() {
-		checksum.update(data1);
-		assertEquals(checksum.getChecksum(), checksum1);
-
-		checksum.update(data2);
-		assertEquals(checksum.getChecksum(), checksum2);
+	public void testChecksumGenerate() {
+		assertEquals(CrcChecksum.generate(data1), checksum1);
+		assertEquals(CrcChecksum.generate(data2), checksum2);
 	}
 
 	@Test
 	public void testChecksumVerify() {
-		checksum.update(data1);
-		assertTrue(checksum.verify(checksum1));
+		assertTrue(CrcChecksum.verify(checksum1, data1));
+		assertTrue(CrcChecksum.verify(checksum2, data2));
 
-		checksum.reset();
-		checksum.update(data2);
-		assertTrue(checksum.verify(checksum1));
+		assertTrue(CrcChecksum.verify(checksum3, data1));
+		assertTrue(CrcChecksum.verify(checksum4, data2));
+	}
+
+	@Test
+	public void testChecksumUpdate() {
+		assertEquals(CrcChecksum.update(data3, checksum1), checksum3);
+		assertEquals(CrcChecksum.update(data4, checksum2), checksum4);
 	}
 }
