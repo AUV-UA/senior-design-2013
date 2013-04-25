@@ -12,8 +12,8 @@ public class CrcChecksumTest {
 	private CrcChecksum checksum;
 	private byte data1[] = { 0x00, 0x05, 0x01 };
 	private byte data2[] = { 0x00, 0x09, 0x0a, 0x00, 0x00, 0x00, 0x14 };
-	private int checksum1 = 1243;
-	private int checksum2 = 23;
+	private int checksum1 = 61396;	//0xefd4 in decimal
+	private int checksum2 = 23801;	//0x5cf9 in decimal
 	private int invalid1 = 1241;
 	private int invalid2 = 22;
 
@@ -29,9 +29,10 @@ public class CrcChecksumTest {
 
 	@Test
 	public void testChecksumToString() {
-		String hex1 = "0x00";
-		String hex2 = "0x12";
-
+		String hex1 = "0";
+		String hex2 = "efd4";
+		String hex3 = "5cf9";
+		
 		assertEquals(checksum.toString(), hex1);
 
 		checksum.update(data1);
@@ -39,7 +40,7 @@ public class CrcChecksumTest {
 
 		checksum.reset();
 		checksum.update(data2);
-		assertEquals(checksum.toString(), hex2);
+		assertEquals(checksum.toString(), hex3);
 	}
 
 	@Test
@@ -55,20 +56,23 @@ public class CrcChecksumTest {
 
 	@Test
 	public void testChecksums() {
+		checksum.reset();
 		checksum.update(data1);
 		assertEquals(checksum.getChecksum(), checksum1);
 
+		checksum.reset();
 		checksum.update(data2);
 		assertEquals(checksum.getChecksum(), checksum2);
 	}
 
 	@Test
 	public void testChecksumVerify() {
+		checksum.reset();
 		checksum.update(data1);
 		assertTrue(checksum.verify(checksum1));
 
 		checksum.reset();
 		checksum.update(data2);
-		assertTrue(checksum.verify(checksum1));
+		assertTrue(checksum.verify(checksum2));
 	}
 }
