@@ -27,14 +27,11 @@ public class CrcChecksumTest {
 		String hex2 = "efd4";
 		String hex3 = "5cf9";
 		
-		assertEquals(checksum.toString(), hex1);
+		assertEquals(checksum.toHexString(0x0000), hex1);
 
-		checksum.update(data1);
-		assertEquals(checksum.toString(), hex2);
+		assertEquals(checksum.toHexString(checksum1), hex2);
 
-		checksum.reset();
-		checksum.update(data2);
-		assertEquals(checksum.toString(), hex3);
+		assertEquals(checksum.toHexString(checksum2), hex3);
 	}
 
 	@Test
@@ -45,24 +42,14 @@ public class CrcChecksumTest {
 
 	@Test
 	public void testChecksums() {
-		checksum.reset();
-		checksum.update(data1);
-		assertEquals(checksum.getChecksum(), checksum1);
-
-		checksum.reset();
-		checksum.update(data2);
-		assertEquals(checksum.getChecksum(), checksum2);
+		assertEquals(checksum.update(data1, 0x0000), checksum1);
+		assertEquals(checksum.update(data2, 0x0000), checksum2);
 	}
 
 	@Test
 	public void testChecksumVerify() {
-		checksum.reset();
-		checksum.update(data1);
-		assertTrue(checksum.verify(checksum1));
-
-		checksum.reset();
-		checksum.update(data2);
-		assertTrue(checksum.verify(checksum2));
+		assertTrue(checksum.verify(checksum1, data1));
+		assertTrue(checksum.verify(checksum2, data2));
 	}
 
 	@Test
