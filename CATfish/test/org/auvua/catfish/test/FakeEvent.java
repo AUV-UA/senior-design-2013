@@ -26,10 +26,25 @@ public class FakeEvent {
 	 * 
 	 * @param src
 	 */
-	public static void sendKeyPress(Component src) {
+	public static void sendKeyPress(Component src, int keyCode) {
 		KeyEvent key_event;
-		key_event = new KeyEvent(src, KeyEvent.KEY_PRESSED, 0, 0,
-				KeyEvent.VK_UNDEFINED, KeyEvent.CHAR_UNDEFINED);
+
+		key_event = new KeyEvent(src, KeyEvent.KEY_RELEASED, 0, 0, keyCode,
+				KeyEvent.CHAR_UNDEFINED);
+
+		scheduleEvent(key_event);
+	}
+
+	/**
+	 * Given a src Component will fake an key relase event.
+	 * 
+	 * @param src
+	 */
+	public static void sendKeyRelease(Component src, int keyCode) {
+		KeyEvent key_event;
+
+		key_event = new KeyEvent(src, KeyEvent.KEY_RELEASED, 0, 0, keyCode,
+				KeyEvent.CHAR_UNDEFINED);
 
 		scheduleEvent(key_event);
 	}

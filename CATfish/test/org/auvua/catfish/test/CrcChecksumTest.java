@@ -12,20 +12,14 @@ public class CrcChecksumTest {
 	private CrcChecksum checksum;
 	private byte data1[] = { 0x00, 0x05, 0x01 };
 	private byte data2[] = { 0x00, 0x09, 0x0a, 0x00, 0x00, 0x00, 0x14 };
+	private byte data3[] = { 0x00 };
+	private byte data4[] = { 0x00 };
 	private int checksum1 = 61396;	//0xefd4 in decimal
 	private int checksum2 = 23801;	//0x5cf9 in decimal
+	private int checksum3;
+	private int checksum4;
 	private int invalid1 = 1241;
 	private int invalid2 = 22;
-
-	@Before
-	public void setup() {
-		checksum = new CrcChecksum();
-	}
-
-	@After
-	public void cleanup() {
-		checksum = null;
-	}
 
 	@Test
 	public void testChecksumToString() {
@@ -44,14 +38,9 @@ public class CrcChecksumTest {
 	}
 
 	@Test
-	public void testChecksumReset() {
-		int reset = 0;
-		assertEquals(checksum.getChecksum(), reset);
-
-		checksum.update(data1);
-		checksum.reset();
-
-		assertEquals(checksum.getChecksum(), reset);
+	public void testChecksumGenerate() {
+		assertEquals(CrcChecksum.generate(data1), checksum1);
+		assertEquals(CrcChecksum.generate(data2), checksum2);
 	}
 
 	@Test
@@ -74,5 +63,11 @@ public class CrcChecksumTest {
 		checksum.reset();
 		checksum.update(data2);
 		assertTrue(checksum.verify(checksum2));
+	}
+
+	@Test
+	public void testChecksumUpdate() {
+		assertEquals(CrcChecksum.update(data3, checksum1), checksum3);
+		assertEquals(CrcChecksum.update(data4, checksum2), checksum4);
 	}
 }
