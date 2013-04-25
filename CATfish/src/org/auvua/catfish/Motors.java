@@ -28,7 +28,7 @@ public class Motors extends Arduino {
 		}
 	
 		msg[19] = msg[20] = 0x00;	//checksum bytes (not implemented yet)
-
+		System.out.println("\tWriting msg to controller");
 		write(msg);					//write the packet
 	}
 

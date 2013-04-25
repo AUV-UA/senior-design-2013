@@ -24,6 +24,7 @@ public class KeyboardController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent event) {
+		System.out.println("Key pressed");
 		if(keymap.containsKey(event.getKeyCode()) && keymap.get(event.getKeyCode()))
 			return;
 		keymap.put(event.getKeyCode(), true);
@@ -45,7 +46,7 @@ public class KeyboardController extends Controller {
 	}
 
 	public void updateMotion() {
-		MotionVector m = new MotionVector(0f, 0f, 0f, 0f, 25.0f);
+		MotionVector m = new MotionVector(0f, 0f, 0f, 0f, 100.0f);
 
 		for (Entry<Integer, Boolean> entry : keymap.entrySet()) {
 			if (motionmap.containsKey(entry.getKey()) && entry.getValue()) {
