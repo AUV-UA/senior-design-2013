@@ -17,7 +17,7 @@ public class ControllerTest {
 
 	private class TestController extends Controller {
 		public void fireEvent(ControlType type) {
-			this.sendControllerEvent(type);
+			this.sendControllerEvent(type, null);
 		}
 	}
 
