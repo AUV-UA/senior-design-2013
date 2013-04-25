@@ -50,13 +50,8 @@ public class CrcChecksum {
 	 * @param checksum
 	 * @return
 	 */
-<<<<<<< HEAD
-	public boolean verify(int checksum) {
-		return crc == checksum;
-=======
 	public static boolean verify(int checksum1, byte[] data) {
 		return checksum1 == generate(data);
->>>>>>> ba751704251617aa19ef3da79e1d9218886fedd4
 	}
 
 	/**
