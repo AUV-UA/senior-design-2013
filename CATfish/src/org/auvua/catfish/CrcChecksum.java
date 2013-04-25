@@ -60,8 +60,7 @@ public class CrcChecksum {
 	 * @return
 	 */
 	public boolean verify(int checksum) {
-		Integer crcInt = new Integer(crc);
-		return crcInt.compareTo(new Integer(checksum)) == 0;
+		return crc == checksum;
 	}
 
 	/**
