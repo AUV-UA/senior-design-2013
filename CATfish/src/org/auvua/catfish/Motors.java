@@ -1,5 +1,7 @@
 package org.auvua.catfish;
 
+import java.io.IOException;
+
 public class Motors extends Arduino {
 	
 	private final int MOTOR_ID_FL = 2;
@@ -28,7 +30,6 @@ public class Motors extends Arduino {
 		}
 	
 		msg[19] = msg[20] = 0x00;	//checksum bytes (not implemented yet)
-		System.out.println("\tWriting msg to controller");
 		write(msg);					//write the packet
 	}
 
@@ -63,7 +64,22 @@ public class Motors extends Arduino {
 
 	@Override
 	public Object[] received() {
-		return null;
+		int[] msg = new int[2];
+		
+		try {
+			msg[0] = input.read();
+			msg[1] = input.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		int sensor = (msg[0] << 8) + msg[1];
+		System.out.println(sensor);
+		float depth = (((float)sensor * 5.0f / 1024.0f) + 0.204f) / 0.0204f;
+		Float[] result = new Float[1];
+		result[0] = new Float(depth);
+		
+		return result;
 	}
 
 	@Override
