@@ -34,13 +34,18 @@ public class CATFishModel implements HardwareEventListener,
 
 	private CATFishPanel panel;
 
-	/* Current desired motion of the robot */
-	public MotionVector motion;
-
 	/* Hardware */
 	private HashMap<String, SerialHardware> hardware;
 	private Timer scheduler;
 
+	/* Current desired motion of the robot */
+	public MotionVector motion;
+	
+	/* Heading, pitch, and roll */
+	public float heading;
+	public float pitch;
+	public float roll;
+	
 	/* Arduino digital outputs */
 	public boolean pins_do[];
 
@@ -124,6 +129,7 @@ public class CATFishModel implements HardwareEventListener,
 			hardware.put(port_name, power_arduino);
 			power_arduino.scheduleAtFixedRate(500, 50);
 			panel.setStatus(Connections.ARDUINO, true);
+			LOGGER.info("Power outputs connected.");
 		}
 
 		return true;
@@ -131,7 +137,6 @@ public class CATFishModel implements HardwareEventListener,
 	
 	public boolean connectMotors(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
-			System.out.println("Creating motors arduino and starting task...");
 			Motors motors_arduino = new Motors(port_name, 1000,
 					baud_rate, this);
 			motors_arduino.initalize();
@@ -140,6 +145,22 @@ public class CATFishModel implements HardwareEventListener,
 			hardware.put(port_name, motors_arduino);
 			motors_arduino.scheduleAtFixedRate(500, 50);
 			panel.setStatus(Connections.MOTORS, true);
+			LOGGER.info("Motors connected.");
+		}
+
+		return true;
+	}
+	
+	public boolean connectCompass(String port_name, int baud_rate) {
+		if (!hardware.containsKey(port_name)) {
+			System.out.println("Creating motors arduino and starting task...");
+			Compass compass = new Compass(port_name, 1000, baud_rate);
+			compass.initalize();
+			compass.addHardwareListener(this);
+
+			hardware.put(port_name, compass);
+			panel.setStatus(Connections.COMPASS, true);
+			LOGGER.info("Compass connected.");
 		}
 
 		return true;
@@ -157,15 +178,22 @@ public class CATFishModel implements HardwareEventListener,
 
 		// TODO: move pins into PowerOutputs
 		if (obj instanceof PowerOutputs) {
-			char[] data = event.data;
+			Object[] data = event.data;
 			for (int i = 1; i < 5; i++)
-				panel.setDigitalInput(i + 9, (data[i] == 1 ? true : false));
+				panel.setDigitalInput(i + 9, ((Character)data[i] == 1 ? true : false));
 
 			for (int i = 5; i < 17; i += 2) {
-				char highbyte = (char) (data[i] & 0x00ff);
-				char lowbyte = (char) (data[i + 1] & 0x00ff);
+				char highbyte = (char) (((Character)data[i]) & 0x00ff);
+				char lowbyte = (char) (((Character)data[i + 1]) & 0x00ff);
 				panel.setAnalogInput((i - 5) / 2, ((highbyte * 256) + lowbyte));
 			}
+		}
+		
+		if(obj instanceof Compass) {
+			heading = (Float)event.data[0];
+			pitch = (Float)event.data[1];
+			roll = (Float)event.data[2];
+			panel.setCompass(heading, pitch, roll);
 		}
 	}
 
@@ -173,7 +201,7 @@ public class CATFishModel implements HardwareEventListener,
 	 * (non-Javadoc)
 	 * 
 	 * @see org.auvua.catfish.ControllerEventListener#controllerEvent(org.auvua.catfish
-	 *      .ControllerEvent)
+	 *      .ControllerEvent) checksum
 	 */
 	@Override
 	public void controllerEvent(ControllerEvent event) {

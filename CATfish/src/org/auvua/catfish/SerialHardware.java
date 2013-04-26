@@ -1,7 +1,7 @@
 package org.auvua.catfish;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -26,7 +26,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	private Thread worker;
 	private ArrayList<HardwareEventListener> hardware_listeners;
 
-	InputStreamReader input;
+	InputStream input;
 	OutputStream output;
 
 	private int TIME_OUT = 2000;
@@ -96,18 +96,20 @@ public abstract class SerialHardware implements SerialPortEventListener,
 			LOGGER.log(Level.SEVERE, "Unable to find the aurduino.");
 			System.exit(1);
 		}
-
+		
 		try {
+			System.out.println(1);
 			port = (SerialPort) identifier.open(this.getClass().getName(),
 					TIME_OUT);
-
+			System.out.println(2);
 			// Configure serial port
 			port.setSerialPortParams(BAUD_RATE, databits, stopbit, parity);
-
+			System.out.println(3);
 			// Configure input/output streams
-			input = new InputStreamReader(port.getInputStream());
+			
+			input = port.getInputStream();
 			output = port.getOutputStream();
-
+			System.out.println(4);
 			// Register listener
 			port.addEventListener(this);
 			port.notifyOnDataAvailable(true);
@@ -173,7 +175,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
 			break;
 		case SerialPortEvent.DATA_AVAILABLE:
-			char[] data = received();
+			Object[] data = received();
 
 			if (data != null)
 				sendHardwareEvent(data);
@@ -192,7 +194,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 * 
 	 * @return
 	 */
-	public abstract char[] received();
+	public abstract Object[] received();
 
 	/**
 	 * Adds a listener for hardware events being passed from the serial port.
@@ -222,7 +224,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	 *            Array of characters to pass to attached
 	 *            HardwareEventListeners.
 	 */
-	protected synchronized void sendHardwareEvent(char[] data) {
+	protected synchronized void sendHardwareEvent(Object[] data) {
 		HardwareEvent event = new HardwareEvent(this, data);
 
 		for (HardwareEventListener listener : hardware_listeners) {
