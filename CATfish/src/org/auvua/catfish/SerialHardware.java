@@ -98,18 +98,16 @@ public abstract class SerialHardware implements SerialPortEventListener,
 		}
 		
 		try {
-			System.out.println(1);
 			port = (SerialPort) identifier.open(this.getClass().getName(),
 					TIME_OUT);
-			System.out.println(2);
+
 			// Configure serial port
 			port.setSerialPortParams(BAUD_RATE, databits, stopbit, parity);
-			System.out.println(3);
+
 			// Configure input/output streams
-			
 			input = port.getInputStream();
 			output = port.getOutputStream();
-			System.out.println(4);
+
 			// Register listener
 			port.addEventListener(this);
 			port.notifyOnDataAvailable(true);
