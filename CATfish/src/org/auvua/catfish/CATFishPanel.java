@@ -106,6 +106,8 @@ public class CATFishPanel implements ActionListener, KeyListener {
 	private HashMap<Connections, JCheckBox> statuses;
 	private HashMap<Connections, JComboBox> portNames;
 	private HashMap<Connections, JComboBox> baudRates;
+	private JTextField panelDepth_t;
+	private JTextField panelBatt_t;
 
 	/**
 	 * Create the application.
@@ -520,12 +522,12 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		frmCatfish.getContentPane().add(panel_4, gbc_panel_4);
 		GridBagLayout gbl_panel_4 = new GridBagLayout();
 		gbl_panel_4.columnWidths = new int[] { 44, 84, 0 };
-		gbl_panel_4.rowHeights = new int[] { 14, 10, 0, 0 };
-		gbl_panel_4.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
-		gbl_panel_4.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_4.rowHeights = new int[] { 14, 10, 0, 0, 0, 0, 0 };
+		gbl_panel_4.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+		gbl_panel_4.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel_4.setLayout(gbl_panel_4);
 
-		JLabel lblCompass = new JLabel("Compass");
+		JLabel lblCompass = new JLabel("Telemetry");
 		lblCompass.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblCompass = new GridBagConstraints();
 		gbc_lblCompass.gridwidth = 2;
@@ -546,6 +548,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 
 		JPanel panel_5 = new JPanel();
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_5.gridwidth = 2;
 		gbc_panel_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_5.gridx = 0;
@@ -553,9 +556,9 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		panel_4.add(panel_5, gbc_panel_5);
 		GridBagLayout gbl_panel_5 = new GridBagLayout();
 		gbl_panel_5.columnWidths = new int[] { 60, 0, 0 };
-		gbl_panel_5.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_panel_5.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_panel_5.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-		gbl_panel_5.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_panel_5.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		panel_5.setLayout(gbl_panel_5);
 
@@ -652,7 +655,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		JLabel lblAccelZ = new JLabel("Accel Z:");
 		GridBagConstraints gbc_lblAccelZ = new GridBagConstraints();
 		gbc_lblAccelZ.anchor = GridBagConstraints.EAST;
-		gbc_lblAccelZ.insets = new Insets(0, 0, 0, 5);
+		gbc_lblAccelZ.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAccelZ.gridx = 0;
 		gbc_lblAccelZ.gridy = 5;
 		panel_5.add(lblAccelZ, gbc_lblAccelZ);
@@ -660,11 +663,47 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		panelAccZ_t = new JTextField();
 		panelAccZ_t.setEditable(false);
 		GridBagConstraints gbc_panelAccZ_t = new GridBagConstraints();
+		gbc_panelAccZ_t.insets = new Insets(0, 0, 5, 0);
 		gbc_panelAccZ_t.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelAccZ_t.gridx = 1;
 		gbc_panelAccZ_t.gridy = 5;
 		panel_5.add(panelAccZ_t, gbc_panelAccZ_t);
 		panelAccZ_t.setColumns(10);
+		
+		JLabel lblDepth = new JLabel("Depth:");
+		GridBagConstraints gbc_lblDepth = new GridBagConstraints();
+		gbc_lblDepth.anchor = GridBagConstraints.EAST;
+		gbc_lblDepth.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDepth.gridx = 0;
+		gbc_lblDepth.gridy = 6;
+		panel_5.add(lblDepth, gbc_lblDepth);
+		
+		panelDepth_t = new JTextField();
+		panelDepth_t.setEditable(false);
+		GridBagConstraints gbc_panelDepth_t = new GridBagConstraints();
+		gbc_panelDepth_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelDepth_t.insets = new Insets(0, 0, 5, 0);
+		gbc_panelDepth_t.gridx = 1;
+		gbc_panelDepth_t.gridy = 6;
+		panel_5.add(panelDepth_t, gbc_panelDepth_t);
+		panelDepth_t.setColumns(10);
+		
+		JLabel lblBattery = new JLabel("Battery:");
+		GridBagConstraints gbc_lblBattery = new GridBagConstraints();
+		gbc_lblBattery.anchor = GridBagConstraints.EAST;
+		gbc_lblBattery.insets = new Insets(0, 0, 0, 5);
+		gbc_lblBattery.gridx = 0;
+		gbc_lblBattery.gridy = 7;
+		panel_5.add(lblBattery, gbc_lblBattery);
+		
+		panelBatt_t = new JTextField();
+		panelBatt_t.setEditable(false);
+		GridBagConstraints gbc_panelBatt_t = new GridBagConstraints();
+		gbc_panelBatt_t.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelBatt_t.gridx = 1;
+		gbc_panelBatt_t.gridy = 7;
+		panel_5.add(panelBatt_t, gbc_panelBatt_t);
+		panelBatt_t.setColumns(10);
 
 		JSeparator separator_4 = new JSeparator();
 		separator_4.setForeground(SystemColor.desktop);
@@ -1484,6 +1523,14 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		panelHeading_t.setText(""+heading);
 		panelPitch_t.setText(""+pitch);
 		panelRoll_t.setText(""+roll);
+	}
+	
+	public void setDepth(float depth) {
+		panelDepth_t.setText(""+depth);
+	}
+	
+	public void setBattery(float battery) {
+		panelBatt_t.setText(""+battery);
 	}
 
 	@Override
