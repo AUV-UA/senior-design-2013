@@ -13,6 +13,7 @@
 // Serial
 #define TXPIN 2
 #define RXPIN 3
+#define DEPTHPIN A7
 
 #define BAUD_RATE 19200
 #define TIMEOUT_THRESHOLD 1000
@@ -69,6 +70,23 @@ void setMotorLimit(uint8_t device_id, uint8_t limit_type, int limit_value) {
     serial_controller.write(packet, 6);
 }
 
+
+/**
+ * pressure = (sesnorValue - 0.204) / 0.0204
+ */
+void sendDepth() {
+    static long previous_time;
+
+    if (abs(previous_time - current_time) > TIMEOUT_THRESHOLD) {
+        previous_time = current_time;
+        word sensorValue = analogRead(DEPTHPIN);
+        byte packet[2] = {0};
+        packet[0] = highByte(sensorValue);
+        packet[1] = lowByte(sensorValue);
+        Serial.write(packet, 2);
+    }
+}
+
 void setup() {
     Serial.begin(BAUD_RATE);
     serial_controller.begin(BAUD_RATE);
@@ -117,7 +135,7 @@ void loop() {
 
         //temporary fix for semi-broken motor controller
         serial_controller.write(SAFE_START_FLAG);
-        
+
         previous_time = millis();
     }
 
@@ -127,6 +145,7 @@ void loop() {
     }
 
     current_time = millis();
+    sendDepth();
 }
 
 int get_checksum(byte packet[]) {
