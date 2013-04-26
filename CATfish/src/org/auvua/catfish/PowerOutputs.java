@@ -72,9 +72,7 @@ public class PowerOutputs extends Arduino {
 	}
 
 	@Override
-	public void send(char[] data) {
-		// TODO Auto-generated method stub
-		
+	public void send(char[] data) {		
 	}
 
 	@Override

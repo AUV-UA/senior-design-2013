@@ -40,12 +40,13 @@ public class CATFishModel implements HardwareEventListener,
 
 	/* Current desired motion of the robot */
 	public MotionVector motion;
-	
+
 	public float heading;
 	public float pitch;
 	public float roll;
 	public float depth;
-	
+	public float battery;
+
 	/* Arduino digital outputs */
 	public boolean pins_do[];
 
@@ -134,11 +135,10 @@ public class CATFishModel implements HardwareEventListener,
 
 		return true;
 	}
-	
+
 	public boolean connectMotors(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
-			Motors motors_arduino = new Motors(port_name, 1000,
-					baud_rate, this);
+			Motors motors_arduino = new Motors(port_name, 1000, baud_rate, this);
 			motors_arduino.initalize();
 			motors_arduino.addHardwareListener(this);
 
@@ -150,7 +150,7 @@ public class CATFishModel implements HardwareEventListener,
 
 		return true;
 	}
-	
+
 	public boolean connectCompass(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
 			System.out.println("Creating motors arduino and starting task...");
@@ -165,7 +165,7 @@ public class CATFishModel implements HardwareEventListener,
 
 		return true;
 	}
-	
+
 	/**
 	 * (non-Javadoc)
 	 * 
@@ -180,25 +180,28 @@ public class CATFishModel implements HardwareEventListener,
 		if (obj instanceof PowerOutputs) {
 			Object[] data = event.data;
 			for (int i = 1; i < 5; i++)
-				panel.setDigitalInput(i + 9, ((Character)data[i] == 1 ? true : false));
+				panel.setDigitalInput(i + 9, ((Character) data[i] == 1 ? true
+						: false));
 
 			for (int i = 5; i < 17; i += 2) {
-				char highbyte = (char) (((Character)data[i]) & 0x00ff);
-				char lowbyte = (char) (((Character)data[i + 1]) & 0x00ff);
+				char highbyte = (char) (((Character) data[i]) & 0x00ff);
+				char lowbyte = (char) (((Character) data[i + 1]) & 0x00ff);
 				panel.setAnalogInput((i - 5) / 2, ((highbyte * 256) + lowbyte));
 			}
 		}
-		
-		if(obj instanceof Compass) {
-			heading = (Float)event.data[0];
-			pitch = (Float)event.data[1];
-			roll = (Float)event.data[2];
+
+		if (obj instanceof Compass) {
+			heading = (Float) event.data[0];
+			pitch = (Float) event.data[1];
+			roll = (Float) event.data[2];
 			panel.setCompass(heading, pitch, roll);
 		}
-		
-		if(obj instanceof Motors) {
-			depth = (Float)event.data[0];
+
+		if (obj instanceof Motors) {
+			depth = (Float) event.data[0];
+			battery = (Float) event.data[1];
 			panel.setDepth(depth);
+			panel.setBattery(battery);
 		}
 	}
 
@@ -214,7 +217,7 @@ public class CATFishModel implements HardwareEventListener,
 
 		switch (event.getControlType()) {
 		case Movement:
-			//update motion vector
+			// update motion vector
 			motion = (MotionVector) event.getData();
 			break;
 		case Acuator:

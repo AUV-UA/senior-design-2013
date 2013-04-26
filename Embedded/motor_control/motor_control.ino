@@ -14,6 +14,7 @@
 #define TXPIN 2
 #define RXPIN 3
 #define DEPTHPIN A7
+#define BATTERYPIN A6
 
 #define BAUD_RATE 19200
 #define TIMEOUT_THRESHOLD 1000
@@ -25,6 +26,9 @@
 #define ACCELERATION_LIMIT 1
 #define DECELERATION_LIMIT 2
 #define LIMIT_VALUE 2
+
+#define DEPTH_SENSOR 0x01
+#define VOLTAGE_MONITOR_SENSOR 0x02
 
 // Flags
 #define READY_FLAG 0x7F
@@ -75,19 +79,24 @@ void setMotorLimit(uint8_t device_id, uint8_t limit_type, int limit_value) {
 /**
  * pressure = (sesnorValue - 0.204) / 0.0204
  */
-void sendDepth() {
+void sendSensorData() {
     static long previous_time;
 
     if (abs(previous_time - current_time) > TELEMETRY_TIMEOUT) {
         previous_time = current_time;
-        word sensorValue = analogRead(DEPTHPIN);
-        byte packet[2] = {0};
-        packet[0] = highByte(sensorValue);
-        packet[1] = lowByte(sensorValue);
-        Serial.write(packet, 2);
+        word sensorValue1 = analogRead(DEPTHPIN);
+        word sensorValue2 = analogRead(BATTERYPIN);
+        byte packet[6] = {0};
+
+        packet[0] = DEPTH_SENSOR;
+        packet[1] = highByte(sensorValue1);
+        packet[2] = lowByte(sensorValue1);
+        packet[3] = VOLTAGE_MONITOR_SENSOR;
+        packet[4] = highByte(sensorValue2);
+        packet[5] = lowByte(sensorValue2);
+        Serial.write(packet, 6);
     }
 }
-
 void setup() {
     Serial.begin(BAUD_RATE);
     serial_controller.begin(BAUD_RATE);
@@ -146,7 +155,7 @@ void loop() {
     }
 
     current_time = millis();
-    sendDepth();
+    sendSensorData();
 }
 
 int get_checksum(byte packet[]) {
