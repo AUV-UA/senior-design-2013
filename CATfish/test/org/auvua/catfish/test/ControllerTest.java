@@ -23,7 +23,7 @@ public class ControllerTest {
 		final static String data = "TestData";
 
 		public void fireEvent(ControlType type) {
-			this.sendControllerEvent(type, null);
+			this.sendControllerEvent(type, data);
 		}
 	}
 

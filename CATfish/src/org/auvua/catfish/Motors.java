@@ -62,7 +62,7 @@ public class Motors extends Arduino {
 	}
 
 	@Override
-	public char[] received() {
+	public Object[] received() {
 		return null;
 	}
 

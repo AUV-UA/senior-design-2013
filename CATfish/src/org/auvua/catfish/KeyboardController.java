@@ -24,7 +24,6 @@ public class KeyboardController extends Controller {
 	}
 
 	public void keyPressed(KeyEvent event) {
-		System.out.println("Key pressed");
 		if(keymap.containsKey(event.getKeyCode()) && keymap.get(event.getKeyCode()))
 			return;
 		keymap.put(event.getKeyCode(), true);

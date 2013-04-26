@@ -1,5 +1,6 @@
 package org.auvua.catfish;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 
 /**
@@ -38,9 +39,9 @@ public class PowerOutputs extends Arduino {
 		
 	}
 	
-	public char[] received() {
+	public Object[] received() {
 		try {
-			char[] data = new char[18];
+			Object[] data = new Object[18];
 			char c;
 			int bytes_read = 0;
 
@@ -59,8 +60,9 @@ public class PowerOutputs extends Arduino {
 			// while(input.ready())
 			// input.skip(1);
 
-			if ((char) data[17] == '-')
+			if (data[17].equals('-')) {
 				return data;
+			}
 		} catch (Exception e) {
 			String msg = String.format(
 					"Unable to read from input stream.\n %s", e.toString());

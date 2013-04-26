@@ -884,6 +884,7 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		gbc_panelConnComp_b.insets = new Insets(0, 0, 5, 5);
 		gbc_panelConnComp_b.gridx = 3;
 		gbc_panelConnComp_b.gridy = 5;
+		panelConnComp_b.addActionListener(this);
 		panel_9.add(panelConnComp_b, gbc_panelConnComp_b);
 
 		panelStatusComp_chk = new JCheckBox("");
@@ -1348,6 +1349,10 @@ public class CATFishPanel implements ActionListener, KeyListener {
 			if(model.connectMotors(getPortName(Connections.MOTORS),
 					getBaudRate(Connections.MOTORS)))
 				setStatus(Connections.MOTORS, true);
+		} else if (event.getSource().equals(panelConnComp_b)) {
+			if(model.connectCompass(getPortName(Connections.COMPASS),
+					getBaudRate(Connections.COMPASS)))
+				setStatus(Connections.COMPASS, true);
 		} else if (event.getSource().equals(panelDO0_tb)) {
 			model.pins_do[0] = panelDO0_tb.isSelected();
 		} else if (event.getSource().equals(panelDO1_tb)) {
@@ -1473,6 +1478,12 @@ public class CATFishPanel implements ActionListener, KeyListener {
 		default:
 			break;
 		}
+	}
+	
+	public void setCompass(float heading, float pitch, float roll) {
+		panelHeading_t.setText(""+heading);
+		panelPitch_t.setText(""+pitch);
+		panelRoll_t.setText(""+roll);
 	}
 
 	@Override
