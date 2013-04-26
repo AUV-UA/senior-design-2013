@@ -17,6 +17,7 @@
 
 #define BAUD_RATE 19200
 #define TIMEOUT_THRESHOLD 1000
+#define TELEMETRY_TIMEOUT 100
 
 #define EMPTY_BYTE 0x00
 #define PACKET_LENGTH 20
@@ -77,7 +78,7 @@ void setMotorLimit(uint8_t device_id, uint8_t limit_type, int limit_value) {
 void sendDepth() {
     static long previous_time;
 
-    if (abs(previous_time - current_time) > TIMEOUT_THRESHOLD) {
+    if (abs(previous_time - current_time) > TELEMETRY_TIMEOUT) {
         previous_time = current_time;
         word sensorValue = analogRead(DEPTHPIN);
         byte packet[2] = {0};
