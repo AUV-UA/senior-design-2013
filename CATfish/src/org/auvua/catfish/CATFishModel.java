@@ -41,10 +41,10 @@ public class CATFishModel implements HardwareEventListener,
 	/* Current desired motion of the robot */
 	public MotionVector motion;
 	
-	/* Heading, pitch, and roll */
 	public float heading;
 	public float pitch;
 	public float roll;
+	public float depth;
 	
 	/* Arduino digital outputs */
 	public boolean pins_do[];
@@ -194,6 +194,11 @@ public class CATFishModel implements HardwareEventListener,
 			pitch = (Float)event.data[1];
 			roll = (Float)event.data[2];
 			panel.setCompass(heading, pitch, roll);
+		}
+		
+		if(obj instanceof Motors) {
+			depth = (Float)event.data[0];
+			panel.setDepth(depth);
 		}
 	}
 
