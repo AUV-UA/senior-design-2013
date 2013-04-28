@@ -11,10 +11,18 @@ public class Motors extends Arduino {
 	private final int MOTOR_ID_RR = 3;
 	private final int MOTOR_ID_VL = 0;
 	private final int MOTOR_ID_VR = 5;
+	
+	private final float battery_offset = -2.7f;
+	private final float depth_offset = -0.0f;
+	
+	private float battery;
+	private float depth;
 
 	public Motors(String port_name, int timeout, int baud_rate,
 			CATFishModel model) {
 		super(port_name, timeout, baud_rate, model);
+		
+		battery = depth = 0;
 	}
 
 	@Override
@@ -83,11 +91,16 @@ public class Motors extends Arduino {
 		}
 
 		int sensor = (msg[1] << 8) + msg[2];
-		float depth = (((float) sensor * 5.0f / 1024.0f) + 0.204f) / 0.0204f;
+		float depth_new = (((float) sensor * 5.0f / 1024.0f) + 0.204f) / 0.0204f;
+		depth_new += depth_offset;
 
 		/* 819.2 = 4/5 of 24V with a resolution of 1024 */
 		sensor = (msg[4] << 8) + msg[5];
-		float battery = (float) (sensor * 5.0f / 1024.0f) * 6.0f;
+		float battery_new = (float) (sensor * 5.0f / 1024.0f) * 6.0f;
+		battery_new += battery_offset;
+		
+		battery = .9f * battery + .1f * battery_new;
+		depth = .9f * depth + .1f * depth_new;
 
 		Float[] result = new Float[2];
 		result[0] = (Float) depth;
