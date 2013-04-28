@@ -74,7 +74,7 @@ public abstract class SerialHardware implements SerialPortEventListener,
 	/**
 	 * Opens the hardware to listen on the serial port on separate thread.
 	 */
-	public void initalize() {
+	public void initialize() {
 		String msg = null;
 		CommPortIdentifier identifier = null;
 

@@ -4,6 +4,7 @@ import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -74,7 +75,7 @@ public class CATFishModel implements HardwareEventListener,
 		pins_do = new boolean[10];
 		pins_di = new boolean[4];
 		pins_ai = new int[6];
-
+		
 		// check for generic comm ports
 		HashSet<CommPortIdentifier> ports = getAvailableSerialPorts();
 		if (ports.size() > 0) {
@@ -124,7 +125,7 @@ public class CATFishModel implements HardwareEventListener,
 		if (!hardware.containsKey(port_name)) {
 			PowerOutputs power_arduino = new PowerOutputs(port_name, 1000,
 					baud_rate, this);
-			power_arduino.initalize();
+			power_arduino.initialize();
 			power_arduino.addHardwareListener(this);
 
 			hardware.put(port_name, power_arduino);
@@ -139,7 +140,7 @@ public class CATFishModel implements HardwareEventListener,
 	public boolean connectMotors(String port_name, int baud_rate) {
 		if (!hardware.containsKey(port_name)) {
 			Motors motors_arduino = new Motors(port_name, 1000, baud_rate, this);
-			motors_arduino.initalize();
+			motors_arduino.initialize();
 			motors_arduino.addHardwareListener(this);
 
 			hardware.put(port_name, motors_arduino);
@@ -155,7 +156,7 @@ public class CATFishModel implements HardwareEventListener,
 		if (!hardware.containsKey(port_name)) {
 			System.out.println("Creating motors arduino and starting task...");
 			Compass compass = new Compass(port_name, 1000, baud_rate);
-			compass.initalize();
+			compass.initialize();
 			compass.addHardwareListener(this);
 
 			hardware.put(port_name, compass);
