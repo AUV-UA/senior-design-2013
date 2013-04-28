@@ -13,8 +13,8 @@
 // Serial
 #define TXPIN 2
 #define RXPIN 3
-#define DEPTHPIN A7
-#define BATTERYPIN A6
+#define DEPTHPIN A5
+#define BATTERYPIN A4
 
 #define BAUD_RATE 19200
 #define TIMEOUT_THRESHOLD 1000
