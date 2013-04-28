@@ -1,6 +1,7 @@
 package org.auvua.catfish;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Motors extends Arduino {
 
@@ -86,7 +87,7 @@ public class Motors extends Arduino {
 
 		/* 819.2 = 4/5 of 24V with a resolution of 1024 */
 		sensor = (msg[4] << 8) + msg[5];
-		float battery = (float) (sensor / 819.2f) * 100f;
+		float battery = (float) (sensor * 5.0f / 1024.0f) * 6.0f;
 
 		Float[] result = new Float[2];
 		result[0] = (Float) depth;
