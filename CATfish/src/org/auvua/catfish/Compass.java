@@ -16,6 +16,18 @@ public class Compass extends SerialHardware {
 	public Compass(String port_name, int timeout, int baud_rate) {
 		super(port_name, timeout, baud_rate, SerialPort.DATABITS_8,
 				SerialPort.PARITY_NONE, SerialPort.STOPBITS_1);
+		
+	}
+	
+	@Override
+	public void initialize() {
+		super.initialize();
+		
+		byte[] setDataComponents = {0x00, 0x0a, 0x05, 0x05, 0x18, 0x19, 0x4f, 0x09, 0x5c, 0x55};
+		byte[] startContinuousMode = {0x00, 0x05, 0x15, (byte) 0xbd, 0x61};
+		
+		write(setDataComponents);
+		write(startContinuousMode);
 	}
 
 	@Override
