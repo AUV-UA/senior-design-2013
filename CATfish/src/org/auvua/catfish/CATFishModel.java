@@ -29,7 +29,7 @@ import org.auvua.utils.*;
  * @author erbriones
  */
 public class CATFishModel implements HardwareEventListener,
-		ControllerEventListener, AUVCommandEventListener {
+		ControllerEventListener {
 
 	/* Global Java logger reference */
 	public static final Logger LOGGER = Logger
@@ -38,6 +38,7 @@ public class CATFishModel implements HardwareEventListener,
 	private CATFishPanel panel;
 
 	private AUVDispatch dispatcher;
+	private AUVController auv_controller;
 	private int publish_period = 100;	//100 ms
 	
 	/* Hardware */
@@ -52,6 +53,8 @@ public class CATFishModel implements HardwareEventListener,
 	public float roll;
 	public float depth;
 	public float battery;
+	
+	public boolean auto_enabled = false;
 
 	/* Arduino digital outputs and digital/analog inputs*/
 	public boolean pins_do[];
@@ -88,8 +91,11 @@ public class CATFishModel implements HardwareEventListener,
 			LOGGER.info("No USB ports available.");
 		}
 		
+		auv_controller = new AUVController();
+		auv_controller.addControllerListener(this);
+		
 		dispatcher = new AUVDispatch("ipc:///tmp/catfish_state", "ipc:///tmp/catfish_command");
-		dispatcher.subscribe(this, "AUVCommand");
+		dispatcher.subscribe(auv_controller, "AUVCommand");
 		
 	    LOGGER.info("ZMQ outward messages bound to '/tmp/CATFISH'");
 	    
@@ -237,6 +243,7 @@ public class CATFishModel implements HardwareEventListener,
 		case Movement:
 			// update motion vector
 			motion = (MotionVector) event.getData();
+			System.out.println(motion.toString());
 			break;
 		case Acuator:
 			break;
@@ -267,8 +274,4 @@ public class CATFishModel implements HardwareEventListener,
 		return result;
 	}
 
-	@Override
-	public void onAUVCommandEvent(AUVCommandEvent event) {
-		System.out.println("Command received at " + System.currentTimeMillis());		
-	}
 }
