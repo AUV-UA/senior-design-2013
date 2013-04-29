@@ -4,12 +4,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/usr/local/share/java/zmq.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/usr/local/lib"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/protobuf-java-2.5.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Utils"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/protobuff"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

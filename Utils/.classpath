@@ -2,13 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/catfish/repos/AUV_UA_Club/protocol/protobuf-java-2.5.0.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/zeromq">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/usr/local/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/usr/lib/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/usr/local/share/java/zmq.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/zeromq"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/protobuff"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
