@@ -4673,6 +4673,16 @@ public final class AUVprotocol {
        * <code>optional float roll = 6;</code>
        */
       float getRoll();
+
+      // required float power = 7;
+      /**
+       * <code>required float power = 7;</code>
+       */
+      boolean hasPower();
+      /**
+       * <code>required float power = 7;</code>
+       */
+      float getPower();
     }
     /**
      * Protobuf type {@code org.auvua.utils.protobuffer.AUVCommand.Movement}
@@ -4753,6 +4763,11 @@ public final class AUVprotocol {
               case 53: {
                 bitField0_ |= 0x00000020;
                 roll_ = input.readFloat();
+                break;
+              }
+              case 61: {
+                bitField0_ |= 0x00000040;
+                power_ = input.readFloat();
                 break;
               }
             }
@@ -4891,6 +4906,22 @@ public final class AUVprotocol {
         return roll_;
       }
 
+      // required float power = 7;
+      public static final int POWER_FIELD_NUMBER = 7;
+      private float power_;
+      /**
+       * <code>required float power = 7;</code>
+       */
+      public boolean hasPower() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>required float power = 7;</code>
+       */
+      public float getPower() {
+        return power_;
+      }
+
       private void initFields() {
         x_ = 0F;
         y_ = 0F;
@@ -4898,6 +4929,7 @@ public final class AUVprotocol {
         yaw_ = 0F;
         pitch_ = 0F;
         roll_ = 0F;
+        power_ = 0F;
       }
       private byte memoizedIsInitialized = -1;
       public final boolean isInitialized() {
@@ -4913,6 +4945,10 @@ public final class AUVprotocol {
           return false;
         }
         if (!hasZ()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+        if (!hasPower()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -4940,6 +4976,9 @@ public final class AUVprotocol {
         }
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
           output.writeFloat(6, roll_);
+        }
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          output.writeFloat(7, power_);
         }
         getUnknownFields().writeTo(output);
       }
@@ -4973,6 +5012,10 @@ public final class AUVprotocol {
         if (((bitField0_ & 0x00000020) == 0x00000020)) {
           size += com.google.protobuf.CodedOutputStream
             .computeFloatSize(6, roll_);
+        }
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeFloatSize(7, power_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSerializedSize = size;
@@ -5102,6 +5145,8 @@ public final class AUVprotocol {
           bitField0_ = (bitField0_ & ~0x00000010);
           roll_ = 0F;
           bitField0_ = (bitField0_ & ~0x00000020);
+          power_ = 0F;
+          bitField0_ = (bitField0_ & ~0x00000040);
           return this;
         }
 
@@ -5154,6 +5199,10 @@ public final class AUVprotocol {
             to_bitField0_ |= 0x00000020;
           }
           result.roll_ = roll_;
+          if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+            to_bitField0_ |= 0x00000040;
+          }
+          result.power_ = power_;
           result.bitField0_ = to_bitField0_;
           onBuilt();
           return result;
@@ -5188,6 +5237,9 @@ public final class AUVprotocol {
           if (other.hasRoll()) {
             setRoll(other.getRoll());
           }
+          if (other.hasPower()) {
+            setPower(other.getPower());
+          }
           this.mergeUnknownFields(other.getUnknownFields());
           return this;
         }
@@ -5202,6 +5254,10 @@ public final class AUVprotocol {
             return false;
           }
           if (!hasZ()) {
+            
+            return false;
+          }
+          if (!hasPower()) {
             
             return false;
           }
@@ -5421,6 +5477,39 @@ public final class AUVprotocol {
         public Builder clearRoll() {
           bitField0_ = (bitField0_ & ~0x00000020);
           roll_ = 0F;
+          onChanged();
+          return this;
+        }
+
+        // required float power = 7;
+        private float power_ ;
+        /**
+         * <code>required float power = 7;</code>
+         */
+        public boolean hasPower() {
+          return ((bitField0_ & 0x00000040) == 0x00000040);
+        }
+        /**
+         * <code>required float power = 7;</code>
+         */
+        public float getPower() {
+          return power_;
+        }
+        /**
+         * <code>required float power = 7;</code>
+         */
+        public Builder setPower(float value) {
+          bitField0_ |= 0x00000040;
+          power_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>required float power = 7;</code>
+         */
+        public Builder clearPower() {
+          bitField0_ = (bitField0_ & ~0x00000040);
+          power_ = 0F;
           onChanged();
           return this;
         }
@@ -7124,15 +7213,16 @@ public final class AUVprotocol {
       "lemetry.CameraLocation\022\020\n\010file_loc\030\002 \002(\t" +
       "\032,\n\006Pinger\022\017\n\007heading\030\001 \002(\002\022\021\n\televation" +
       "\030\002 \002(\002\"@\n\016CameraLocation\022\013\n\007FORWARD\020\000\022\010\n" +
-      "\004DOWN\020\001\022\010\n\004PORT\020\002\022\r\n\tSTARBOARD\020\003\"\270\002\n\nAUV" +
+      "\004DOWN\020\001\022\010\n\004PORT\020\002\022\r\n\tSTARBOARD\020\003\"\307\002\n\nAUV" +
       "Command\022?\n\005speed\030\001 \001(\01320.org.auvua.utils" +
       ".protobuffer.AUVCommand.Movement\022\017\n\007head",
       "ing\030\002 \001(\002\022\r\n\005depth\030\003 \001(\002\022\014\n\004freq\030\004 \001(\r\022?" +
       "\n\007outputs\030\005 \003(\0132..org.auvua.utils.protob" +
-      "uffer.AUVCommand.Output\032U\n\010Movement\022\t\n\001x" +
+      "uffer.AUVCommand.Output\032d\n\010Movement\022\t\n\001x" +
       "\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\022\t\n\001z\030\003 \002(\002\022\013\n\003yaw\030\004 \001(" +
-      "\002\022\r\n\005pitch\030\005 \001(\002\022\014\n\004roll\030\006 \001(\002\032#\n\006Output" +
-      "\022\n\n\002id\030\001 \002(\t\022\r\n\005value\030\002 \002(\002"
+      "\002\022\r\n\005pitch\030\005 \001(\002\022\014\n\004roll\030\006 \001(\002\022\r\n\005power\030" +
+      "\007 \002(\002\032#\n\006Output\022\n\n\002id\030\001 \002(\t\022\r\n\005value\030\002 \002" +
+      "(\002"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -7174,7 +7264,7 @@ public final class AUVprotocol {
           internal_static_org_auvua_utils_protobuffer_AUVCommand_Movement_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_org_auvua_utils_protobuffer_AUVCommand_Movement_descriptor,
-              new java.lang.String[] { "X", "Y", "Z", "Yaw", "Pitch", "Roll", });
+              new java.lang.String[] { "X", "Y", "Z", "Yaw", "Pitch", "Roll", "Power", });
           internal_static_org_auvua_utils_protobuffer_AUVCommand_Output_descriptor =
             internal_static_org_auvua_utils_protobuffer_AUVCommand_descriptor.getNestedTypes().get(1);
           internal_static_org_auvua_utils_protobuffer_AUVCommand_Output_fieldAccessorTable = new

@@ -55,6 +55,7 @@ message AUVCommand {
 		optional float yaw = 4;
 		optional float pitch = 5;
 		optional float roll = 6;
+		required float power = 7;
 	}
 
 	optional Movement speed = 1;				// 6-degree movement vector
