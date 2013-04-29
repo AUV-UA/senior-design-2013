@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.auvua.utils.protobuffer.AUVprotocol.AUVState;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,6 +20,7 @@ public class Mission implements Runnable {
 	private final boolean DEBUG = true;
 	private ArrayList<Task> tasks;
 	private Thread worker;
+	private Task curr_task;
 	
 	public Mission(String filename) {
 		tasks = new ArrayList<Task>();
@@ -95,9 +97,19 @@ public class Mission implements Runnable {
 		worker.interrupt();	
 	}
 	
+	public void updateAUVState(AUVState state) {
+		curr_task.queueState(state);
+	}
+	
+	public Task getCurrentTask() {
+		return curr_task;
+	}
+	
 	public void run() {
 		for(Task task : tasks) {
 			
+			System.out.println("Running a task");
+			curr_task = task;
 			task.run();
 			
 			while(!task.isFinished()) {
