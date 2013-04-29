@@ -98,9 +98,7 @@ public class Mission implements Runnable {
 	public void run() {
 		for(Task task : tasks) {
 			
-			System.out.println("Running a task");
 			task.run();
-			System.out.println("Finished a task");
 			
 			while(!task.isFinished()) {
 				try {
