@@ -99,17 +99,24 @@ public class AgentPanel implements ActionListener {
 		frmAuvAgent.getContentPane().add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
+		
+		JSeparator separator_2 = new JSeparator();
+		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
+		gbc_separator_2.insets = new Insets(0, 0, 5, 5);
+		gbc_separator_2.gridx = 1;
+		gbc_separator_2.gridy = 0;
+		panel.add(separator_2, gbc_separator_2);
 		
 		JLabel lblMissionFile = new JLabel("Mission File:");
 		GridBagConstraints gbc_lblMissionFile = new GridBagConstraints();
 		gbc_lblMissionFile.anchor = GridBagConstraints.WEST;
 		gbc_lblMissionFile.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMissionFile.gridx = 1;
-		gbc_lblMissionFile.gridy = 0;
+		gbc_lblMissionFile.gridy = 1;
 		panel.add(lblMissionFile, gbc_lblMissionFile);
 		
 		JPanel panel_2 = new JPanel();
@@ -118,7 +125,7 @@ public class AgentPanel implements ActionListener {
 		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_2.gridx = 2;
-		gbc_panel_2.gridy = 0;
+		gbc_panel_2.gridy = 1;
 		panel.add(panel_2, gbc_panel_2);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{0, 0};
@@ -140,7 +147,7 @@ public class AgentPanel implements ActionListener {
 		gbc_panel_3.gridheight = 2;
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 3;
-		gbc_panel_3.gridy = 0;
+		gbc_panel_3.gridy = 1;
 		panel.add(panel_3, gbc_panel_3);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
 		gbl_panel_3.columnWidths = new int[]{0, 0};
@@ -161,7 +168,7 @@ public class AgentPanel implements ActionListener {
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.insets = new Insets(0, 0, 0, 5);
 		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 1;
+		gbc_separator_1.gridy = 2;
 		panel.add(separator_1, gbc_separator_1);
 		
 		filelist = new JList();
@@ -169,7 +176,7 @@ public class AgentPanel implements ActionListener {
 		gbc_filelist.insets = new Insets(0, 0, 0, 5);
 		gbc_filelist.fill = GridBagConstraints.BOTH;
 		gbc_filelist.gridx = 1;
-		gbc_filelist.gridy = 1;
+		gbc_filelist.gridy = 2;
 		DefaultListModel lm = new DefaultListModel();
 		File path = new File("./missions");
 		File[] files = path.listFiles();
