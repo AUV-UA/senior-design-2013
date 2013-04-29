@@ -14,10 +14,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class Mission {
+public class Mission implements Runnable {
 
 	private final boolean DEBUG = true;
 	private ArrayList<Task> tasks;
+	private Thread worker;
 	
 	public Mission(String filename) {
 		tasks = new ArrayList<Task>();
@@ -55,7 +56,7 @@ public class Mission {
 					params.add(new Parameter(type, name, data));
 				}
 				
-				Class taskClass = Class.forName("org.auvua.agent." + taskName);
+				Class<?> taskClass = Class.forName("org.auvua.agent." + taskName);
 				Task t = (Task) taskClass.newInstance();
 				t.setStartLocation(taskLoc);
 				t.setParameters(params);
@@ -85,16 +86,34 @@ public class Mission {
 		}
 	}
 	
-	public void execute() {
+	public void start() {
+		worker = new Thread(this);
+		worker.start();
+	}
+	
+	public void stop() {
+		worker.interrupt();	
+	}
+	
+	public void run() {
 		for(Task task : tasks) {
+			
+			System.out.println("Running a task");
 			task.run();
+			System.out.println("Finished a task");
 			
 			while(!task.isFinished()) {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					return;
 				}
+			}
+			
+			if(worker.isInterrupted()) {
+				System.out.println("Interrupting cow!");
+				return;
 			}
 		}
 	}
