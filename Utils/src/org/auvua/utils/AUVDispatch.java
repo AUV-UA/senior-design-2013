@@ -3,9 +3,9 @@ package org.auvua.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
@@ -20,16 +20,17 @@ import com.google.protobuf.InvalidProtocolBufferException;
 public class AUVDispatch {
 	private static AUVPublisher publisher;
 	private static HashMap<String, AUVSubscriber> subscribers = null;
-	private static String address;
+	private static String address_pub, address_sub;
 
 	/* Global Java logger reference */
 	public static final Logger LOGGER = Logger
 			.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	public AUVDispatch(String address) {
+	public AUVDispatch(String address_pub, String address_sub) {
 		subscribers = new HashMap<String, AUVDispatch.AUVSubscriber>();
-		publisher = new AUVPublisher(address);
-		this.address = address;
+		publisher = new AUVPublisher(address_pub);
+		this.address_pub = address_pub;
+		this.address_sub = address_sub;
 	}
 
 	public static void sendCommand(AUVCommand command, String tag) {
@@ -61,7 +62,7 @@ public class AUVDispatch {
 			AUVSubscriber sub = subscribers.get(tag);
 			sub.addAUVCommandEventListener(listener);
 		} else {
-			AUVSubscriber sub = new AUVSubscriber(address, tag);
+			AUVSubscriber sub = new AUVSubscriber(address_sub, tag);
 			sub.addAUVCommandEventListener(listener);
 			subscribers.put(tag, sub);
 		}
@@ -79,7 +80,7 @@ public class AUVDispatch {
 			AUVSubscriber sub = subscribers.get(tag);
 			sub.addAUVStateEventListener(listener);
 		} else {
-			AUVSubscriber sub = new AUVSubscriber(address, tag);
+			AUVSubscriber sub = new AUVSubscriber(address_sub, tag);
 			sub.addAUVStateEventListener(listener);
 			subscribers.put(tag, sub);
 		}
@@ -108,8 +109,20 @@ public class AUVDispatch {
 		public AUVSubscriber(String address, String tag) {
 			final Context context = ZMQ.context(1);
 			socket = context.socket(ZMQ.SUB);
-			socket.bind(address);
+			socket.connect(address);
 			socket.subscribe(tag.getBytes());
+			
+			state_listener = new ArrayList<AUVStateEventListener>();
+			command_listener = new ArrayList<AUVCommandEventListener>();
+			
+			Timer scheduler = new Timer();
+			TimerTask updater = new TimerTask() {
+				@Override
+				public void run() {
+					update();
+				}
+			};
+			scheduler.schedule(updater, 100, 1);
 		}
 
 		private AUVState deserializeState(byte[] data) {
@@ -138,19 +151,19 @@ public class AUVDispatch {
 		// TODO: There must be a better way to do this.
 		public void update() {
 			byte[] data = null;
-
+			
 			String object = "";
 			do {
 				object = socket.recvStr();
-			} while (object != "AUVState" && object != "AUVCommand");
+			} while (object == null || (!object.equals("AUVState") && !object.equals("AUVCommand")));
 
 			data = socket.recv();
-
-			if (object == "AUVState" && data != null) {
+			
+			if (object.equals("AUVState") && data != null) {
 				sendAUVStateEvent(deserializeState(data));
 			}
 
-			if (object == "AUVCommand") {
+			if (object.equals("AUVCommand") && data != null) {
 				sendAUVCommandEvent(deserializeCommand(data));
 			}
 		}
