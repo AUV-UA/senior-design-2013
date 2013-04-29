@@ -1,0 +1,15 @@
+<xml>
+<mission>
+	<name>Doing something</name>
+	<task>
+		<name>DriveStraight</name>
+		<location x="0" y="0" z="0" angle="25.0" />
+		<parameter type="float" name="distance">1.0</parameter>
+		<parameter type="float" name="speed">50</parameter>
+	</task>
+	<task>
+		<name>DriveStraight</name>
+		<location x="1" y="0" z="0" angle="0" />
+	</task>
+</mission>
+</xml>

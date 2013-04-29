@@ -4,6 +4,8 @@ public class Move implements Action {
 
 	private Location start;
 	private Location dest;
+	private float angle_to;
+	private float dist_to;
 	
 	public Move(Location start, Location dest) {
 		this.start = start;
@@ -12,7 +14,8 @@ public class Move implements Action {
 	
 	@Override
 	public void initialize() {
-		
+		angle_to = start.getHeadingToLocation(dest);
+		dist_to = start.getDistanceToLocation(dest);
 	}
 
 	@Override
