@@ -4,14 +4,14 @@
 	<task>
 		<name>DriveStraight</name>
 		<location x="0" y="0" z="0" angle="25.0" />
-		<parameter type="float" name="distance">3.0</parameter>
+		<parameter type="float" name="distance">2.0</parameter>
 		<parameter type="float" name="speed">12</parameter>
 	</task>
 	<task>
-		<name>DriveStraight</name>
+		<name>Rotate</name>
 		<location x="1" y="0" z="0" angle="0" />
-		<parameter type="float" name="distance">0.5</parameter>
-		<parameter type="float" name="speed">30</parameter>
+		<parameter type="float" name="angle">45.0</parameter>
+		<parameter type="float" name="speed">10.0</parameter>
 	</task>
 </mission>
 </xml>
