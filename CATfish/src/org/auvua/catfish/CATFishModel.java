@@ -17,8 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.auvua.catfish.CATFishPanel.Connections;
-import org.auvua.protobuff.AUVprotocol.AUV_State;
-import org.zeromq.ZMQ;
+
+import org.auvua.utils.protobuffer.AUVprotocol.AUVState;
+import org.auvua.utils.*;
 
 /**
  * Collects data from telemetry sources, writes values to motors, and interfaces
@@ -28,7 +29,7 @@ import org.zeromq.ZMQ;
  * @author erbriones
  */
 public class CATFishModel implements HardwareEventListener,
-		ControllerEventListener {
+		ControllerEventListener, AUVCommandEventListener {
 
 	/* Global Java logger reference */
 	public static final Logger LOGGER = Logger
@@ -36,8 +37,7 @@ public class CATFishModel implements HardwareEventListener,
 
 	private CATFishPanel panel;
 
-	private ZMQ.Context context;
-	private ZMQ.Socket publisher;
+	private AUVDispatch dispatcher;
 	private int publish_period = 100;	//100 ms
 	
 	/* Hardware */
@@ -88,18 +88,16 @@ public class CATFishModel implements HardwareEventListener,
 			LOGGER.info("No USB ports available.");
 		}
 		
-		// Get ZMQ context and open ipc socket
-		context = ZMQ.context(1);
-	    publisher = context.socket(ZMQ.PUB);
-	    publisher.bind("ipc:///tmp/CATFISH");		//bind to /tmp/CATFISH
+		dispatcher = new AUVDispatch("ipc:///tmp/catfish_state", "ipc:///tmp/catfish_command");
+		dispatcher.subscribe(this, "AUVCommand");
+		
 	    LOGGER.info("ZMQ outward messages bound to '/tmp/CATFISH'");
 	    
 	    TimerTask sendAUVStateTask = new TimerTask() {
 			@Override
 			public void run() {
-				publisher.sendMore("AUV_State");
-				byte[] msg = buildZMQMsg();
-				publisher.send(msg, 0);
+				AUVState state = buildZMQMsg();
+				dispatcher.sendState(state, "AUVState");
 			}
 	    };
 	    
@@ -250,30 +248,27 @@ public class CATFishModel implements HardwareEventListener,
 		}
 	}
 	
-	public byte[] buildZMQMsg() {
+	public AUVState buildZMQMsg() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		AUV_State.Builder state = AUV_State.newBuilder();
+		AUVState.Builder state = AUVState.newBuilder();
 		
 		state.setTimestamp(System.currentTimeMillis())
 			.setMission(false)
 			.setBatt(battery)
 			.setAligning(false)
-			.setTelemetry(AUV_State.Telemetry.newBuilder()
+			.setTelemetry(AUVState.Telemetry.newBuilder()
 					.setHeading(heading)
 					.setPitch(pitch)
 					.setRoll(roll)
 					.setDepth(depth));
 		
-		try {
-			state.build().writeTo(baos);
-		} catch (IOException e) {
-			LOGGER.warning("Failed to write message to ZMQ socket");
-			e.printStackTrace();
-			return null;
-		}
+		AUVState result = state.build();
 		
-		System.out.println(Arrays.toString(baos.toByteArray()));
-		
-		return baos.toByteArray();
+		return result;
+	}
+
+	@Override
+	public void onAUVCommandEvent(AUVCommandEvent event) {
+		System.out.println("Command received at " + System.currentTimeMillis());		
 	}
 }
