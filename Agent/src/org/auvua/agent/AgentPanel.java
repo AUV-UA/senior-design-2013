@@ -244,6 +244,8 @@ public class AgentPanel implements ActionListener {
 			if(filelist.getSelectedIndex() >= 0) {
 				String file = (String) filelist.getSelectedValue();
 				model.startMission("./missions/" + file);
+			} else {
+				LOGGER.info("Select mission file to run");
 			}
 		} else if(e.getSource().equals(stop_mission)) {
 			model.stopMission();
