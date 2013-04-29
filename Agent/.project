@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>utils</name>
-			<type>2</type>
-			<location>/home/catfish/repos/AUV_UA_Club/Utils/src</location>
-		</link>
-	</linkedResources>
 </projectDescription>
