@@ -2,10 +2,4 @@
 **build
 **dist
 **lib
-Agent/.classpath
-Agent/.project
-CATfish/.classpath
-CATfish/.project
 CATfish/*.so
-Utils/.classpath
-Utils/.project
