@@ -12,8 +12,9 @@ public class Motors extends Arduino {
 	private final int MOTOR_ID_VL = 0;
 	private final int MOTOR_ID_VR = 5;
 	
-	private final float battery_offset = -2.7f;
-	private final float depth_offset = -0.0f;
+	private final float battery_scaling = 0.8923f;
+	private final float depth_offset = -49.97f;
+	private final float depth_scaling = 1.0f;
 	
 	private float battery;
 	private float depth;
@@ -93,11 +94,12 @@ public class Motors extends Arduino {
 		int sensor = (msg[1] << 8) + msg[2];
 		float depth_new = (((float) sensor * 5.0f / 1024.0f) + 0.204f) / 0.0204f;
 		depth_new += depth_offset;
+		depth_new *= depth_scaling;
 
 		/* 819.2 = 4/5 of 24V with a resolution of 1024 */
 		sensor = (msg[4] << 8) + msg[5];
 		float battery_new = (float) (sensor * 5.0f / 1024.0f) * 6.0f;
-		battery_new += battery_offset;
+		battery_new *= battery_scaling;
 		
 		battery = .9f * battery + .1f * battery_new;
 		depth = .9f * depth + .1f * depth_new;
